@@ -1,0 +1,375 @@
+/*
+=================================================
+	UP FROM 1200PX
+=================================================
+*/ 
+@media (min-width: 1200px) and (max-width: 1366px){
+   
+}
+/*
+=================================================
+	FROM 992PX TO 1199PX
+=================================================
+*/ 
+@media (min-width: 992px) and (max-width: 1199px) {
+	.history_wrap .heading02,
+	.event_meta li:last-child,
+	.section_heading p:last-child,
+	.service_text p:nth-child(3),
+	.juma_timing{
+		display: none;
+	}
+	.namaz_list li:last-child{
+		margin-right: 0px;
+	}
+	.navigation ul li{
+		margin-left: 19px;
+	}
+	.history_service_text p{
+		font-size: 12px;
+	}
+	.history_text > p {
+	    margin-bottom: 16px;
+	    height: 60px;
+	    overflow: hidden;
+	}
+	.service_text p {
+	    margin-bottom: 15px;
+	}
+	.section_heading.padding38.margin30{
+		margin-bottom: 0px;
+	}
+	.gallery_fig .islamic_title{
+		width: 170px;
+	}
+	.teach_text {
+	    padding: 0px 0px;
+	}
+	.team_fig .islamic_title{
+		width: 163px;
+		font-size: 14px;
+	}
+	.view_galley .theme_btn{
+		top: 100px;
+	}
+	.event_list .client_text {
+	    padding: 5px 0px 0px 12px;
+	}
+	.newsletter_field{
+		position: relative;
+	}
+	.newsletter_field,
+	.newsletter_field input[type="text"]{
+		width: 100%;
+	}
+	.newsletter_field .theme_btn {
+		position: absolute;
+		top: 6px;
+		right: 1px;
+		border:none;
+		border-left: 1px solid #fff;
+	}
+	.section_heading h2{font-size: 28px;}
+}
+/*
+=================================================
+	FROM 0PX TO 991PX
+=================================================
+*/ 
+@media (max-width: 991px) {
+	.navigation{
+    	display: none;
+	}
+	
+    .top_colume{
+    	display: block;
+    }
+    .namaz_timing{
+    	float: left;
+    	width: 100%;
+    }
+    .dl-menuwrapper{
+    	display: block;
+    	float: left;
+		text-align: right;
+		width: auto;
+		margin-top: 15px;
+    }
+    .dl-menuwrapper li a{
+    	text-align: left;
+    }
+    .dl-menuwrapper .dl-menu{
+    	background-color: #333;
+    }
+    .top_logo{
+    	float: left;
+    	width: auto;
+    }
+    .main_banner figure img {
+	    min-height: 500px;
+	}
+	.history_text {
+	    padding-top: 70px;
+	}
+	.news_fig,
+	.colume_padding ,
+	.service_text,
+	.islamic_colume{
+		margin-bottom: 30px;
+	}
+	.service_tabs li h6{
+		font-size: 14px;
+	}
+	.gallery_wrap .padding38 {
+		padding: 0px 0px 30px;
+	}
+	.newsletter_text,
+	.teach_text,
+	.teach_fig {
+	    text-align: center;
+	}
+	.teach_fig figure{
+		width: auto;
+		float: none;
+		display: inline-block;
+	}
+	.client_text {
+	    padding: 10px 0px 10px 26px;
+	}
+	.newsletter_field,
+	.event_row{
+		float: left;
+		width: 100%;
+	}
+	.event_row{
+		padding-top: 60px;
+	}
+	.newsletter_text{
+		margin-bottom: 30px;
+	}
+	.newsletter_field{
+		position: relative;
+	}
+	.newsletter_field,
+	.newsletter_field input[type="text"]{
+		width: 100%;
+	}
+	.newsletter_field .theme_btn {
+		position: absolute;
+		top: 6px;
+		right: 1px;
+		border:none;
+		border-left: 1px solid #fff;
+	}
+	.widget_text{
+		margin-bottom: 40px;
+	}
+	.widget_wrap{
+		padding: 66px 0px 30px;
+	}
+	.colume_padding{padding-left: 0px;}
+	.history_fig{text-align: center;}
+	.history_fig>figure{width: auto;float: none;}
+	.history_text{margin-bottom: 30px;}
+	.view_galley .theme_btn{position: relative;top: 0px;}
+	.keo_contact_form{margin-bottom: 30px;}
+	.section_heading p{padding: 0px 100px;}
+	.event_det_text{margin-bottom: 30px;}
+	.event_det_fig>figure{width: 370px;margin-left: auto;margin-right: auto;float: none;}
+	.keo_our_speaker{margin-bottom: 30px;}
+	.keo_coming_text>p{padding: 0px 20px;}
+	.keo_coming_soon_bg{padding: 0px;}
+}
+
+/*
+=================================================
+	FROM 768PX TO 979PX
+=================================================
+*/
+
+@media (min-width: 768px) and (max-width: 979px) {
+	.client-slider.slick-slider .slick-list{height: 440px !important;overflow: hidden !important;}
+	.event_row{padding-top: 0px;}
+	.gallery_wrap .padding38 {padding: 0px 0px 0px;}
+}
+/*
+=================================================
+	FROM 0PX TO 767PX
+=================================================
+*/
+@media (max-width: 767px){
+	.team_fig .islamic_title span,
+	.service_tabs li:last-child,
+	.banner_text .small_text,
+	.juma_timing{
+		display: none;
+	}
+	.namaz_list{
+		text-align: center;
+		width: 100%;	
+	}
+	.namaz_list li {
+	    margin-right: 18px;
+	}
+	.namaz_list li{
+		float: none;
+		display: inline-block;
+	}
+	.namaz_list li:last-child{
+		margin-right: 0px;
+	}
+	.dl-menuwrapper .dl-menu{
+		width: 250px;
+		right: 100%;
+	}
+	.main_banner .slick-prev, 
+	.main_banner .slick-next{
+		display: none !important;
+	}
+	.banner_text{
+		width: 100%;
+		margin: -120px auto;
+	}
+	
+	.main_banner figure img {
+	    min-height: 400px;
+	}
+	.history_service_text p {
+	    margin-bottom: 8px;
+	    height: 50px;
+	    overflow: hidden;
+	}
+	.service_tabs li{
+		margin-bottom: 30px;
+		width: 50%;
+	}
+	.service_text{
+		text-align: center;
+	}
+	.gallery_fig .islamic_title{
+		width: 170px;
+	}
+	.team_fig .islamic_title{
+		width: 150px;
+	}
+	.keo_event_countdown{width: 100%;margin-bottom: 20px;}
+	.keo_event_countdown:before{display: none;}
+	.keo_event_count_location{width: 100%;}
+	.keo_event_count_location>ul>li{width: 100%;margin-bottom: 15px;}
+	.keo_speaker_wrap{margin-bottom: 20px;}
+	.keo_comming_form{width: 100%;}
+	.keo_career_accordian{padding: 0px 0px;}
+	.keo_career_accordian .panel{padding: 0px 15px;}
+	.keo_career_accordian .panel-title{font-size: 18px;}
+}
+
+/*
+=================================================
+	FROM 0PX TO 0PX
+=================================================
+*/
+@media (max-width: 480px){ 
+	.top_logo {
+	    float: left;
+	    width: 74%;
+	}
+	.main_banner figure img {
+	    min-height: 350px;
+	}
+	.banner_text {
+	    margin: -65px auto;
+	}
+	.large_text{
+		line-height: 24px;
+		font-size: 16px;
+		padding: 0 10px;	
+	}
+	.margin_right25 {
+	    margin-right: 10px;
+	}
+	.banner_btn .theme_btn,
+	.banner_text .theme_btn{
+		padding: 9px 30px 9px;
+	}
+	.teach_text h1,
+	.section_heading h2{
+		font-size: 24px;
+	}
+	.col-xs-6{
+		width: 100%;
+	}
+	.service_tabs li:nth-child(4),
+	.service_tabs li:nth-child(2){
+		border-right:none;
+	}
+	.gallery_wrap .section_heading ,
+	.heading02,
+	.history_text,
+	.islamic_text {
+	    text-align: center;
+	}
+	.islamic_text p{
+		font-size: 16px;
+	}
+	.news_fig {
+	    position: relative;
+	    z-index: 1;
+	}
+	.news_text{
+		padding: 25px 10px 0px;
+	}
+	.news_text h4{
+		font-size: 20px;
+	}
+	.team_fig .islamic_title {
+	    width: 236px;
+	}
+	.team_fig .islamic_title span{
+		display: inline-block;
+	}
+	.client_text .event_meta,
+	.client_fig,
+	.section_heading,
+	.client_fig,
+	.all_team.text_right{
+	    text-align: center;
+	}
+	.client_fig figure {
+	    border-radius: 100%;
+	    width: 80px;
+	    height: 80px;
+	    float: none;
+	    display: inline-block;
+	}
+	.client_text .event_meta li,
+	.client_fig h4{
+		float: none;
+		display: inline-block;
+	}
+	.client_wrap .slick-prev, 
+	.client_wrap .slick-next,
+	.event_row .slick-prev, 
+	.event_row .slick-next{
+		display: none !important;
+	}
+	.client_text {
+	    padding: 10px 0px 10px 0px;
+	}
+	.event_list .client_text {
+	    padding: 15px 0px 15px 0px;
+	}
+	.banner_text span:after, .banner_text span:before{bottom: -4px;}
+	.section_heading p{padding: 0px 20px;}
+	.event_det_fig>figure{width: 310px;}
+	.keo_coming_text>h2{font-size: 40px;}
+	.keo_coming_soon_des ul.countdown li:nth-child(even){margin-right: 0px;}
+	.newsletter_field .theme_btn{padding: 10px 6px 10px;}
+}
+/*
+=================================================
+	FROM 0PX TO 0PX
+=================================================
+*/
+@media (max-width: 320px){ 
+	.keo_404_des>img{width: 100%;}
+}

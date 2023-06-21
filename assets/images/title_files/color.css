@@ -1,0 +1,262 @@
+/**
+=============================================================
+[Main Stylesheet]
+
+Template:     Muslim Centeric
+Version:      1.0
+Created:      08.20.2019
+Primary use:  Muslim Centeric and Multipurpose Template
+
+@Author: kode4everyone
+
+* This file contains the styling for the actual theme, this
+is the file you need to edit to change the look of the
+theme.
+
+====================[Table of contents]======================
+
+* 1.0 - Font Color
+* 2.0 - Background Color
+* 3.0 - Border Color
+* 4.0 - Transaction Effect
+* 5.0 - Transform & Rotate Effect
+* 6.0 - Transform Effect
+* 7.0 - Rotation Effect in Positive
+* 8.0 - Rotation Effect in Negative
+* 9.0 - Single Border Color Wrap CSS
+* 10.0 - Content Selection
+
+[Color codes]
+
+Background Color, Text Color, Border Color:	#bcaf7c (Lime)
+
+=============================================================
+**/
+
+/*
+	============================================================
+		Font Color
+	============================================================
+*/
+
+.play_btn:hover,
+.comment_text a:hover,
+.comment_text h6,
+.next_page a:hover,
+.blog_tages .top_icon li a:hover,
+.tags_deta a:hover,
+.blog_detail .blockquote p:before,
+.team_overview h5,
+.team_title.title2 span,
+.team_contact_text a:hover,
+.event_text.project .blog_meta li span,
+.service_det_text a:hover,
+.latest_news_fig:hover .latest_news_text h6,
+.rating_colume > a:hover,
+.rating_colume > a i,
+.sidebar_info_text a:hover,
+.sidebar_info_list span,
+.sidebar_categories li:hover a,
+.Portfolio_colume:hover .more_btn,
+.Portfolio_colume:hover .Portfolio_caption h5,
+.event_fig.listing .event_text .more_btn:hover,
+.event_fig:hover .event_text h5,
+.event_text .blog_meta li a i,
+.blog_fig:hover .blog_text h6,
+.blog_meta li a:hover,
+.news_fig.blog:hover .more_btn,
+.news_fig.blog:hover .news_text h4,
+.breadcrumb > .active,
+.breadcrumb li a,
+.service_tabs li.active a h6,
+.service_tabs li.active a,
+.client_wrap .slick-prev:hover:before, 
+.client_wrap .slick-next:hover:before,
+.news_text .more_btn:hover,
+.team_fig:hover .islamic_title,
+.teach_text h1 span,
+.gallery_fig .islamic_title a,
+.islamic_fig:hover .more_btn,
+.main_banner .slick-prev:hover:before, 
+.main_banner .slick-next:hover:before,
+.namaz_list li a:hover,
+.navigation ul li a:hover,
+.juma_timing,
+.navigation > li > a:hover,
+.keo_contact_form>h4,
+.contact_icon,
+.team_fig:hover .islamic_title>a,
+.keo_speaker_wrap:hover .keo_speaker_des_inner>h6>a,
+.keo_event_countdown li h4,
+.keo_event_count_location>ul>li>i,
+.keo_sidebar_event>span>i,
+.keo_sidebar_event>h5>a:hover,
+.keo_404_des>h4
+{
+	color:#bcaf7c;	
+}
+.main_banner .slick-prev:hover:before, 
+.main_banner .slick-next:hover:before
+{
+	background-color: #bcaf7c;
+}
+.main_banner .slick-prev:hover:before, 
+.main_banner .slick-next:hover:before
+{
+	color: #ffffff;
+}
+/*
+	============================================================
+		Background Color
+	============================================================
+*/
+.team_contact_info span,
+.no-touch .dl-menuwrapper li a:hover,
+.dl-menuwrapper button.dl-active,
+.dl-menuwrapper button:hover,
+.dl-menuwrapper button,
+.project_progress .label,
+.project_progress .bar,
+.tags li a:hover,
+.blockquote p:before,
+.event_date,
+.pagination_list ul li a:hover,
+.newsletter_wrap,
+.client_fig h4,
+.team_fig:hover,
+.islamic_fig:hover .full_border,
+.islamic_title:before,
+.islamic_title,
+.main_banner .slick-prev, 
+.main_banner .slick-next,
+.theme_overlay:before,
+.theme_btn:hover,
+.laguage_list .nice-select .list,
+.top_icon li a:hover,
+.keo_contact_field>input[type="submit"],
+.keo_contact_field>button,
+.keo_speaker_wrap:hover,
+.keo_404_des>a:hover,
+.keo_comming_form>button,
+.keo_price_wrap>a:hover
+{
+	background-color:#443a31;	
+}
+
+/*
+	  ============================================================
+		   Border Color
+	  ============================================================
+*/
+.leave_field input[type="text"]:focus,
+.leave_form textarea:focus,
+.navigation ul li ul,
+.latest_news li:hover,
+.sidebar_categories li:hover,
+.breadcrumb li:before,
+.widget_icon li a:hover,
+.theme_btn:hover,
+.top_icon li a:hover,
+.navigation > li > ul
+{
+	border-color:#bcaf7c;	
+}
+/*
+	  ============================================================
+		   Transaction Effect
+	  ============================================================
+*/
+.play_btn,
+.leave_field input[type="text"],
+.leave_form textarea:focus,
+.leave_form textarea,
+.comment_text a,
+.next_page a,
+.blog_tages .top_icon li a,
+.tags_deta a,
+.team_contact_text a,
+.no-touch .dl-menuwrapper li a,
+.navigation ul li ul,
+.service_det_text a,
+.tags li a,
+.latest_news_text h6,
+.latest_news li,
+.rating_colume > a,
+.sidebar_info_text a,
+.sidebar_categories li a,
+.sidebar_categories li,
+.Portfolio_caption.service,
+.Portfolio_caption h5,
+.Portfolio_colume,
+.event_text h5,
+.event_fig,
+.blog_text h6,
+.blog_fig,
+.blog_meta li a,
+.pagination_list ul li a,
+.news_text h4,
+.news_fig.blog,
+.newsletter_field .theme_btn,
+.service_tabs li.active a h6,
+.service_tabs li.active a,
+.team_fig .islamic_title:after,
+.widget_icon li a,
+.client_fig,
+.client_wrap .slick-prev:before, 
+.client_wrap .slick-next:before,
+.news_text .more_btn,
+.team_fig figure,
+.team_fig .islamic_title span,
+.islamic_title:before,
+.islamic_title,
+.team_fig,
+.gallery_fig,
+.gallery_fig .islamic_title,
+.theme_overlay:before,
+.full_border,
+.more_btn,
+.history_colume,
+.history_colume:before,
+.history_service,
+.history_service_text,
+.main_banner .slick-prev, 
+.main_banner .slick-next,
+.main_banner .slick-prev:before, 
+.main_banner .slick-next:before,
+.theme_btn,
+.namaz_list li a,
+.navigation ul li a,
+.laguage_list .nice-select .list li,
+.top_icon li a,
+.keo_contact_field>input[type="submit"],
+.keo_contact_field>button,
+.keo_contact_info_wrap>ul>li,
+.team_fig .islamic_title>a,
+.keo_speaker_wrap,
+.keo_speaker_wrap img,
+.keo_speaker_des,.keo_speaker_des_inner,.keo_speaker_des_inner>h6,.keo_speaker_des_inner>h6>a,.keo_speaker_des_inner>span,.keo_speaker_des_inner:after,.keo_speaker_des_inner:before,
+.keo_sidebar_event>h5>a,
+.keo_404_des>a,
+.keo_comming_form>button,
+.keo_price_wrap>a,
+.keo_price_wrap
+{
+	transition:all 0.3s ease-in-out;
+	-webkit-transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;
+	-o-transition:all 0.3s ease-in-out;
+	-moz-transition:all 0.3s ease-in-out;	
+}
+
+.theme-color{
+	color:#bcb07c;
+}
+.theme-bg{
+	background-color:#bcaf7c;
+}
+.theme-border{
+	border:1px solid #bcaf7c;
+}
+.bg_dark{
+	background-color: #333333;
+}
