@@ -37,14 +37,18 @@ class CurencySettingScreen extends StatelessWidget {
                             // Use the default value.
                           }),
                           columnSpacing: 30,
-                          headingTextStyle:
-                              myTextStyles.title2.copyWith(color: MyColors.bg),
+                          headingRowHeight: 50,
+                          headingTextStyle: myTextStyles.title2.copyWith(
+                            color: MyColors.bg,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
                           dataTextStyle: myTextStyles.subTitle.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
                           ),
                           decoration: BoxDecoration(
-                              color: MyColors.containerColor,
+                              color: MyColors.bg,
                               borderRadius: BorderRadius.circular(7)),
                           columns: const [
                             DataColumn(label: Expanded(child: Text('الاسم'))),

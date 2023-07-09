@@ -32,19 +32,30 @@ class PersonalInfoScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // const FaIcon(
-                      //   FontAwesomeIcons.penToSquare,
-                      //   size: 15,
-                      //   color: Colors.green,
-                      // ),
-                      // Spacer(),
-                      const CircleAvatar(
-                        radius: 30,
-                        backgroundColor: MyColors.lessBlackColor,
-                        child: FaIcon(
-                          FontAwesomeIcons.house,
-                          color: Colors.white,
-                        ),
+                      Column(
+                        children: [
+                          const CircleAvatar(
+                            radius: 30,
+                            backgroundColor: MyColors.lessBlackColor,
+                            child: FaIcon(
+                              FontAwesomeIcons.house,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            margin: EdgeInsets.only(top: 10, bottom: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border:
+                                    Border.all(color: MyColors.shadowColor)),
+                            child: Text(
+                              "اضافة صوره",
+                              style: myTextStyles.body.copyWith(fontSize: 8),
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -69,16 +80,38 @@ class PersonalInfoScreen extends StatelessWidget {
                     children: [
                       const Spacer(),
                       Text(
-                        "772342424",
+                        "hazemsmawy@gmail.com",
                         style: myTextStyles.title2
                             .copyWith(color: MyColors.secondaryTextColor),
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
-                        FontAwesomeIcons.phone,
+                        FontAwesomeIcons.envelope,
                         size: 15,
                         color: MyColors.secondaryTextColor,
                       )
+                    ],
+                  ),
+                  //SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      Text(
+                        "772342424",
+                        style: myTextStyles.title2
+                            .copyWith(color: MyColors.secondaryTextColor),
+                      ),
+                      const SizedBox(width: 10),
+                      Icon(
+                        Icons.phone_outlined,
+                        size: 17,
+                        color: MyColors.secondaryTextColor,
+                      ),
+                      // const FaIcon(
+                      //   FontAwesomeIcons.phoneFlip,
+                      //   size: 15,
+                      //   color: MyColors.secondaryTextColor,
+                      // )
                     ],
                   ),
                   Row(
@@ -102,11 +135,12 @@ class PersonalInfoScreen extends StatelessWidget {
                             .copyWith(color: MyColors.secondaryTextColor),
                       ),
                       const SizedBox(width: 10),
-                      const FaIcon(
-                        FontAwesomeIcons.locationPin,
-                        size: 15,
+                      const Icon(
+                        Icons.location_pin,
+                        size: 18,
                         color: MyColors.secondaryTextColor,
-                      )
+                      ),
+                      
                     ],
                   )
                 ],

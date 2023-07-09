@@ -19,7 +19,10 @@ class CustomBackBtnWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           12,
         ),
-        color: MyColors.containerColor,
+        // border: Border.all(
+        //   color: MyColors.bg.withOpacity(0.6),
+        // ),
+        color: MyColors.bg,
       ),
       child: Row(
         children: [

@@ -39,14 +39,18 @@ class DetailsScreen extends StatelessWidget {
                             // Use the default value.
                           }),
                           columnSpacing: 10,
-                          headingTextStyle:
-                              myTextStyles.title2.copyWith(color: MyColors.bg),
+                          headingRowHeight: 50,
+                          headingTextStyle: myTextStyles.title2.copyWith(
+                            color: MyColors.bg,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                          ),
                           dataTextStyle: myTextStyles.subTitle.copyWith(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                           decoration: BoxDecoration(
-                              color: MyColors.containerColor,
+                              color: MyColors.bg,
                               borderRadius: BorderRadius.circular(7)),
                           columns: const [
                             DataColumn(label: Text('التأريخ')),
@@ -54,7 +58,7 @@ class DetailsScreen extends StatelessWidget {
                             DataColumn(
                                 label: Center(
                               child: Text(
-                                'تفاصيل',
+                                '     تفاصيل',
                               ),
                             )),
                             DataColumn(
@@ -86,7 +90,8 @@ class DetailsScreen extends StatelessWidget {
                                 size: 18,
                               )),
                               DataCell(Text(
-                                '1000',
+                                '1000  ',
+                                textAlign: TextAlign.right,
                                 style: myTextStyles.title2,
                               )),
                             ]),
@@ -109,6 +114,7 @@ class DetailsScreen extends StatelessWidget {
                               )),
                               DataCell(Text(
                                 '1000',
+                                textAlign: TextAlign.left,
                                 style: myTextStyles.title2,
                               )),
                             ]),
@@ -144,6 +150,7 @@ class DetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
                   border: Border.all(color: MyColors.shadowColor),
+                  color: MyColors.bg,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -158,10 +165,11 @@ class DetailsScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: MyColors.shadowColor,
-                          )),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: MyColors.shadowColor,
+                        ),
+                      ),
                       child: const FaIcon(
                         FontAwesomeIcons.chevronDown,
                         color: Colors.red,
@@ -207,6 +215,7 @@ class DetailsSammaryWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(13),
           border: Border.all(color: MyColors.shadowColor),
+          color: MyColors.bg,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,

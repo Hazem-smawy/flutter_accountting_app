@@ -5,7 +5,6 @@ import 'package:account_app/widget/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/screen/new_account/new_account.dart';
@@ -17,6 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
+      backgroundColor: MyColors.containerColor,
       endDrawer: const MyDrawerView(),
       body: SafeArea(
         child: Column(
@@ -24,20 +24,21 @@ class HomeScreen extends StatelessWidget {
             MyAppBarWidget(globalKey: _globalKey),
             const SizedBox(height: 10),
             const Padding(
-              padding:  EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
               child: _homeSammaryWidget(),
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ListView.builder(
-                  itemCount: 20,
+                  itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     return HomeRowView(
-                        color: index % 2 == 0 ? Colors.red : Colors.green,
-                        icon: index % 2 == 0
-                            ? FontAwesomeIcons.chevronDown
-                            : FontAwesomeIcons.chevronUp);
+                      color: index % 2 == 0 ? Colors.red : Colors.green,
+                      icon: index % 2 == 0
+                          ? FontAwesomeIcons.chevronDown
+                          : FontAwesomeIcons.chevronUp,
+                    );
                   },
                 ),
               ),
@@ -48,7 +49,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         backgroundColor: MyColors.primaryColor,
-        onPressed: () => Get.to(() => const NewAccountScreen()),
+        onPressed: () {
+          Get.bottomSheet(NewAccountScreen());
+        },
         child: const FaIcon(FontAwesomeIcons.plus),
       ),
     );

@@ -61,7 +61,7 @@ class AccGroupSettingScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  // color: MyColors.bg,
+                  color: MyColors.bg,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,7 +84,7 @@ class AccGroupSettingScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const Divider(),
+              //const Divider(),
             ],
           ),
         ),

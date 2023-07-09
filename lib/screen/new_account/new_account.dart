@@ -42,16 +42,22 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   NewCustomerSheet mySheet = Get.put(NewCustomerSheet());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return Container(
+      constraints: BoxConstraints(minHeight: Get.height / 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        color: MyColors.bg,
+      ),
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CustomBackBtnWidget(
-                title: "",
-              ),
+              // const CustomBackBtnWidget(
+              //   title: "",
+              // ),
               const SizedBox(height: 20),
               Row(
                 children: [

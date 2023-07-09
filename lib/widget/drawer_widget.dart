@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -19,8 +18,7 @@ class MyDrawerView extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         height: Get.height,
-        margin:
-            const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+        margin: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: MyColors.lessBlackColor,
@@ -71,32 +69,34 @@ class MyDrawerView extends StatelessWidget {
                     title: " عنا",
                   ),
                   const DrawerItemWidget(
-                    icon: FontAwesomeIcons.question,
-                    title: " الاسئله الشائعه",
-                  ),
-                  const DrawerItemWidget(
                     icon: FontAwesomeIcons.phone,
                     title: "الاتصال والدعم",
                   ),
+                  const DrawerItemWidget(
+                    icon: FontAwesomeIcons.question,
+                    title: " الاسئله الشائعه",
+                  ),
+
                   //Spacer(),
                   Container(
                     constraints: BoxConstraints(
-                      maxHeight: 300,
+                      maxHeight: 200,
                     ),
                   ),
                   ListTile(
+                    contentPadding: EdgeInsets.only(right: 20),
                     title: Text(
                       "خروج",
                       textAlign: TextAlign.right,
                       style: myTextStyles.title2.copyWith(
-                        color: Colors.red.withOpacity(0.8),
+                        color: MyColors.secondaryTextColor,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    trailing: FaIcon(
+                    trailing: const FaIcon(
                       FontAwesomeIcons.arrowRightToBracket,
                       size: 20,
-                      color: Colors.red.withOpacity(0.8),
+                      color: MyColors.secondaryTextColor,
                     ),
                   ),
                   SizedBox(height: 40),

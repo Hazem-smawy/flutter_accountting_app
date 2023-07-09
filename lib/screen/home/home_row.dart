@@ -1,5 +1,5 @@
-
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/screen/details/details.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
@@ -23,7 +23,8 @@ class HomeRowView extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: MyColors.containerColor,
+        color: MyColors.bg,
+        // boxShadow: [myShadow.blackShadow],
       ),
       child: GestureDetector(
         onTap: () => Get.to(() => const DetailsScreen()),

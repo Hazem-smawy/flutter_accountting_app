@@ -18,7 +18,7 @@ class SettingScreen extends StatelessWidget {
     return Container(
       color: MyColors.lessBlackColor,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         body: SafeArea(
           bottom: false,
           child: Column(
@@ -30,32 +30,45 @@ class SettingScreen extends StatelessWidget {
                 // ),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 30),
-                        Expanded(
-                            child: Text(
-                          "الا عدادات",
-                          textAlign: TextAlign.center,
-                          style: myTextStyles.title1.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 22),
-                        )),
-                        GestureDetector(
-                          onTap: () => Get.back(),
-                          child: const FaIcon(
-                            FontAwesomeIcons.arrowRightLong,
-                            color: Colors.white54,
-                          ),
-                        )
-                      ],
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: MyColors.lessBlackColor,
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 30),
+                          Expanded(
+                              child: Text(
+                            "الا عدادات",
+                            textAlign: TextAlign.center,
+                            style: myTextStyles.title1.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 22),
+                          )),
+                          GestureDetector(
+                            onTap: () => Get.back(),
+                            child: const FaIcon(
+                              FontAwesomeIcons.arrowRightLong,
+                              color: Colors.white54,
+                              size: 20,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () => Get.to(() => PersonalInfoScreen()),
-                      child: Padding(
+                      child: Container(
                         padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: MyColors.bg,
+                        ),
                         child: Row(
                           children: [
                             const FaIcon(
@@ -70,7 +83,7 @@ class SettingScreen extends StatelessWidget {
                                 Text(
                                   "name goes",
                                   style: myTextStyles.title1.copyWith(
-                                    color: Colors.white70,
+                                    // color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -78,7 +91,7 @@ class SettingScreen extends StatelessWidget {
                                 Text(
                                   "hazemsmawy@gmail.com",
                                   style: myTextStyles.title1.copyWith(
-                                    color: Colors.white54,
+                                    //  color: Colors.white54,
                                     fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -130,9 +143,10 @@ class SettingScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   decoration: const BoxDecoration(
-                    color: MyColors.bg,
-                  ),
+                      // color: MyColors.bg,
+                      ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
@@ -180,7 +194,7 @@ class SettingScreen extends StatelessWidget {
                             "الليلي",
                             textAlign: TextAlign.right,
                             style: myTextStyles.title2.copyWith(
-                              fontSize: 18,
+                              fontSize: 14,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -213,47 +227,56 @@ class SettingItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5.0),
-      child: ListTile(
-        onTap: () {
-          if (onPress != null) {
-            onPress!();
-          }
-        },
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: FaIcon(
-            FontAwesomeIcons.chevronLeft,
-            size: 15,
-            color: Colors.black45,
-          ),
-        ),
-        trailing: Container(
-          width: 30,
-          height: 30,
-          padding: const EdgeInsets.all(8),
+    return GestureDetector(
+      onTap: () {
+        if (onPress != null) {
+          onPress!();
+        }
+      },
+      child: Container(
+          margin: const EdgeInsets.only(top: 5.0),
+          padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: MyColors.lessBlackColor,
+            borderRadius: BorderRadius.circular(12),
+            color: MyColors.bg,
           ),
-          child: Center(
-            child: FaIcon(
-              icon,
-              size: 15,
-              color: Colors.white,
+          child: Row(children: [
+            SizedBox(width: 5),
+            const Padding(
+              padding: EdgeInsets.all(5),
+              child: FaIcon(
+                FontAwesomeIcons.chevronLeft,
+                size: 15,
+                color: Colors.black45,
+              ),
             ),
-          ),
-        ),
-        title: Text(
-          title,
-          textAlign: TextAlign.right,
-          style: myTextStyles.title2.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-      ),
+            Spacer(),
+            Text(
+              title,
+              textAlign: TextAlign.right,
+              style: myTextStyles.title2.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            SizedBox(width: 10),
+            Container(
+              width: 30,
+              height: 30,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: MyColors.lessBlackColor.withOpacity(0.8),
+              ),
+              child: Center(
+                child: FaIcon(
+                  icon,
+                  size: 15,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ])),
     );
   }
 }
