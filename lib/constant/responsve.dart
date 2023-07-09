@@ -8,7 +8,6 @@ class Responsive extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     isMobile = true;
     if (Get.width > 700) {
       isMobile = false;

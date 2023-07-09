@@ -79,12 +79,12 @@ class MyDrawerView extends StatelessWidget {
 
                   //Spacer(),
                   Container(
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxHeight: 200,
                     ),
                   ),
                   ListTile(
-                    contentPadding: EdgeInsets.only(right: 20),
+                    contentPadding: const EdgeInsets.only(right: 20),
                     title: Text(
                       "خروج",
                       textAlign: TextAlign.right,
@@ -99,7 +99,7 @@ class MyDrawerView extends StatelessWidget {
                       color: MyColors.secondaryTextColor,
                     ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

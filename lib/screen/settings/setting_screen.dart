@@ -31,8 +31,10 @@ class SettingScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 1),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         color: MyColors.lessBlackColor,
@@ -45,9 +47,10 @@ class SettingScreen extends StatelessWidget {
                             "الا عدادات",
                             textAlign: TextAlign.center,
                             style: myTextStyles.title1.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 22),
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
                           )),
                           GestureDetector(
                             onTap: () => Get.back(),
@@ -62,9 +65,14 @@ class SettingScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(
-                      onTap: () => Get.to(() => PersonalInfoScreen()),
+                      onTap: () => Get.to(() => const PersonalInfoScreen()),
                       child: Container(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          right: 8,
+                          bottom: 12,
+                          top: 8,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: MyColors.bg,
@@ -81,10 +89,10 @@ class SettingScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "name goes",
+                                  "حازم السماوي",
                                   style: myTextStyles.title1.copyWith(
                                     // color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
@@ -92,7 +100,7 @@ class SettingScreen extends StatelessWidget {
                                   "hazemsmawy@gmail.com",
                                   style: myTextStyles.title1.copyWith(
                                     //  color: Colors.white54,
-                                    fontSize: 14,
+                                    fontSize: 10,
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
@@ -143,7 +151,7 @@ class SettingScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: const BoxDecoration(
                       // color: MyColors.bg,
                       ),
@@ -153,24 +161,27 @@ class SettingScreen extends StatelessWidget {
                       children: [
                         const SizedBox(height: 15),
                         SettingItemWidget(
-                          onPress: () => Get.to(() => CustomerSettingScreen()),
+                          onPress: () =>
+                              Get.to(() => const CustomerSettingScreen()),
                           icon: FontAwesomeIcons.a,
                           title: "كل العملاء",
                         ),
                         SettingItemWidget(
-                          onPress: () => Get.to(() => CurencySettingScreen()),
+                          onPress: () =>
+                              Get.to(() => const CurencySettingScreen()),
                           icon: FontAwesomeIcons.dollarSign,
                           title: "العملات",
                         ),
                         SettingItemWidget(
-                          onPress: () => Get.to(() => AccGroupSettingScreen()),
+                          onPress: () =>
+                              Get.to(() => const AccGroupSettingScreen()),
                           icon: FontAwesomeIcons.fileCirclePlus,
                           title: " التصنيفات",
                         ),
 
                         //theme
                         const SizedBox(height: 30),
-                        Spacer(),
+                        const Spacer(),
                         ListTile(
                           leading: Switch.adaptive(
                               value: false, onChanged: (newValue) {}),
@@ -235,13 +246,13 @@ class SettingItemWidget extends StatelessWidget {
       },
       child: Container(
           margin: const EdgeInsets.only(top: 5.0),
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: MyColors.bg,
           ),
           child: Row(children: [
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
             const Padding(
               padding: EdgeInsets.all(5),
               child: FaIcon(
@@ -250,7 +261,7 @@ class SettingItemWidget extends StatelessWidget {
                 color: Colors.black45,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               title,
               textAlign: TextAlign.right,
@@ -259,7 +270,7 @@ class SettingItemWidget extends StatelessWidget {
                 fontWeight: FontWeight.normal,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               width: 30,
               height: 30,

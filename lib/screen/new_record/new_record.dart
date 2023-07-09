@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/widget/custom_back_button_widget.dart';
 import 'package:account_app/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -63,7 +62,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                       child: Container(
                     height: 56,
-                    padding: EdgeInsets.only(right: 10),
+                    padding:const EdgeInsets.only(right: 10),
                     alignment: Alignment.centerRight,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -104,9 +103,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                       child: CustomTextFieldWidget(textHint: "التفاصل")),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
-                children: [
+                children:const [
                   Flexible(
                       child: CustomBtnWidget(color: Colors.red, label: "له")),
                   SizedBox(width: 10),
@@ -115,7 +114,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                           CustomBtnWidget(color: Colors.green, label: "عليه"))
                 ],
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -125,7 +124,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 }
 
 class NewCustomerSheet extends StatelessWidget {
-  NewCustomerSheet({super.key});
+  const NewCustomerSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

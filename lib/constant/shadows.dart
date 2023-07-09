@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class myShadow {
   static final blackShadow = BoxShadow(
     color: MyColors.shadowColor,
-    offset: Offset(1, 1),
+    offset: const Offset(1, 1),
     blurRadius: 10,
 blurStyle: BlurStyle.solid,
   );

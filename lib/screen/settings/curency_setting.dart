@@ -2,6 +2,9 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/custom_back_button_widget.dart';
 import 'package:account_app/widget/custom_button_widget.dart';
+import 'package:account_app/widget/custom_delete_btn_widget.dart';
+import 'package:account_app/widget/custom_dialog.dart';
+import 'package:account_app/widget/custom_sheet_back_btn.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,7 +27,7 @@ class CurencySettingScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(7),
+                      borderRadius: BorderRadius.circular(12),
                       child: Directionality(
                         textDirection: TextDirection.rtl,
                         child: DataTable(
@@ -49,8 +52,9 @@ class CurencySettingScreen extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                               color: MyColors.bg,
-                              borderRadius: BorderRadius.circular(7)),
+                              borderRadius: BorderRadius.circular(12)),
                           columns: const [
+                            DataColumn(label: SizedBox(width: 20)),
                             DataColumn(label: Expanded(child: Text('الاسم'))),
                             DataColumn(label: Text('الرمز')),
                             DataColumn(
@@ -68,12 +72,94 @@ class CurencySettingScreen extends StatelessWidget {
                           ],
                           rows: [
                             DataRow(cells: [
+                              DataCell(GestureDetector(
+                                onTap: () => CustomDialog.showDialog(
+                                  title: "تعديل",
+                                  description:
+                                      "هل انت متاكد من تعديل هذه العمله",
+                                  color: Colors.green,
+                                  icon: FontAwesomeIcons.penToSquare,
+                                ),
+                                child: const FaIcon(
+                                  FontAwesomeIcons.penToSquare,
+                                  size: 17,
+                                  color: MyColors.secondaryTextColor,
+                                ),
+                              )),
+                              DataCell(Text(
+                                'محلي',
+                                style: myTextStyles.title2,
+                              )),
+                              DataCell(Text(
+                                '\$',
+                                style: myTextStyles.title2,
+                              )),
+                              const DataCell(Text(
+                                '40',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.clip,
+                                textDirection: TextDirection.rtl,
+                              )),
+                              const DataCell(CircleAvatar(
+                                backgroundColor: Colors.red,
+                                radius: 5,
+                              )),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(GestureDetector(
+                                onTap: () => CustomDialog.showDialog(
+                                  title: "تعديل",
+                                  description:
+                                      "هل انت متاكد من تعديل هذه العمله",
+                                  color: Colors.green,
+                                  icon: FontAwesomeIcons.penToSquare,
+                                ),
+                                child: const FaIcon(
+                                  FontAwesomeIcons.penToSquare,
+                                  size: 17,
+                                  color: MyColors.secondaryTextColor,
+                                ),
+                              )),
                               DataCell(Text(
                                 'دولار',
                                 style: myTextStyles.title2,
                               )),
                               DataCell(Text(
                                 '\$',
+                                style: myTextStyles.title2,
+                              )),
+                              const DataCell(Text(
+                                '40',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.clip,
+                                textDirection: TextDirection.rtl,
+                              )),
+                              const DataCell(CircleAvatar(
+                                backgroundColor: Colors.red,
+                                radius: 5,
+                              )),
+                            ]),
+                            DataRow(cells: [
+                              DataCell(GestureDetector(
+                                onTap: () => CustomDialog.showDialog(
+                                  title: "تعديل",
+                                  description:
+                                      "هل انت متاكد من تعديل هذه العمله",
+                                  color: Colors.green,
+                                  icon: FontAwesomeIcons.penToSquare,
+                                ),
+                                child: const FaIcon(
+                                  FontAwesomeIcons.penToSquare,
+                                  size: 17,
+                                  color: MyColors.secondaryTextColor,
+                                ),
+                              )),
+                              DataCell(Text(
+                                'ريال',
+                                style: myTextStyles.title2,
+                              )),
+                              DataCell(Text(
+                                'ري',
                                 style: myTextStyles.title2,
                               )),
                               const DataCell(Text(
@@ -100,7 +186,7 @@ class CurencySettingScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.bottomSheet(const NewCurencySheet());
+          Get.bottomSheet(const NewCurencySheet(), isScrollControlled: true);
         },
         backgroundColor: MyColors.primaryColor,
         child: const FaIcon(FontAwesomeIcons.plus),
@@ -115,14 +201,18 @@ class NewCurencySheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+      //margin: const EdgeInsets.only(top: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         color: MyColors.bg,
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 20),
+          const CustomSheetBackBtnWidget(),
+          const SizedBox(height: 30),
           const FaIcon(
             FontAwesomeIcons.dollarSign,
             size: 40,
@@ -153,9 +243,9 @@ class NewCurencySheet extends StatelessWidget {
             children: [
               SizedBox(
                   width: Get.width / 3,
-                  child: CustomTextFieldWidget(textHint: 'رمز العمله')),
-              SizedBox(width: 10),
-              Expanded(child: const CustomTextFieldWidget(textHint: "الاسم")),
+                  child: const CustomTextFieldWidget(textHint: 'رمز العمله')),
+              const SizedBox(width: 10),
+              const Expanded(child: CustomTextFieldWidget(textHint: "الاسم")),
             ],
           ),
           const SizedBox(height: 20),
@@ -170,7 +260,12 @@ class NewCurencySheet extends StatelessWidget {
                   child: CustomBtnWidget(
                       color: MyColors.primaryColor, label: "اضافه"))
             ],
-          )
+          ),
+          const SizedBox(height: 20),
+          const CustomDeleteBtnWidget(
+            lable: "حذف العمله",
+          ),
+          const SizedBox(height: 30),
         ],
       ),
     );

@@ -75,6 +75,7 @@ class CustomDialog {
       middleText:
           "تعني المحاسبة تتبع جميع المعاملات المالية المتعلقة بالعمل، والتي تتضمن تبويب المدخلات وتسجيلها وتلخيصها وتحليلها وإبلاغ ",
       content: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //Icon(Icons.dele),
           FaIcon(
@@ -82,7 +83,7 @@ class CustomDialog {
             color: MyColors.secondaryTextColor,
             size: 50,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(title,
               textAlign: TextAlign.center,
               style: myTextStyles.title1.copyWith(
@@ -99,15 +100,13 @@ class CustomDialog {
               style: myTextStyles.body,
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
         ],
       ),
       cancel: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            minimumSize: Size.fromHeight(50),
+            minimumSize: const Size.fromHeight(50),
             backgroundColor: color,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -120,11 +119,14 @@ class CustomDialog {
           )),
       confirm: Padding(
         padding: const EdgeInsets.only(bottom: 20, top: 3),
-        child: Text(
-          "الغاء",
-          style: myTextStyles.subTitle.copyWith(
-            color: MyColors.secondaryTextColor,
-            fontWeight: FontWeight.normal,
+        child: GestureDetector(
+          onTap: () => Get.back(),
+          child: Text(
+            "الغاء",
+            style: myTextStyles.subTitle.copyWith(
+              color: MyColors.secondaryTextColor,
+              fontWeight: FontWeight.normal,
+            ),
           ),
         ),
       ),

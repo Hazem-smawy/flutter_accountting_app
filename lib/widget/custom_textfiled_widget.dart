@@ -13,9 +13,9 @@ class CustomTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 57,
+      height: 55,
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: MyColors.containerSecondColor,

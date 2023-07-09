@@ -3,6 +3,7 @@ import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/custom_back_button_widget.dart';
 import 'package:account_app/widget/custom_button_widget.dart';
+import 'package:account_app/widget/custom_sheet_back_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -43,9 +44,9 @@ class PersonalInfoScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
-                            margin: EdgeInsets.only(top: 10, bottom: 5),
+                            margin: const EdgeInsets.only(top: 10, bottom: 5),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 border:
@@ -75,14 +76,16 @@ class PersonalInfoScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       const Spacer(),
                       Text(
                         "hazemsmawy@gmail.com",
-                        style: myTextStyles.title2
-                            .copyWith(color: MyColors.secondaryTextColor),
+                        style: myTextStyles.title2.copyWith(
+                          color: MyColors.secondaryTextColor,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
@@ -92,17 +95,19 @@ class PersonalInfoScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  //SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       const Spacer(),
                       Text(
                         "772342424",
-                        style: myTextStyles.title2
-                            .copyWith(color: MyColors.secondaryTextColor),
+                        style: myTextStyles.title2.copyWith(
+                          color: MyColors.secondaryTextColor,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       const SizedBox(width: 10),
-                      Icon(
+                      const Icon(
                         Icons.phone_outlined,
                         size: 17,
                         color: MyColors.secondaryTextColor,
@@ -114,13 +119,16 @@ class PersonalInfoScreen extends StatelessWidget {
                       // )
                     ],
                   ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       const SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          Get.bottomSheet(const EditPersonalInfoSheet(),
-                              isScrollControlled: true);
+                          Get.bottomSheet(
+                            const EditPersonalInfoSheet(),
+                            isScrollControlled: true,
+                          );
                         },
                         child: const FaIcon(
                           FontAwesomeIcons.penToSquare,
@@ -131,8 +139,10 @@ class PersonalInfoScreen extends StatelessWidget {
                       const Spacer(),
                       Text(
                         "ibb-mobile",
-                        style: myTextStyles.title2
-                            .copyWith(color: MyColors.secondaryTextColor),
+                        style: myTextStyles.title2.copyWith(
+                          color: MyColors.secondaryTextColor,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       const Icon(
@@ -140,7 +150,6 @@ class PersonalInfoScreen extends StatelessWidget {
                         size: 18,
                         color: MyColors.secondaryTextColor,
                       ),
-                      
                     ],
                   )
                 ],
@@ -161,28 +170,30 @@ class EditPersonalInfoSheet extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: Container(
-        margin: EdgeInsets.only(top: Get.width / 4),
-        decoration: BoxDecoration(
+        // margin: EdgeInsets.only(top: Get.width / 4),
+        decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15), topRight: Radius.circular(15)),
             color: MyColors.bg),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 7,
-                width: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: MyColors.blackColor,
-                ),
-              ),
-              const SizedBox(height: 50),
+              CustomSheetBackBtnWidget(),
+              // Container(
+              //   height: 7,
+              //   width: 70,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(10),
+              //     color: MyColors.secondaryTextColor,
+              //   ),
+              // ),
+              const SizedBox(height: 30),
               Stack(
                 alignment: AlignmentDirectional.bottomEnd,
-                children: [
-                  const CircleAvatar(
+                children: const [
+                  CircleAvatar(
                     radius: 35,
                     backgroundColor: MyColors.lessBlackColor,
                     child: FaIcon(
@@ -190,7 +201,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const Positioned(
+                  Positioned(
                       child: CircleAvatar(
                     radius: 12,
                     backgroundColor: MyColors.primaryColor,
@@ -217,18 +228,19 @@ class EditPersonalInfoSheet extends StatelessWidget {
                   textHint: "العنوان", icon: FontAwesomeIcons.locationPin),
               const SizedBox(height: 20),
               Row(
-                children: [
-                  const Flexible(
+                children: const [
+                  Flexible(
                       child: CustomBtnWidget(
                           color: MyColors.secondaryTextColor, label: "الغاء")),
-                  const SizedBox(width: 10),
-                  const Flexible(
+                  SizedBox(width: 10),
+                  Flexible(
                       child: CustomBtnWidget(
                     color: MyColors.primaryColor,
                     label: 'اضافه',
                   ))
                 ],
-              )
+              ),
+              SizedBox(height: 20),
             ],
           ),
         ),

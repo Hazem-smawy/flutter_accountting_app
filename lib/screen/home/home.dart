@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: _homeSammaryWidget(),
+              child: HomePrivateSammaryWidget(),
             ),
             Expanded(
               child: Padding(
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: MyColors.primaryColor,
         onPressed: () {
-          Get.bottomSheet(NewAccountScreen());
+          Get.bottomSheet(const NewAccountScreen());
         },
         child: const FaIcon(FontAwesomeIcons.plus),
       ),
@@ -58,8 +58,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _homeSammaryWidget extends StatelessWidget {
-  const _homeSammaryWidget({
+class HomePrivateSammaryWidget extends StatelessWidget {
+  const HomePrivateSammaryWidget({
     super.key,
   });
 
