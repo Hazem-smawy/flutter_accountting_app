@@ -25,7 +25,7 @@ class DetailsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               ClipRRect(
-                borderRadius: BorderRadius.circular(7),
+                borderRadius: BorderRadius.circular(12),
                 child: Row(
                   children: [
                     Expanded(
@@ -39,10 +39,11 @@ class DetailsScreen extends StatelessWidget {
                             // Use the default value.
                           }),
                           columnSpacing: 10,
-                          headingRowHeight: 50,
+                          headingRowHeight: 45,
+                          dataRowHeight: 40,
                           headingTextStyle: myTextStyles.title2.copyWith(
                             color: MyColors.bg,
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
                           dataTextStyle: myTextStyles.subTitle.copyWith(
@@ -51,7 +52,7 @@ class DetailsScreen extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                               color: MyColors.bg,
-                              borderRadius: BorderRadius.circular(7)),
+                              borderRadius: BorderRadius.circular(12)),
                           columns: const [
                             DataColumn(label: Text('التأريخ')),
                             DataColumn(label: Text('المبلغ')),
@@ -108,6 +109,29 @@ class DetailsScreen extends StatelessWidget {
                                 textDirection: TextDirection.rtl,
                               )),
                               const DataCell(FaIcon(
+                                FontAwesomeIcons.chevronUp,
+                                color: Colors.red,
+                                size: 18,
+                              )),
+                              DataCell(Text(
+                                '1000  ',
+                                textAlign: TextAlign.right,
+                                style: myTextStyles.title2,
+                              )),
+                            ]),
+                            DataRow(cells: [
+                              const DataCell(Text('2020-2-4')),
+                              DataCell(Text(
+                                '3000',
+                                style: myTextStyles.title2,
+                              )),
+                              const DataCell(Text(
+                                'إب هي مدينة ',
+                                textAlign: TextAlign.right,
+                                overflow: TextOverflow.clip,
+                                textDirection: TextDirection.rtl,
+                              )),
+                              const DataCell(FaIcon(
                                 FontAwesomeIcons.chevronDown,
                                 color: Colors.green,
                                 size: 18,
@@ -133,7 +157,7 @@ class DetailsScreen extends StatelessWidget {
                       title: "3000",
                       subTitle: "له",
                       color: Colors.red),
-                  SizedBox(width: 10),
+                  SizedBox(width: 5),
                   DetailsSammaryWidget(
                       icon: FontAwesomeIcons.arrowUp,
                       title: "3000",
@@ -146,7 +170,7 @@ class DetailsScreen extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(13),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
                   border: Border.all(color: MyColors.shadowColor),
@@ -161,7 +185,8 @@ class DetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Container(
-                      width: 35,
+                      width: 30,
+                      height: 30,
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
@@ -170,15 +195,18 @@ class DetailsScreen extends StatelessWidget {
                           color: MyColors.shadowColor,
                         ),
                       ),
-                      child: const FaIcon(
-                        FontAwesomeIcons.chevronDown,
-                        color: Colors.red,
-                        size: 20,
+                      child: const Center(
+                        child: FaIcon(
+                          FontAwesomeIcons.chevronDown,
+                          color: Colors.red,
+                          size: 15,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(height: 9),
             ],
           ),
         ),
