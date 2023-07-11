@@ -1,9 +1,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/widget/custom_back_button_widget.dart';
-import 'package:account_app/widget/custom_button_widget.dart';
-import 'package:account_app/widget/custom_sheet_back_btn.dart';
+import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';

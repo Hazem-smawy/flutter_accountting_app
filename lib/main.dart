@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/theme.dart';
 import 'package:account_app/screen/home/home.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: MyColors.containerColor,
       ),
+     // theme: AppThemes.darkTheme,
       home: HomeScreen(),
     );
   }
@@ -35,7 +37,7 @@ class MyBoxess extends StatelessWidget {
           children: [
             Center(
               child: ElevatedButton(
-                  onPressed: () {             
+                  onPressed: () {
                     CustomDialog.customSnackBar('', '');
                   },
                   child: const Text("click here")),

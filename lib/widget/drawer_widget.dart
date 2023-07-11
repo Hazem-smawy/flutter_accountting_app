@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +13,11 @@ class MyDrawerView extends StatelessWidget {
   const MyDrawerView({
     super.key,
   });
+
+  void closeApp() {
+    exit(0);
+    //SystemNavigator.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +93,11 @@ class MyDrawerView extends StatelessWidget {
                   ),
                   ListTile(
                     contentPadding: const EdgeInsets.only(right: 20),
+                    onTap: () {
+                      SystemNavigator.pop();
+                      // closeApp();
+                      // print("h");
+                    },
                     title: Text(
                       "خروج",
                       textAlign: TextAlign.right,
