@@ -35,6 +35,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 
   _showBottomSheet() {
     Get.bottomSheet(mySheet,
+        isScrollControlled: true,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
   }
 

@@ -41,11 +41,11 @@ class CurencySettingScreen extends StatelessWidget {
                           headingRowHeight: 50,
                           headingTextStyle: myTextStyles.title2.copyWith(
                             color: MyColors.bg,
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                           dataTextStyle: myTextStyles.subTitle.copyWith(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                           decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class CurencySettingScreen extends StatelessWidget {
                             DataColumn(
                                 label: Center(
                               child: Text(
-                                'عدد الحسابات',
+                                ' الحسابات',
                               ),
                             )),
                             DataColumn(

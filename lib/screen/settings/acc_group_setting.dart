@@ -217,7 +217,7 @@ class NewAccGroupSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 60),
+      // margin: const EdgeInsets.only(top: 60),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(

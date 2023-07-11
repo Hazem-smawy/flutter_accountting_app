@@ -61,7 +61,10 @@ class HomeRowView extends StatelessWidget {
             const SizedBox(width: 15),
             GestureDetector(
               onTap: () {
-                Get.bottomSheet(const NewRecordScreen());
+                Get.bottomSheet(const NewRecordScreen(),
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)));
               },
               child: const FaIcon(FontAwesomeIcons.plus, size: 20),
             )

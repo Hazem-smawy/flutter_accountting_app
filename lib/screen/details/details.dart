@@ -20,7 +20,7 @@ class DetailsScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const CustomBackBtnWidget (
+              const CustomBackBtnWidget(
                 title: "حازم السماوي",
               ),
               const SizedBox(height: 10),
@@ -73,29 +73,33 @@ class DetailsScreen extends StatelessWidget {
                             ),
                           ],
                           rows: [
-                            DataRow(cells: [
-                              const DataCell(Text('2020-2-4')),
-                              DataCell(Text(
-                                '3000',
-                                style: myTextStyles.title2,
-                              )),
-                              const DataCell(Text(
-                                'إب هي مدينة ',
-                                textAlign: TextAlign.right,
-                                overflow: TextOverflow.clip,
-                                textDirection: TextDirection.rtl,
-                              )),
-                              const DataCell(FaIcon(
-                                FontAwesomeIcons.chevronDown,
-                                color: Colors.green,
-                                size: 18,
-                              )),
-                              DataCell(Text(
-                                '1000  ',
-                                textAlign: TextAlign.right,
-                                style: myTextStyles.title2,
-                              )),
-                            ]),
+                            DataRow(
+                                onLongPress: () {
+                                  Get.dialog(const DetialInfoSheet());
+                                },
+                                cells: [
+                                  const DataCell(Text('2020-2-4')),
+                                  DataCell(Text(
+                                    '3000',
+                                    style: myTextStyles.title2,
+                                  )),
+                                  const DataCell(Text(
+                                    'إب هي مدينة ',
+                                    textAlign: TextAlign.right,
+                                    overflow: TextOverflow.clip,
+                                    textDirection: TextDirection.rtl,
+                                  )),
+                                  const DataCell(FaIcon(
+                                    FontAwesomeIcons.chevronDown,
+                                    color: Colors.green,
+                                    size: 18,
+                                  )),
+                                  DataCell(Text(
+                                    '1000  ',
+                                    textAlign: TextAlign.right,
+                                    style: myTextStyles.title2,
+                                  )),
+                                ]),
                             DataRow(cells: [
                               const DataCell(Text('2020-2-4')),
                               DataCell(Text(
@@ -214,7 +218,10 @@ class DetailsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.primaryColor,
         onPressed: () {
-          Get.bottomSheet(const NewRecordScreen());
+          Get.bottomSheet(
+            const NewRecordScreen(),
+            isScrollControlled: true,
+          );
         },
         child: const FaIcon(FontAwesomeIcons.plus),
       ),
@@ -263,7 +270,7 @@ class DetailsSammaryWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  '$subTitle',
+                  subTitle,
                   style: myTextStyles.body,
                 )
               ],
@@ -277,6 +284,192 @@ class DetailsSammaryWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DetialInfoSheet extends StatelessWidget {
+  const DetialInfoSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 50,
+        vertical: 100,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: MyColors.containerColor,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "حازم السماوي",
+                style: myTextStyles.title1,
+              ),
+              //Divider(),
+              const SizedBox(height: 25),
+              Row(
+                children: [
+                  const SizedBox(width: 5),
+                  const FaIcon(
+                    FontAwesomeIcons.chevronDown,
+                    size: 17,
+                    color: Colors.red,
+                  ),
+                  const Spacer(),
+                  Text(
+                    "3000",
+                    style: myTextStyles.title2,
+                  ),
+                  const Spacer(),
+                  const InfoTitleWidget(
+                    title: "المبلغ",
+                    icon: FontAwesomeIcons.moneyBill,
+                  ),
+                ],
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "ر.س",
+                    style: myTextStyles.subTitle
+                        .copyWith(color: MyColors.blackColor),
+                  ),
+                  Text(
+                    "دولار",
+                    style: myTextStyles.subTitle,
+                  ),
+                  const InfoTitleWidget(
+                    title: "العمله",
+                    icon: FontAwesomeIcons.dollarSign,
+                  ),
+                ],
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "2022-06-22",
+                    style: myTextStyles.subTitle
+                        .copyWith(color: MyColors.blackColor),
+                  ),
+                  const InfoTitleWidget(
+                    title: "التاريخ",
+                    icon: FontAwesomeIcons.calendarCheck,
+                  ),
+                ],
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "11:00 pm",
+                    style: myTextStyles.subTitle
+                        .copyWith(color: MyColors.blackColor),
+                  ),
+                  const InfoTitleWidget(
+                    title: "الوقت",
+                    icon: FontAwesomeIcons.clock,
+                  ),
+                ],
+              ),
+              const Divider(),
+              const SizedBox(height: 10),
+              Column(
+                children: [
+                  Text(
+                    "التفاصيل",
+                    style: myTextStyles.subTitle.copyWith(
+                      color: MyColors.blackColor,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    ' خلال المؤتمر أعلنت تعهدات بتقديم ملياري دولار لدعم الاستجابة الإنسانية في اليمن. والخطة هي أكبر نداء تطلقه ',
+                    textAlign: TextAlign.center,
+                    maxLines: 4,
+                    style: myTextStyles.body,
+                  )
+                ],
+              ),
+              //  Divider(),
+              const SizedBox(height: 20),
+              const Spacer(),
+
+              //  CustomBtnWidget(color: Colors.green, label: "تعديل"),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: MyColors.primaryColor,
+                    elevation: 0,
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15))),
+                child: Text(
+                  "تعد يل",
+                  style: myTextStyles.title1.copyWith(
+                    color: MyColors.background,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Text(
+                  "موافق",
+                  textAlign: TextAlign.center,
+                  style: myTextStyles.subTitle,
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class InfoTitleWidget extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  const InfoTitleWidget({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: myTextStyles.subTitle,
+        ),
+        const SizedBox(width: 7),
+        Container(
+          width: 20,
+          alignment: Alignment.center,
+          child: FaIcon(
+            icon,
+            size: 15,
+            color: MyColors.secondaryTextColor,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -33,12 +33,11 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     }
   }
 
-  NewCustomerSheet mySheet = Get.put(NewCustomerSheet());
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        minHeight: 400,
+        minHeight: 300,
       ),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
