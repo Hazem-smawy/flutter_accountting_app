@@ -2,12 +2,12 @@
 import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:account_app/screen/settings/curency_setting.dart';
+import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/screen/settings/customer_setting.dart';
 
 class SettingScreen extends StatelessWidget {

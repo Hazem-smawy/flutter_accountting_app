@@ -82,7 +82,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             ),
                             child: const Center(
                                 child: FaIcon(
-                              FontAwesomeIcons.calendar,
+                              FontAwesomeIcons.calendarCheck,
                               color: MyColors.secondaryTextColor,
                               size: 22,
                             ))),

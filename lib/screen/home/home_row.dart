@@ -1,8 +1,7 @@
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/constant/shadows.dart';
-import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/screen/details/details.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
+import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';

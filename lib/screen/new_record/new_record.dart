@@ -62,7 +62,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   Expanded(
                       child: Container(
                     height: 56,
-                    padding:const EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 10),
                     alignment: Alignment.centerRight,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -93,7 +93,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         ),
                         child: const Center(
                             child: FaIcon(
-                          FontAwesomeIcons.calendar,
+                          FontAwesomeIcons.calendarCheck,
                           color: MyColors.secondaryTextColor,
                           size: 22,
                         ))),
@@ -105,7 +105,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
               ),
               const SizedBox(height: 20),
               Row(
-                children:const [
+                children: const [
                   Flexible(
                       child: CustomBtnWidget(color: Colors.red, label: "له")),
                   SizedBox(width: 10),

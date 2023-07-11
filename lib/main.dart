@@ -1,5 +1,4 @@
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/constant/theme.dart';
 import 'package:account_app/screen/home/home.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
+import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +20,7 @@ class DetailsScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const CustomBackBtnWidget(
+              const CustomBackBtnWidget (
                 title: "حازم السماوي",
               ),
               const SizedBox(height: 10),

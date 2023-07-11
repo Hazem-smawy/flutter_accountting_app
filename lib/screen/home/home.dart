@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:account_app/screen/home/home_row.dart';
 import 'package:account_app/screen/home/summary_item_widget.dart';
+import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/screen/new_account/new_account.dart';
 
 class HomeScreen extends StatelessWidget {
