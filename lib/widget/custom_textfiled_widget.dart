@@ -2,14 +2,23 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextFieldWidget extends StatelessWidget {
+class CustomTextFieldWidget extends StatefulWidget {
   final String textHint;
+  Function(String)? action;
+   String? placeHolder;
 
-  const CustomTextFieldWidget({
+  CustomTextFieldWidget({
     required this.textHint,
+    this.action,
+    this.placeHolder = "",
     super.key,
   });
 
+  @override
+  State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
+}
+
+class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,12 +30,18 @@ class CustomTextFieldWidget extends StatelessWidget {
         color: MyColors.containerSecondColor,
       ),
       child: TextFormField(
+        initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
         style: myTextStyles.title1,
+        onChanged: (value) {
+          if (widget.action != null) {
+            widget.action!(value);
+          }
+        },
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: textHint,
+          hintText: widget.textHint,
           hintStyle: myTextStyles.subTitle,
         ),
       ),

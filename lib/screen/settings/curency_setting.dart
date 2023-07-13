@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 
 import 'package:account_app/widget/custom_dialog.dart';
@@ -9,182 +13,153 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class CurencySettingScreen extends StatelessWidget {
-  const CurencySettingScreen({super.key});
-
+  CurencySettingScreen({super.key});
+  CurencyController curencyController = Get.put(CurencyController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            children: [
-              const CustomBackBtnWidget(title: "العملات"),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
+        child: Obx(
+          () => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              children: [
+                const CustomBackBtnWidget(title: "العملات"),
+                const SizedBox(height: 15),
+                if (curencyController.allCurency.isEmpty)
+                  Container(
+                    height: Get.height / 3,
+                    width: Get.width - 50,
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: DataTable(
-                          showCheckboxColumn: true,
-                          horizontalMargin: 20,
-                          headingRowColor:
-                              MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                            return MyColors.lessBlackColor;
-                            // Use the default value.
-                          }),
-                          columnSpacing: 30,
-                          headingRowHeight: 50,
-                          headingTextStyle: myTextStyles.title2.copyWith(
-                            color: MyColors.bg,
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          dataTextStyle: myTextStyles.subTitle.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          decoration: BoxDecoration(
-                              color: MyColors.bg,
-                              borderRadius: BorderRadius.circular(12)),
-                          columns: const [
-                            DataColumn(label: SizedBox(width: 20)),
-                            DataColumn(label: Expanded(child: Text('الاسم'))),
-                            DataColumn(label: Text('الرمز')),
-                            DataColumn(
-                                label: Center(
-                              child: Text(
-                                ' الحسابات',
-                              ),
-                            )),
-                            DataColumn(
-                              label: CircleAvatar(
-                                radius: 5,
-                                backgroundColor: Colors.red,
-                              ),
-                            ),
-                          ],
-                          rows: [
-                            DataRow(cells: [
-                              DataCell(GestureDetector(
-                                onTap: () => CustomDialog.showDialog(
-                                  title: "تعديل",
-                                  description:
-                                      "هل انت متاكد من تعديل هذه العمله",
-                                  color: Colors.green,
-                                  icon: FontAwesomeIcons.penToSquare,
-                                ),
-                                child: const FaIcon(
-                                  FontAwesomeIcons.penToSquare,
-                                  size: 17,
-                                  color: MyColors.secondaryTextColor,
-                                ),
-                              )),
-                              DataCell(Text(
-                                'محلي',
-                                style: myTextStyles.title2,
-                              )),
-                              DataCell(Text(
-                                '\$',
-                                style: myTextStyles.title2,
-                              )),
-                              const DataCell(Text(
-                                '40',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.clip,
-                                textDirection: TextDirection.rtl,
-                              )),
-                              const DataCell(CircleAvatar(
-                                backgroundColor: Colors.red,
-                                radius: 5,
-                              )),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(GestureDetector(
-                                onTap: () => CustomDialog.showDialog(
-                                  title: "تعديل",
-                                  description:
-                                      "هل انت متاكد من تعديل هذه العمله",
-                                  color: Colors.green,
-                                  icon: FontAwesomeIcons.penToSquare,
-                                ),
-                                child: const FaIcon(
-                                  FontAwesomeIcons.penToSquare,
-                                  size: 17,
-                                  color: MyColors.secondaryTextColor,
-                                ),
-                              )),
-                              DataCell(Text(
-                                'دولار',
-                                style: myTextStyles.title2,
-                              )),
-                              DataCell(Text(
-                                '\$',
-                                style: myTextStyles.title2,
-                              )),
-                              const DataCell(Text(
-                                '40',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.clip,
-                                textDirection: TextDirection.rtl,
-                              )),
-                              const DataCell(CircleAvatar(
-                                backgroundColor: Colors.red,
-                                radius: 5,
-                              )),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(GestureDetector(
-                                onTap: () => CustomDialog.showDialog(
-                                  title: "تعديل",
-                                  description:
-                                      "هل انت متاكد من تعديل هذه العمله",
-                                  color: Colors.green,
-                                  icon: FontAwesomeIcons.penToSquare,
-                                ),
-                                child: const FaIcon(
-                                  FontAwesomeIcons.penToSquare,
-                                  size: 17,
-                                  color: MyColors.secondaryTextColor,
-                                ),
-                              )),
-                              DataCell(Text(
-                                'ريال',
-                                style: myTextStyles.title2,
-                              )),
-                              DataCell(Text(
-                                'ري',
-                                style: myTextStyles.title2,
-                              )),
-                              const DataCell(Text(
-                                '40',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.clip,
-                                textDirection: TextDirection.rtl,
-                              )),
-                              const DataCell(CircleAvatar(
-                                backgroundColor: Colors.red,
-                                radius: 5,
-                              )),
-                            ]),
-                          ],
-                        ),
-                      ),
+                      color: MyColors.bg,
                     ),
                   ),
-                ],
-              ),
-            ],
+                if (curencyController.allCurency.isNotEmpty)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: DataTable(
+                              showCheckboxColumn: true,
+                              horizontalMargin: 20,
+                              headingRowColor:
+                                  MaterialStateProperty.resolveWith<Color?>(
+                                      (Set<MaterialState> states) {
+                                return MyColors.lessBlackColor;
+                                // Use the default value.
+                              }),
+                              columnSpacing: 10,
+                              headingRowHeight: 50,
+                              headingTextStyle: myTextStyles.title2.copyWith(
+                                color: MyColors.bg,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              dataTextStyle: myTextStyles.subTitle.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              decoration: BoxDecoration(
+                                  color: MyColors.bg,
+                                  borderRadius: BorderRadius.circular(12)),
+                              columns: const [
+                                DataColumn(label: SizedBox(width: 5)),
+                                DataColumn(
+                                    label: Expanded(child: Text('الاسم'))),
+                                DataColumn(label: Text('الرمز')),
+                                DataColumn(
+                                    label: Center(
+                                  child: Text(
+                                    ' الحسابات',
+                                  ),
+                                )),
+                                DataColumn(
+                                  label: CircleAvatar(
+                                    radius: 5,
+                                    backgroundColor: Colors.red,
+                                  ),
+                                ),
+                              ],
+                              rows: curencyController.allCurency.map((element) {
+                                return DataRow(cells: [
+                                  DataCell(GestureDetector(
+                                    onTap: () => CustomDialog.showDialog(
+                                        title: "تعد يل",
+                                        description:
+                                            "هل انت متاكد من تعد يل هذه العمله",
+                                        color: Colors.green,
+                                        icon: FontAwesomeIcons.penToSquare,
+                                        action: () {
+                                          //edit
+                                          if (Get.isDialogOpen == true) {
+                                            Get.back();
+                                          }
+                                          curencyController.newCurency
+                                              .addAll(element.toEditMap());
+                                          Get.bottomSheet(
+                                                  NewCurencySheet(
+                                                    isEdding: true,
+                                                  ),
+                                                  isScrollControlled: true)
+                                              .then((value) {
+                                            curencyController.newCurency
+                                                .clear();
+                                          });
+                                        }),
+                                    child: const FaIcon(
+                                      FontAwesomeIcons.penToSquare,
+                                      size: 17,
+                                      color: MyColors.secondaryTextColor,
+                                    ),
+                                  )),
+                                  DataCell(
+                                    RichText(
+                                        text: TextSpan(
+                                            text: element.name,
+                                            style: myTextStyles.subTitle)),
+                                  ),
+                                  DataCell(RichText(
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.ltr,
+                                      text: TextSpan(
+                                        text: '${element.symbol}',
+                                        style: myTextStyles.title2,
+                                      ))),
+                                  const DataCell(Text(
+                                    '10          ',
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.clip,
+                                    textDirection: TextDirection.rtl,
+                                  )),
+                                  DataCell(CircleAvatar(
+                                    backgroundColor: element.status
+                                        ? Colors.green
+                                        : Colors.red,
+                                    radius: 5,
+                                  )),
+                                ]);
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.bottomSheet(const NewCurencySheet(), isScrollControlled: true);
+          Get.bottomSheet(NewCurencySheet(), isScrollControlled: true)
+              .then((value) {
+            curencyController.newCurency.clear();
+          });
         },
         backgroundColor: MyColors.primaryColor,
         child: const FaIcon(FontAwesomeIcons.plus),
@@ -194,77 +169,201 @@ class CurencySettingScreen extends StatelessWidget {
 }
 
 class NewCurencySheet extends StatelessWidget {
-  const NewCurencySheet({super.key});
+  NewCurencySheet({super.key, this.isEdding = false});
+  final bool isEdding;
+  CurencyController curencyController = Get.find();
+  final Set<int> generatedIds = Set<int>();
+
+  int generateUniqeRandomId() {
+    int min = 1000;
+    int max = 9999;
+    Random random = Random();
+    int id;
+    do {
+      id = min + random.nextInt(max - min + 1);
+    } while (generatedIds.contains(id));
+
+    generatedIds.add(id);
+    return id;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //margin: const EdgeInsets.only(top: 50),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        color: MyColors.bg,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CustomSheetBackBtnWidget(),
-          const SizedBox(height: 30),
-          const FaIcon(
-            FontAwesomeIcons.dollarSign,
-            size: 40,
-            color: MyColors.secondaryTextColor,
-          ),
-          const SizedBox(height: 7),
-          Text(
-            "اضافه عمله",
-            style: myTextStyles.title1
-                .copyWith(color: MyColors.secondaryTextColor),
-          ),
-          const SizedBox(height: 20),
+    //print(curencyController.newCurency);
+    return Obx(
+      () => Container(
+        //margin: const EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          color: MyColors.bg,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CustomSheetBackBtnWidget(),
+            const SizedBox(height: 30),
+            const FaIcon(
+              FontAwesomeIcons.dollarSign,
+              size: 40,
+              color: MyColors.secondaryTextColor,
+            ),
+            const SizedBox(height: 7),
+            Text(
+              isEdding ? " تعد يل عمله" : "اضافه عمله",
+              style: myTextStyles.title1
+                  .copyWith(color: MyColors.secondaryTextColor),
+            ),
+            const SizedBox(height: 20),
 
-          // acc  state
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Switch.adaptive(value: true, onChanged: (newValue) {}),
-              Text(
-                "الحاله ",
-                style: myTextStyles.subTitle,
-              )
-            ],
-          ),
-          // name
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              SizedBox(
-                  width: Get.width / 3,
-                  child: const CustomTextFieldWidget(textHint: 'رمز العمله')),
-              const SizedBox(width: 10),
-              const Expanded(child: CustomTextFieldWidget(textHint: "الاسم")),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: const [
-              Flexible(
-                child: CustomBtnWidget(
-                    color: MyColors.secondaryTextColor, label: "الغاء"),
-              ),
-              SizedBox(width: 10),
-              Flexible(
+            // acc  state
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Switch.adaptive(
+                    value: curencyController.newCurency[CurencyField.status] ??
+                        true,
+                    onChanged: (newValue) {
+                      curencyController.newCurency.update(
+                        CurencyField.status,
+                        (value) => newValue,
+                        ifAbsent: () => newValue,
+                      );
+                    }),
+                Text(
+                  "الحاله ",
+                  style: myTextStyles.subTitle,
+                )
+              ],
+            ),
+            // name
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(
+                    width: Get.width / 3,
+                    child: CustomTextFieldWidget(
+                      textHint: 'رمز العمله',
+                      placeHolder:
+                          curencyController.newCurency[CurencyField.symbol],
+                      action: (p0) {
+                        curencyController.newCurency.update(
+                          CurencyField.symbol,
+                          (value) => p0,
+                          ifAbsent: () => p0,
+                        );
+                      },
+                    )),
+                const SizedBox(width: 10),
+                Expanded(
+                    child: CustomTextFieldWidget(
+                  textHint: "الاسم",
+                  placeHolder: curencyController.newCurency[CurencyField.name],
+                  action: (p0) {
+                    curencyController.newCurency.update(
+                      CurencyField.name,
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                )),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Flexible(
                   child: CustomBtnWidget(
-                      color: MyColors.primaryColor, label: "اضافه"))
-            ],
-          ),
-          const SizedBox(height: 20),
-          const CustomDeleteBtnWidget(
-            lable: "حذف العمله",
-          ),
-          const SizedBox(height: 30),
-        ],
+                    color: MyColors.secondaryTextColor,
+                    label: "الغاء",
+                    action: () {
+                      Get.back();
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                    child: CustomBtnWidget(
+                  color: MyColors.primaryColor,
+                  label: "اضافه",
+                  action: () async {
+                    Curency? curentCurency =
+                        curencyController.allCurency.firstWhere(
+                      (element) =>
+                          element.name ==
+                          (curencyController.newCurency[CurencyField.name] ??
+                              ""),
+                      orElse: () => Curency(
+                        id: 1,
+                        name: 'no',
+                        symbol: 'no',
+                        status: false,
+                        createdAt: DateTime.now(),
+                        modifiedAt: DateTime.now(),
+                      ),
+                    );
+                    if (curentCurency.name != 'no') {
+                      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+                    } else {
+                      try {
+                        if (curencyController.newCurency[CurencyField.name] !=
+                                null &&
+                            curencyController.newCurency[CurencyField.symbol] !=
+                                null) {
+                          var curency = Curency(
+                            id: isEdding
+                                ? curencyController.newCurency[CurencyField.id]
+                                : generateUniqeRandomId(),
+                            name:
+                                curencyController.newCurency[CurencyField.name],
+                            symbol: curencyController
+                                .newCurency[CurencyField.symbol],
+                            status: curencyController
+                                    .newCurency[CurencyField.status] ??
+                                true,
+                            createdAt: isEdding
+                                ? DateTime.parse(curencyController
+                                    .newCurency[CurencyField.createdAt])
+                                : DateTime.now(),
+                            modifiedAt: DateTime.now(),
+                          );
+
+                          isEdding
+                              ? await curencyController.updateCurency(curency)
+                              : await curencyController.createCurency(curency);
+                        }
+                      } catch (e) {
+                        // print("some error : $e");
+                      } finally {
+                        Get.back();
+                      }
+                    }
+                  },
+                ))
+              ],
+            ),
+            const SizedBox(height: 20),
+            if (isEdding)
+              CustomDeleteBtnWidget(
+                lable: "حذف العمله",
+                action: () {
+                  CustomDialog.showDialog(
+                      title: "حذف العمله",
+                      description: "هل انت متاكد من حذف هذه العمله",
+                      color: Colors.red,
+                      icon: FontAwesomeIcons.trashCan,
+                      action: () {
+                        curencyController.deleteCurency(
+                            curencyController.newCurency[CurencyField.id]);
+                        Get.back();
+                        Get.back();
+                      });
+                },
+              ),
+            const SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }

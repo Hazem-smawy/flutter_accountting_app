@@ -1,12 +1,8 @@
-
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
-
-
 
 class CustomBackBtnWidget extends StatelessWidget {
   final String title;
@@ -18,7 +14,7 @@ class CustomBackBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           12,
@@ -40,7 +36,7 @@ class CustomBackBtnWidget extends StatelessWidget {
           )),
           GestureDetector(
             onTap: () => Get.back(),
-            child:const FaIcon(
+            child: const FaIcon(
               FontAwesomeIcons.arrowRightLong,
               color: MyColors.secondaryTextColor,
               size: 20,
@@ -52,10 +48,11 @@ class CustomBackBtnWidget extends StatelessWidget {
   }
 }
 
-
 class CustomDeleteBtnWidget extends StatelessWidget {
   final String lable;
-  const CustomDeleteBtnWidget({super.key,required this.lable});
+  final VoidCallback action;
+  const CustomDeleteBtnWidget(
+      {super.key, required this.lable, required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +63,11 @@ class CustomDeleteBtnWidget extends StatelessWidget {
           minimumSize: const Size.fromHeight(50),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-      onPressed: () {},
+      onPressed: () {
+        action();
+      },
       child: Text(
-       lable,
+        lable,
         style: myTextStyles.title1.copyWith(
           fontWeight: FontWeight.normal,
           color: Colors.red,
@@ -77,7 +76,6 @@ class CustomDeleteBtnWidget extends StatelessWidget {
     );
   }
 }
-
 
 class CustomSheetBackBtnWidget extends StatelessWidget {
   const CustomSheetBackBtnWidget({super.key});
@@ -98,16 +96,15 @@ class CustomSheetBackBtnWidget extends StatelessWidget {
   }
 }
 
-
-
-
 class CustomBtnWidget extends StatelessWidget {
   final Color color;
   final String label;
+  final VoidCallback action;
 
   const CustomBtnWidget({
     Key? key,
     required this.color,
+    required this.action,
     required this.label,
   }) : super(key: key);
 
@@ -116,10 +113,10 @@ class CustomBtnWidget extends StatelessWidget {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             backgroundColor: color,
-            minimumSize:const Size.fromHeight(56),
+            minimumSize: const Size.fromHeight(56),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12))),
-        onPressed: () {},
+        onPressed: () => action(),
         child: Text(
           label,
           style: myTextStyles.title1.copyWith(

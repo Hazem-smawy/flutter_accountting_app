@@ -46,13 +46,13 @@ class MyDrawerView extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               "حازم السماوي",
-              style: myTextStyles.title1.copyWith(
+              style: myTextStyles.title2.copyWith(
                 color: MyColors.containerColor,
               ),
             ),
             Text(
               "hazemsmawy@gmail.com",
-              style: myTextStyles.title1.copyWith(
+              style: myTextStyles.subTitle.copyWith(
                 color: MyColors.secondaryTextColor,
               ),
             ),

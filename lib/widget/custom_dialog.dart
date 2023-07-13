@@ -5,12 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class CustomDialog {
-  static void customSnackBar(title, description) {
+  static void customSnackBar( description) {
     Get.rawSnackbar(
       backgroundColor: MyColors.lessBlackColor.withOpacity(0.9),
       //duration: const Duration(seconds: 10),
       messageText: Text(
-        "جميع المعاملات المالية ",
+        description,
         textAlign: TextAlign.right,
         style: myTextStyles.subTitle.copyWith(
           color: Colors.white,
@@ -66,7 +66,7 @@ class CustomDialog {
     //     ));
   }
 
-  static void showDialog({title, description, icon, color}) {
+  static void showDialog({title, description, icon, color, action}) {
     Get.defaultDialog(
       title: "",
       titleStyle: myTextStyles.title1,
@@ -112,7 +112,9 @@ class CustomDialog {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            action();
+          },
           child: Text(
             "موافق",
             style: myTextStyles.title1.copyWith(color: Colors.white),

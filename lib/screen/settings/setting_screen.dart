@@ -162,19 +162,19 @@ class SettingScreen extends StatelessWidget {
                         const SizedBox(height: 15),
                         SettingItemWidget(
                           onPress: () =>
-                              Get.to(() => const CustomerSettingScreen()),
+                              Get.to(() =>  CustomerSettingScreen()),
                           icon: FontAwesomeIcons.a,
                           title: "كل العملاء",
                         ),
                         SettingItemWidget(
                           onPress: () =>
-                              Get.to(() => const CurencySettingScreen()),
+                              Get.to(() =>  CurencySettingScreen()),
                           icon: FontAwesomeIcons.dollarSign,
                           title: "العملات",
                         ),
                         SettingItemWidget(
                           onPress: () =>
-                              Get.to(() => const AccGroupSettingScreen()),
+                              Get.to(() =>  AccGroupSettingScreen()),
                           icon: FontAwesomeIcons.fileCirclePlus,
                           title: " التصنيفات",
                         ),

@@ -226,15 +226,20 @@ class EditPersonalInfoSheet extends StatelessWidget {
                   textHint: "العنوان", icon: FontAwesomeIcons.locationPin),
               const SizedBox(height: 20),
               Row(
-                children: const [
+                children:  [
                   Flexible(
                       child: CustomBtnWidget(
-                          color: MyColors.secondaryTextColor, label: "الغاء")),
+                          color: MyColors.secondaryTextColor, label: "الغاء",action: () {
+                            
+                          },)),
                   SizedBox(width: 10),
                   Flexible(
                       child: CustomBtnWidget(
                     color: MyColors.primaryColor,
                     label: 'اضافه',
+                    action: () {
+                      
+                    },
                   ))
                 ],
               ),

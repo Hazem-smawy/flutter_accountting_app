@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +42,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       ),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         color: MyColors.bg,
       ),
       child: SafeArea(
@@ -56,7 +57,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 children: [
                   SizedBox(
                       width: Get.width / 3,
-                      child: const CustomTextFieldWidget(textHint: "المبلغ")),
+                      child:  CustomTextFieldWidget(textHint: "المبلغ")),
                   const SizedBox(width: 10),
                   Expanded(
                       child: Container(
@@ -98,19 +99,24 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         ))),
                   ),
                   const SizedBox(width: 10),
-                  const Expanded(
+                   Expanded(
                       child: CustomTextFieldWidget(textHint: "التفاصل")),
                 ],
               ),
+              CurencyShowWidget(),
               const SizedBox(height: 20),
               Row(
-                children: const [
+                children:  [
                   Flexible(
-                      child: CustomBtnWidget(color: Colors.red, label: "له")),
+                      child: CustomBtnWidget(color: Colors.red, label: "له",action: () {
+                        
+                      },)),
                   SizedBox(width: 10),
                   Flexible(
                       child:
-                          CustomBtnWidget(color: Colors.green, label: "عليه"))
+                          CustomBtnWidget(color: Colors.green, label: "عليه",action: () {
+                            
+                          },))
                 ],
               ),
               const SizedBox(height: 30),
@@ -158,26 +164,31 @@ class NewCustomerSheet extends StatelessWidget {
                     //   style: myTextStyles.title1,
                     // ),
                     const SizedBox(height: 20),
-                    const CustomTextFieldWidget(
+                     CustomTextFieldWidget(
                       textHint: "العنوان",
                     ),
                     const SizedBox(height: 10),
-                    const CustomTextFieldWidget(
+                     CustomTextFieldWidget(
                       textHint: "الهاتف",
                     ),
                     const SizedBox(height: 20),
                     Row(
-                      children: const [
+                      children:  [
                         Flexible(
                           child: CustomBtnWidget(
                               color: MyColors.secondaryTextColor,
-                              label: "الغاء"),
+                              label: "الغاء",action: () {
+                                
+                              },),
                         ),
                         SizedBox(width: 10),
                         Flexible(
                           child: CustomBtnWidget(
                             color: Colors.green,
                             label: "اضافه",
+                            action: () {
+                              
+                            },
                           ),
                         )
                       ],

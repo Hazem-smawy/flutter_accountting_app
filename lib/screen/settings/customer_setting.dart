@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
@@ -9,31 +13,50 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class CustomerSettingScreen extends StatelessWidget {
-  const CustomerSettingScreen({super.key});
+  CustomerSettingScreen({super.key});
+  CustomerController customerController = Get.put(CustomerController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            children: [
-              const CustomBackBtnWidget(title: "العملاء"),
-              const SizedBox(height: 20),
-              CustomerSettingItemWidget(),
-              CustomerSettingItemWidget(),
-              CustomerSettingItemWidget(),
-            ],
+        child: Obx(
+          () => SingleChildScrollView(
+            padding:
+                const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 50),
+            child: Column(
+              children: [
+                const CustomBackBtnWidget(title: "العملاء"),
+                const SizedBox(height: 20),
+                if (customerController.allCustomers.isEmpty)
+                  Container(
+                    width: Get.width - 50,
+                    height: Get.height / 3,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: MyColors.bg,
+                    ),
+                  ),
+                Column(
+                  children: customerController.allCustomers.map((element) {
+                    return CustomerSettingItemWidget(
+                      customer: element,
+                    );
+                  }).toList(),
+                )
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.bottomSheet(
-            const NewCustomerSheet(),
+            NewCustomerSheet(),
             isScrollControlled: true,
-          );
+          ).then((value) {
+            customerController.newCustomer.clear();
+          });
         },
         backgroundColor: MyColors.primaryColor,
         child: const FaIcon(FontAwesomeIcons.plus),
@@ -43,10 +66,12 @@ class CustomerSettingScreen extends StatelessWidget {
 }
 
 class CustomerSettingItemWidget extends StatelessWidget {
-  const CustomerSettingItemWidget({
+  final Customer customer;
+  CustomerSettingItemWidget({
     super.key,
+    required this.customer,
   });
-
+  CustomerController customerController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,13 +87,13 @@ class CustomerSettingItemWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 5,
-                backgroundColor: Colors.green,
+                backgroundColor: customer.status ? Colors.green : Colors.red,
               ),
               const Spacer(),
               Text(
-                "حازم السماوي",
+                customer.name,
                 style: myTextStyles.title2,
               ),
               const SizedBox(width: 10),
@@ -84,7 +109,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
             children: [
               const Spacer(),
               Text(
-                "772342424",
+                customer.phone,
                 style: myTextStyles.title2.copyWith(
                   color: MyColors.secondaryTextColor,
                   fontWeight: FontWeight.normal,
@@ -102,11 +127,14 @@ class CustomerSettingItemWidget extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => CustomDialog.showDialog(
-                  title: "حذف",
-                  description: "هل انت متاكد من حذف هذا الحساب",
-                  color: Colors.red,
-                  icon: FontAwesomeIcons.trashCan,
-                ),
+                    title: "حذف",
+                    description: "هل انت متاكد من حذف هذا الحساب",
+                    color: Colors.red,
+                    icon: FontAwesomeIcons.trashCan,
+                    action: () {
+                      customerController.deleteCustomer(customer.id);
+                      Get.back();
+                    }),
                 child: const FaIcon(
                   FontAwesomeIcons.trashCan,
                   size: 15,
@@ -116,11 +144,23 @@ class CustomerSettingItemWidget extends StatelessWidget {
               const SizedBox(width: 10),
               GestureDetector(
                 onTap: () => CustomDialog.showDialog(
-                  title: "تعديل",
-                  description: "هل انت متاكد من تعديل هذا الحساب",
-                  color: Colors.green,
-                  icon: FontAwesomeIcons.penToSquare,
-                ),
+                    title: "تعديل",
+                    description: "هل انت متاكد من تعديل هذا الحساب",
+                    color: Colors.green,
+                    icon: FontAwesomeIcons.penToSquare,
+                    action: () {
+                      customerController.newCustomer
+                          .addAll(customer.toEditMap());
+                      Get.back();
+                      Get.bottomSheet(
+                        NewCustomerSheet(
+                          isEditing: true,
+                        ),
+                        isScrollControlled: true,
+                      ).then((value) {
+                        customerController.newCustomer.clear();
+                      });
+                    }),
                 child: const FaIcon(
                   FontAwesomeIcons.penToSquare,
                   size: 15,
@@ -129,7 +169,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                "ibb-mobile",
+                customer.address,
                 style: myTextStyles.title2.copyWith(
                   color: MyColors.secondaryTextColor,
                   fontWeight: FontWeight.normal,
@@ -150,7 +190,23 @@ class CustomerSettingItemWidget extends StatelessWidget {
 }
 
 class NewCustomerSheet extends StatelessWidget {
-  const NewCustomerSheet({super.key});
+  final bool isEditing;
+  NewCustomerSheet({super.key, this.isEditing = false});
+  CustomerController customerController = Get.find();
+  final Set<int> generatedIds = Set<int>();
+
+  int generateUniqeRandomId() {
+    int min = 1;
+    int max = 9999;
+    Random random = Random();
+    int id;
+    do {
+      id = min + random.nextInt(max - min + 1);
+    } while (generatedIds.contains(id));
+
+    generatedIds.add(id);
+    return id;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,60 +217,170 @@ class NewCustomerSheet extends StatelessWidget {
             topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         color: MyColors.bg,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 20),
-          const FaIcon(
-            FontAwesomeIcons.user,
-            size: 40,
-            color: MyColors.secondaryTextColor,
-          ),
-          const SizedBox(height: 7),
-          Text(
-            "اضافه عميل",
-            style: myTextStyles.title1
-                .copyWith(color: MyColors.secondaryTextColor),
-          ),
-          const SizedBox(height: 20),
+      child: Obx(
+        () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 20),
+            const FaIcon(
+              FontAwesomeIcons.user,
+              size: 40,
+              color: MyColors.secondaryTextColor,
+            ),
+            const SizedBox(height: 7),
+            Text(
+              "اضافه عميل",
+              style: myTextStyles.title1
+                  .copyWith(color: MyColors.secondaryTextColor),
+            ),
+            const SizedBox(height: 20),
 
-          // customer state
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Switch.adaptive(value: true, onChanged: (newValue) {}),
-              Text(
-                "حاله العميل",
-                style: myTextStyles.subTitle,
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          // customer name
-          Row(
-            children: const [
-              Flexible(child: CustomTextFieldWidget(textHint: "الرقم")),
-              SizedBox(width: 10),
-              Flexible(child: CustomTextFieldWidget(textHint: "الاسم"))
-            ],
-          ),
-          const SizedBox(height: 10),
-          const CustomTextFieldWidget(textHint: "العنوان"),
-          const SizedBox(height: 20),
-          Row(
-            children: const [
-              Flexible(
-                child: CustomBtnWidget(
-                    color: MyColors.secondaryTextColor, label: "الغاء"),
-              ),
-              SizedBox(width: 10),
-              Flexible(
+            // customer state
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Switch.adaptive(
+                    value:
+                        customerController.newCustomer[CustomerField.status] ??
+                            true,
+                    onChanged: (newValue) {
+                      customerController.newCustomer.update(
+                        CustomerField.status,
+                        (value) => newValue,
+                        ifAbsent: () => newValue,
+                      );
+                    }),
+                Text(
+                  "حاله العميل",
+                  style: myTextStyles.subTitle,
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            // customer name
+            Row(
+              children: [
+                Flexible(
+                    child: CustomTextFieldWidget(
+                  textHint: "الرقم",
+                  placeHolder:
+                      customerController.newCustomer[CustomerField.phone] ?? '',
+                  action: (p0) {
+                    customerController.newCustomer.update(
+                      CustomerField.phone,
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                )),
+                const SizedBox(width: 10),
+                Flexible(
+                    child: CustomTextFieldWidget(
+                  textHint: "الاسم",
+                  placeHolder:
+                      customerController.newCustomer[CustomerField.name] ?? '',
+                  action: (p0) {
+                    customerController.newCustomer.update(
+                      CustomerField.name,
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                ))
+              ],
+            ),
+            const SizedBox(height: 10),
+            CustomTextFieldWidget(
+              textHint: "العنوان",
+              placeHolder:
+                  customerController.newCustomer[CustomerField.address] ?? "",
+              action: (p0) {
+                customerController.newCustomer.update(
+                  CustomerField.address,
+                  (value) => p0,
+                  ifAbsent: () => p0,
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Flexible(
                   child: CustomBtnWidget(
-                      color: MyColors.primaryColor, label: "اضافه"))
-            ],
-          ),
-          SizedBox(height: 20),
-        ],
+                    color: MyColors.secondaryTextColor,
+                    label: "الغاء",
+                    action: () {},
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                    child: CustomBtnWidget(
+                  color: MyColors.primaryColor,
+                  label: "اضافه",
+                  action: () async {
+                    Customer? curentCustomer =
+                        customerController.allCustomers.firstWhere(
+                      (element) =>
+                          element.name ==
+                          (customerController.newCustomer[CustomerField.name] ??
+                              ""),
+                      orElse: () => Customer(
+                        id: 1,
+                        name: 'no',
+                        phone: 'no',
+                        address: 'no',
+                        status: false,
+                        createdAt: DateTime.now(),
+                        modifiedAt: DateTime.now(),
+                      ),
+                    );
+                    if (curentCustomer.name != 'no') {
+                      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+                    } else {
+                      try {
+                        if (customerController
+                                .newCustomer[CustomerField.name] !=
+                            null) {
+                          var customer = Customer(
+                              id: isEditing
+                                  ? customerController
+                                      .newCustomer[CustomerField.id]
+                                  : generateUniqeRandomId(),
+                              name: customerController
+                                  .newCustomer[CustomerField.name],
+                              phone: customerController
+                                      .newCustomer[CustomerField.phone] ??
+                                  'لا يوجد رقم',
+                              address: customerController
+                                      .newCustomer[CustomerField.address] ??
+                                  "لايوجد عنوان",
+                              status: customerController
+                                      .newCustomer[CustomerField.status] ??
+                                  true,
+                              createdAt: isEditing
+                                  ? DateTime.parse(customerController
+                                      .newCustomer[CustomerField.createdAt])
+                                  : DateTime.now(),
+                              modifiedAt: DateTime.now());
+
+                          isEditing
+                              ? await customerController
+                                  .updateCustomer(customer)
+                              : await customerController
+                                  .createCusomer(customer);
+                          Get.back();
+                        }
+                      } catch (e) {
+                        print("some error : $e");
+                      }
+                    }
+                  },
+                ))
+              ],
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
