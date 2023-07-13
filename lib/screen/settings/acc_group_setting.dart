@@ -259,62 +259,40 @@ class NewAccGroupSheet extends StatelessWidget {
                   const SizedBox(width: 10),
                   Flexible(
                       child: CustomBtnWidget(
-                    color: MyColors.primaryColor,
-                    label: "اضافه",
-                    action: () async {
-                      AccGroup? curentAccgroup =
-                          accGroupController.allAccGroups.firstWhere(
-                        (element) =>
-                            element.name ==
-                            (accGroupController
-                                    .newAccGroup[AccGroupField.name] ??
-                                ""),
-                        orElse: () => AccGroup(
-                          id: 1,
-                          name: 'no',
-                          status: false,
-                          createdAt: DateTime.now(),
-                          modifiedAt: DateTime.now(),
-                        ),
-                      );
-                      if (curentAccgroup.name != 'no') {
-                        CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-                      } else {
-                        try {
-                          if (accGroupController
-                                  .newAccGroup[AccGroupField.name] !=
-                              null) {
-                            var accgroup = AccGroup(
-                              id: isEditing
-                                  ? accGroupController
-                                      .newAccGroup[AccGroupField.id]
-                                  : generateUniqeRandomId(),
-                              name: accGroupController
-                                  .newAccGroup[AccGroupField.name],
-                              status: accGroupController
-                                      .newAccGroup[AccGroupField.status] ??
-                                  true,
-                              createdAt: isEditing
-                                  ? DateTime.parse(accGroupController
-                                      .newAccGroup[AccGroupField.createdAt])
-                                  : DateTime.now(),
-                              modifiedAt: DateTime.now(),
-                            );
+                          color: MyColors.primaryColor,
+                          label: "اضافه",
+                          action: () async {
+                            try {
+                              if (accGroupController
+                                      .newAccGroup[AccGroupField.name] !=
+                                  null) {
+                                var accgroup = AccGroup(
+                                  id: isEditing
+                                      ? accGroupController
+                                          .newAccGroup[AccGroupField.id]
+                                      : generateUniqeRandomId(),
+                                  name: accGroupController
+                                      .newAccGroup[AccGroupField.name],
+                                  status: accGroupController
+                                          .newAccGroup[AccGroupField.status] ??
+                                      true,
+                                  createdAt: isEditing
+                                      ? DateTime.parse(accGroupController
+                                          .newAccGroup[AccGroupField.createdAt])
+                                      : DateTime.now(),
+                                  modifiedAt: DateTime.now(),
+                                );
 
-                            isEditing
-                                ? await accGroupController
-                                    .updateAccGroup(accgroup)
-                                : await accGroupController
-                                    .createAccGroup(accgroup);
-                          }
-                        } catch (e) {
-                          // print("some error : $e");
-                        } finally {
-                          Get.back();
-                        }
-                      }
-                    },
-                  ))
+                                isEditing
+                                    ? await accGroupController
+                                        .updateAccGroup(accgroup)
+                                    : await accGroupController
+                                        .createAccGroup(accgroup);
+                              }
+                            } catch (e) {
+                              // print("some error : $e");
+                            } 
+                          }))
                 ],
               ),
               const SizedBox(height: 20),

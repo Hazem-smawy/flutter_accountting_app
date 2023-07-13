@@ -1,15 +1,21 @@
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/service/database/database_service.dart';
 import 'package:account_app/service/database/tables_helpers.dart';
+import 'package:account_app/widget/custom_dialog.dart';
+import 'package:get/get.dart';
 
 class CurencyData {
   final ins = DatabaseService.instance;
 
- Future<Curency> create(Curency curency) async {
-    final db = await ins.database;
-    final id = await db.insert(TableName.curencyTbl, curency.toMap());
-
-    return curency.copyWith(id: id);
+  Future<Curency?> create(Curency curency) async {
+    try {
+      final db = await ins.database;
+      final id = await db.insert(TableName.curencyTbl, curency.toMap());
+      Get.back();
+      return curency.copyWith(id: id);
+    } catch (e) {
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+    }
   }
 
   Future<Curency?> readCurency(int id) async {
@@ -35,17 +41,23 @@ class CurencyData {
     return result.map((e) => Curency.fromMap(e)).toList();
   }
 
-  Future<int> updateCurency(Curency curency) async {
+  Future<int?> updateCurency(Curency curency) async {
     final db = await ins.database;
-    return db.update(TableName.curencyTbl, curency.toMap(),
-        where: '${CurencyField.id} = ?', whereArgs: [curency.id]);
+
+    try {
+      final updatedObject = await db.update(
+          TableName.curencyTbl, curency.toMap(),
+          where: '${CurencyField.id} = ?', whereArgs: [curency.id]);
+      Get.back();
+      return updatedObject;
+    } catch (e) {
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+    }
   }
 
   Future<int> delete(int id) async {
     final db = await ins.database;
-    return await db
-        .delete(TableName.curencyTbl, where: '${CurencyField.id} = ?', whereArgs: [id]);
+    return await db.delete(TableName.curencyTbl,
+        where: '${CurencyField.id} = ?', whereArgs: [id]);
   }
-
-
 }

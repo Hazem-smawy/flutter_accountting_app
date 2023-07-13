@@ -318,67 +318,64 @@ class NewCustomerSheet extends StatelessWidget {
                   color: MyColors.primaryColor,
                   label: "اضافه",
                   action: () async {
-                    Customer? curentCustomer =
-                        customerController.allCustomers.firstWhere(
-                      (element) =>
-                          element.name ==
-                          (customerController.newCustomer[CustomerField.name] ??
-                              ""),
-                      orElse: () => Customer(
-                        id: 1,
-                        name: 'no',
-                        phone: 'no',
-                        address: 'no',
-                        status: false,
-                        createdAt: DateTime.now(),
-                        modifiedAt: DateTime.now(),
-                      ),
-                    );
-                    if (curentCustomer.name != 'no') {
-                      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-                    } else {
-                      try {
-                        if (customerController
-                                .newCustomer[CustomerField.name] !=
-                            null) {
-                          var customer = Customer(
-                              id: isEditing
-                                  ? customerController
-                                      .newCustomer[CustomerField.id]
-                                  : generateUniqeRandomId(),
-                              name: customerController
-                                  .newCustomer[CustomerField.name],
-                              phone: customerController
-                                      .newCustomer[CustomerField.phone] ??
-                                  'لا يوجد رقم',
-                              address: customerController
-                                      .newCustomer[CustomerField.address] ??
-                                  "لايوجد عنوان",
-                              status: customerController
-                                      .newCustomer[CustomerField.status] ??
-                                  true,
-                              createdAt: isEditing
-                                  ? DateTime.parse(customerController
-                                      .newCustomer[CustomerField.createdAt])
-                                  : DateTime.now(),
-                              modifiedAt: DateTime.now());
+                    // Customer? curentCustomer =
+                    //     customerController.allCustomers.firstWhere(
+                    //   (element) =>
+                    //       element.name ==
+                    //       (customerController.newCustomer[CustomerField.name] ??
+                    //           ""),
+                    //   orElse: () => Customer(
+                    //     id: 1,
+                    //     name: 'no',
+                    //     phone: 'no',
+                    //     address: 'no',
+                    //     status: false,
+                    //     createdAt: DateTime.now(),
+                    //     modifiedAt: DateTime.now(),
+                    //   ),
+                    // );
+                    // if (curentCustomer.name != 'no') {
+                    //   CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+                    // } else {
+                    try {
+                      if (customerController.newCustomer[CustomerField.name] !=
+                          null) {
+                        var customer = Customer(
+                            id: isEditing
+                                ? customerController
+                                    .newCustomer[CustomerField.id]
+                                : generateUniqeRandomId(),
+                            name: customerController
+                                .newCustomer[CustomerField.name],
+                            phone: customerController
+                                    .newCustomer[CustomerField.phone] ??
+                                'لا يوجد رقم',
+                            address: customerController
+                                    .newCustomer[CustomerField.address] ??
+                                "لايوجد عنوان",
+                            status: customerController
+                                    .newCustomer[CustomerField.status] ??
+                                true,
+                            createdAt: isEditing
+                                ? DateTime.parse(customerController
+                                    .newCustomer[CustomerField.createdAt])
+                                : DateTime.now(),
+                            modifiedAt: DateTime.now());
 
-                          isEditing
-                              ? await customerController
-                                  .updateCustomer(customer)
-                              : await customerController
-                                  .createCusomer(customer);
-                          Get.back();
-                        }
-                      } catch (e) {
-                        print("some error : $e");
+                        isEditing
+                            ? await customerController.updateCustomer(customer)
+                            : await customerController.createCusomer(customer);
                       }
+                    } catch (e) {
+                      //print(e);
+                      // CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
                     }
+                    // }
                   },
                 ))
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

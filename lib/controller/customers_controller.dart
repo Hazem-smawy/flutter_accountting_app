@@ -31,6 +31,7 @@ class CustomerController extends GetxController {
   }
 
   Future<void> updateCustomer(Customer customer) async {
+  
     customerData.updateCustomer(customer);
     readAllCustomer();
   }

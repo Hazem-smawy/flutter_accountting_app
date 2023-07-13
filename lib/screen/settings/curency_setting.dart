@@ -288,56 +288,35 @@ class NewCurencySheet extends StatelessWidget {
                   color: MyColors.primaryColor,
                   label: "اضافه",
                   action: () async {
-                    Curency? curentCurency =
-                        curencyController.allCurency.firstWhere(
-                      (element) =>
-                          element.name ==
-                          (curencyController.newCurency[CurencyField.name] ??
-                              ""),
-                      orElse: () => Curency(
-                        id: 1,
-                        name: 'no',
-                        symbol: 'no',
-                        status: false,
-                        createdAt: DateTime.now(),
-                        modifiedAt: DateTime.now(),
-                      ),
-                    );
-                    if (curentCurency.name != 'no') {
-                      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-                    } else {
-                      try {
-                        if (curencyController.newCurency[CurencyField.name] !=
-                                null &&
-                            curencyController.newCurency[CurencyField.symbol] !=
-                                null) {
-                          var curency = Curency(
-                            id: isEdding
-                                ? curencyController.newCurency[CurencyField.id]
-                                : generateUniqeRandomId(),
-                            name:
-                                curencyController.newCurency[CurencyField.name],
-                            symbol: curencyController
-                                .newCurency[CurencyField.symbol],
-                            status: curencyController
-                                    .newCurency[CurencyField.status] ??
-                                true,
-                            createdAt: isEdding
-                                ? DateTime.parse(curencyController
-                                    .newCurency[CurencyField.createdAt])
-                                : DateTime.now(),
-                            modifiedAt: DateTime.now(),
-                          );
+                    try {
+                      if (curencyController.newCurency[CurencyField.name] !=
+                              null &&
+                          curencyController.newCurency[CurencyField.symbol] !=
+                              null) {
+                        var curency = Curency(
+                          id: isEdding
+                              ? curencyController.newCurency[CurencyField.id]
+                              : generateUniqeRandomId(),
+                          name: curencyController.newCurency[CurencyField.name],
+                          symbol:
+                              curencyController.newCurency[CurencyField.symbol],
+                          status: curencyController
+                                  .newCurency[CurencyField.status] ??
+                              true,
+                          createdAt: isEdding
+                              ? DateTime.parse(curencyController
+                                  .newCurency[CurencyField.createdAt])
+                              : DateTime.now(),
+                          modifiedAt: DateTime.now(),
+                        );
 
-                          isEdding
-                              ? await curencyController.updateCurency(curency)
-                              : await curencyController.createCurency(curency);
-                        }
-                      } catch (e) {
-                        // print("some error : $e");
-                      } finally {
-                        Get.back();
+                        isEdding
+                            ? await curencyController.updateCurency(curency)
+                            : await curencyController.createCurency(curency);
                       }
+                    } catch (e) {
+                      print("some error : $e");
+                    
                     }
                   },
                 ))

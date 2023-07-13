@@ -22,7 +22,7 @@ class DatabaseService {
   }
 
   Future<String> get fullPath async {
-    const name = "account_Fourth.db";
+    const name = "account_fifth.db";
     final path = await getDatabasesPath();
     return join(path, name);
   }
@@ -39,7 +39,7 @@ class DatabaseService {
     await db.execute('''
         CREATE TABLE ${TableName.curencyTbl} (
           ${CurencyField.id} ${FieldType.idType},
-          ${CurencyField.name} ${FieldType.textType},
+          ${CurencyField.name} ${FieldType.textType} UNIQUE,
           ${CurencyField.symbol} ${FieldType.textType},
           ${CurencyField.status} ${FieldType.boolType},
           ${CurencyField.createdAt} ${FieldType.timeType},
@@ -51,7 +51,7 @@ class DatabaseService {
     await db.execute('''
         CREATE TABLE ${TableName.customerTbl} (
           ${CustomerField.id} ${FieldType.idType},
-          ${CustomerField.name} ${FieldType.textType},
+          ${CustomerField.name} ${FieldType.textType} UNIQUE,
           ${CustomerField.phone} ${FieldType.textType},
           ${CustomerField.address} ${FieldType.textType},
           ${CustomerField.status} ${FieldType.boolType},
@@ -65,7 +65,7 @@ class DatabaseService {
     await db.execute('''
         CREATE TABLE ${TableName.accGroupTbl} (
           ${AccGroupField.id} ${FieldType.idType},
-          ${AccGroupField.name} ${FieldType.textType},
+          ${AccGroupField.name} ${FieldType.textType} UNIQUE,
           ${AccGroupField.status} ${FieldType.boolType},
           ${AccGroupField.createdAt} ${FieldType.timeType},
           ${AccGroupField.modifiedAt} ${FieldType.timeType}
