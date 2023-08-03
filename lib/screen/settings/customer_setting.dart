@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 
 class CustomerSettingScreen extends StatelessWidget {
   CustomerSettingScreen({super.key});
-  CustomerController customerController = Get.put(CustomerController());
+  CustomerController customerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +132,7 @@ class CustomerSettingItemWidget extends StatelessWidget {
                     color: Colors.red,
                     icon: FontAwesomeIcons.trashCan,
                     action: () {
-                      customerController.deleteCustomer(customer.id);
+                      customerController.deleteCustomer(customer.id ?? 0);
                       Get.back();
                     }),
                 child: const FaIcon(
@@ -193,20 +193,6 @@ class NewCustomerSheet extends StatelessWidget {
   final bool isEditing;
   NewCustomerSheet({super.key, this.isEditing = false});
   CustomerController customerController = Get.find();
-  final Set<int> generatedIds = Set<int>();
-
-  int generateUniqeRandomId() {
-    int min = 1;
-    int max = 9999;
-    Random random = Random();
-    int id;
-    do {
-      id = min + random.nextInt(max - min + 1);
-    } while (generatedIds.contains(id));
-
-    generatedIds.add(id);
-    return id;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -344,7 +330,7 @@ class NewCustomerSheet extends StatelessWidget {
                             id: isEditing
                                 ? customerController
                                     .newCustomer[CustomerField.id]
-                                : generateUniqeRandomId(),
+                                : null,
                             name: customerController
                                 .newCustomer[CustomerField.name],
                             phone: customerController

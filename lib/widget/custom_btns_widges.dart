@@ -14,7 +14,7 @@ class CustomBackBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           12,
@@ -36,10 +36,13 @@ class CustomBackBtnWidget extends StatelessWidget {
           )),
           GestureDetector(
             onTap: () => Get.back(),
-            child: const FaIcon(
-              FontAwesomeIcons.arrowRightLong,
-              color: MyColors.secondaryTextColor,
-              size: 20,
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              child: FaIcon(
+                FontAwesomeIcons.arrowRightLong,
+                color: MyColors.secondaryTextColor,
+                size: 20,
+              ),
             ),
           )
         ],

@@ -38,6 +38,7 @@ class AccGroupData {
     final db = await ins.database;
 
     final result = await db.query(TableName.accGroupTbl);
+    
     return result.map((e) => AccGroup.fromMap(e)).toList();
   }
 
@@ -49,8 +50,7 @@ class AccGroupData {
       Get.back();
       return upOb;
     } catch (e) {
-            CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
     }
   }
 

@@ -7,6 +7,7 @@ class CurencyController extends GetxController {
   final allCurency = <Curency>[].obs;
   final newCurency = {}.obs;
   final editCurency = {}.obs;
+  final selectedCurency = {}.obs;
 
   /*
   _productsController.newProduct.update(
@@ -18,11 +19,18 @@ class CurencyController extends GetxController {
   @override
   void onInit() {
     readAllCurency();
+
+    
+
     super.onInit();
   }
 
   Future<void> readAllCurency() async {
     allCurency.value = await curencyData.readAllCurencies();
+    allCurency.sort(((a, b) => b.createdAt.compareTo(a.createdAt)));
+    if (allCurency.isNotEmpty) {
+      selectedCurency.addAll(allCurency.last.toEditMap());
+    }
   }
 
   Future<void> createCurency(Curency curency) async {

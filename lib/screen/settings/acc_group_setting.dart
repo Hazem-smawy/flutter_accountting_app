@@ -164,20 +164,6 @@ class NewAccGroupSheet extends StatelessWidget {
   final bool isEditing;
   NewAccGroupSheet({super.key, this.isEditing = false});
   AccGroupController accGroupController = Get.find();
-  final Set<int> generatedIds = Set<int>();
-
-  int generateUniqeRandomId() {
-    int min = 1000;
-    int max = 9999;
-    Random random = Random();
-    int id;
-    do {
-      id = min + random.nextInt(max - min + 1);
-    } while (generatedIds.contains(id));
-
-    generatedIds.add(id);
-    return id;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -270,7 +256,7 @@ class NewAccGroupSheet extends StatelessWidget {
                                   id: isEditing
                                       ? accGroupController
                                           .newAccGroup[AccGroupField.id]
-                                      : generateUniqeRandomId(),
+                                      : null,
                                   name: accGroupController
                                       .newAccGroup[AccGroupField.name],
                                   status: accGroupController
@@ -291,7 +277,7 @@ class NewAccGroupSheet extends StatelessWidget {
                               }
                             } catch (e) {
                               // print("some error : $e");
-                            } 
+                            }
                           }))
                 ],
               ),

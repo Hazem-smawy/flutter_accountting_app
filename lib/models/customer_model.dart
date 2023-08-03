@@ -22,7 +22,7 @@ class CustomerField {
 }
 
 class Customer {
-  final int id;
+  int? id;
   final String name;
   final String phone;
   final String address;
@@ -30,7 +30,7 @@ class Customer {
   final DateTime createdAt;
   final DateTime modifiedAt;
   Customer({
-    required this.id,
+    this.id,
     required this.name,
     required this.phone,
     required this.address,

@@ -23,7 +23,7 @@ class JournalField {
 }
 
 class Journal {
-  final int id;
+   int? id;
   final int customerAccountId;
   final String details;
   final DateTime registeredAt;
@@ -32,7 +32,7 @@ class Journal {
   final DateTime createdAt;
   final DateTime modifiedAt;
   Journal({
-    required this.id,
+     this.id,
     required this.customerAccountId,
     required this.details,
     required this.registeredAt,

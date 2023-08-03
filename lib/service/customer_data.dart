@@ -43,11 +43,11 @@ class CustomerData {
 
   Future<int?> updateCustomer(Customer customer) async {
     final db = await ins.database;
-    
 
-         try {
-      final updatedObject = await db.update(TableName.customerTbl, customer.toMap(),
-        where: '${CustomerField.id} = ?', whereArgs: [customer.id]);
+    try {
+      final updatedObject = await db.update(
+          TableName.customerTbl, customer.toMap(),
+          where: '${CustomerField.id} = ?', whereArgs: [customer.id]);
       Get.back();
       return updatedObject;
     } catch (e) {

@@ -1,9 +1,17 @@
+import 'package:account_app/controller/accgroup_controller.dart';
+import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/models/accgroup_model.dart';
+import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/customer_account.dart';
+import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/service/customer_account_data.dart';
 import 'package:get/get.dart';
+import 'package:account_app/models/customer_account.dart';
 
 class CustomerAccountController extends GetxController {
   CustomerAccountData customerAccountData = CustomerAccountData();
+  AccGroupController accGroupController = AccGroupController();
+
   final allCustomerAccounts = <CustomerAccount>[].obs;
   final newCustomerAccount = {}.obs;
 
@@ -17,7 +25,59 @@ class CustomerAccountController extends GetxController {
   @override
   void onInit() {
     readAllCustomerAccounts();
+
+    // acFike();
     super.onInit();
+  }
+
+  Future<void> acFike() async {
+    //   // CustomerAccount(
+    //   //     id: 0,
+    //   //     customerId: customer.id ?? 0,
+    //   //     curencyId: cu.id ?? 0,
+    //   //     accgroupId: acc.id ?? 0,
+    //   //     totalCredit: 0,
+    //   //     totalDebit: 300,
+    //   //     operation: 2,
+    //   //     createdAt: DateTime.now() ,);
+    final list = [
+      CustomerAccount(
+          customerId: 214,
+          curencyId: 5718,
+          accgroupId: 7353,
+          totalCredit: 200,
+          totalDebit: 0,
+          operation: 4,
+          createdAt: DateTime.now()),
+      CustomerAccount(
+          customerId: 214,
+          curencyId: 5718,
+          accgroupId: 7353,
+          totalCredit: 200,
+          totalDebit: 0,
+          operation: 4,
+          createdAt: DateTime.now()),
+      // CustomerAccount(
+      //     customerId: 214,
+      //     curencyId: 7014,
+      //     accgroupId: 4684,
+      //     totalCredit: 200,
+      //     totalDebit: 0,
+      //     operation: 4,
+      //     createdAt: DateTime.now()),
+      // CustomerAccount(
+      //     customerId: 588,
+      //     curencyId: 5718,
+      //     accgroupId: 4267,
+      //     totalCredit: 200,
+      //     totalDebit: 0,
+      //     operation: 4,
+      //     createdAt: DateTime.now()),
+    ];
+    print(allCustomerAccounts);
+    // list.forEach((element) {
+    //   createCusomerAccount(element);
+    // });
   }
 
   Future<void> readAllCustomerAccounts() async {
@@ -25,9 +85,17 @@ class CustomerAccountController extends GetxController {
         await customerAccountData.readAllCustomerAccounts();
   }
 
-  Future<void> createCusomer(CustomerAccount customerAccount) async {
-    customerAccountData.create(customerAccount);
-    readAllCustomerAccounts();
+  Future<CustomerAccount> createNewCusomerAccount(
+      CustomerAccount customerAccount) async {
+    var newCustomerAccount = customerAccountData.create(customerAccount);
+    // readAllCustomerAccounts();
+    return newCustomerAccount;
+  }
+
+  Future<CustomerAccount?> findCustomerAccountIfExist(
+      {required int cid, required int accg, required int curid}) async {
+    return customerAccountData.isCustomerAccountExist(
+        customerId: cid, accGroupId: accg, curencyId: curid);
   }
 
   Future<void> updateCustomerAccount(CustomerAccount customerAccount) async {

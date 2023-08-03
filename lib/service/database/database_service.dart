@@ -2,6 +2,7 @@ import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
+import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/service/database/database_helper.dart';
 import 'package:account_app/service/database/tables_helpers.dart';
@@ -10,7 +11,7 @@ import 'package:path/path.dart';
 
 class DatabaseService {
   static Database? _database;
-  static final DatabaseService instance = DatabaseService._init();
+  static DatabaseService instance = DatabaseService._init();
 
   DatabaseService._init();
   Future<Database> get database async {
@@ -22,7 +23,7 @@ class DatabaseService {
   }
 
   Future<String> get fullPath async {
-    const name = "account_fifth.db";
+    const name = "account_sex.db";
     final path = await getDatabasesPath();
     return join(path, name);
   }
@@ -83,13 +84,17 @@ class DatabaseService {
           ${CustomerAccountField.totalCredit} ${FieldType.doubleType},
           ${CustomerAccountField.totalDebit} ${FieldType.doubleType},
           ${CustomerAccountField.createdAt} ${FieldType.timeType},
+          ${CustomerAccountField.operation} ${FieldType.integerType}
+        
+        )
+    ''');
+    /* 
+ 
           FOREIGN KEY(${CustomerAccountField.customerId}) REFERENCES ${TableName.customerTbl}(id) on DELETE CASCADE ,
           FOREIGN KEY(${CustomerAccountField.accgroupId}) REFERENCES ${TableName.accGroupTbl}(id) on DELETE CASCADE ,
           FOREIGN KEY(${CustomerAccountField.curencyId}) REFERENCES ${TableName.curencyTbl}(id) on DELETE CASCADE 
 
-        )
-    ''');
-
+ */
     await db.execute('''
         CREATE TABLE ${TableName.journalTbl} (
           ${JournalField.id} ${FieldType.idType},
@@ -99,9 +104,10 @@ class DatabaseService {
           ${JournalField.credit} ${FieldType.doubleType},
           ${JournalField.debit} ${FieldType.doubleType},
           ${JournalField.createdAt} ${FieldType.timeType},
-          ${JournalField.modifiedAt} ${FieldType.timeType},
-          FOREIGN KEY(${JournalField.customerAccountId}) REFERENCES ${TableName.customerAccountTbl}(id) on DELETE CASCADE 
+          ${JournalField.modifiedAt} ${FieldType.timeType}
+         
         )
     ''');
+    //  FOREIGN KEY(${JournalField.customerAccountId}) REFERENCES ${TableName.customerAccountTbl}(id) on DELETE CASCADE
   }
 }

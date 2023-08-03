@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 
 class CurencySettingScreen extends StatelessWidget {
   CurencySettingScreen({super.key});
-  CurencyController curencyController = Get.put(CurencyController());
+  CurencyController curencyController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -172,20 +172,6 @@ class NewCurencySheet extends StatelessWidget {
   NewCurencySheet({super.key, this.isEdding = false});
   final bool isEdding;
   CurencyController curencyController = Get.find();
-  final Set<int> generatedIds = Set<int>();
-
-  int generateUniqeRandomId() {
-    int min = 1000;
-    int max = 9999;
-    Random random = Random();
-    int id;
-    do {
-      id = min + random.nextInt(max - min + 1);
-    } while (generatedIds.contains(id));
-
-    generatedIds.add(id);
-    return id;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +282,7 @@ class NewCurencySheet extends StatelessWidget {
                         var curency = Curency(
                           id: isEdding
                               ? curencyController.newCurency[CurencyField.id]
-                              : generateUniqeRandomId(),
+                              : null,
                           name: curencyController.newCurency[CurencyField.name],
                           symbol:
                               curencyController.newCurency[CurencyField.symbol],
@@ -316,7 +302,6 @@ class NewCurencySheet extends StatelessWidget {
                       }
                     } catch (e) {
                       print("some error : $e");
-                    
                     }
                   },
                 ))

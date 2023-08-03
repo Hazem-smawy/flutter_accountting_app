@@ -1,11 +1,12 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/error_controller.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFieldWidget extends StatefulWidget {
   final String textHint;
   Function(String)? action;
-   String? placeHolder;
+  String? placeHolder;
 
   CustomTextFieldWidget({
     required this.textHint,
@@ -37,6 +38,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         onChanged: (value) {
           if (widget.action != null) {
             widget.action!(value);
+            CEC.errorMessage.value = "";
           }
         },
         decoration: InputDecoration(

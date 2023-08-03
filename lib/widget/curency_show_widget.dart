@@ -1,54 +1,39 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/models/curency_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
-class CurencyShowWidget extends StatefulWidget {
-  CurencyShowWidget({super.key});
-
-  @override
-  State<CurencyShowWidget> createState() => _CurencyShowWidgetState();
-}
-
-class _CurencyShowWidgetState extends State<CurencyShowWidget> {
-  final list = ["دولار", "ريال", "محلي"];
-  late String selected;
-  @override
-  void initState() {
-    // TODO: implement initState
-    selected = list.last;
-    super.initState();
-  }
+class CurencyShowWidget extends StatelessWidget {
+  CurencyController curencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(top: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: MyColors.containerColor.withOpacity(0.5),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: MyColors.shadowColor.withOpacity(0.09),
-        //     offset: Offset(1, 0),
-        //     //spreadRadius: 10,
-        //     blurRadius: 10,
-        //   )
-        //]
-      ),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: list.map((element) {
-            return CurencyShowItem(
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(top: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: MyColors.containerColor.withOpacity(0.5),
+        ),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: curencyController.allCurency.map((element) {
+              return CurencyShowItem(
                 action: () {
-                  setState(() {
-                    selected = element;
-                  });
+                  //curencyController.selectedCurency.clear();
+                  curencyController.selectedCurency.addAll(element.toEditMap());
                 },
-                isSelected: selected == element,
-                lable: element);
-          }).toList()),
+                isSelected:
+                    curencyController.selectedCurency[CurencyField.name] ==
+                        element.name,
+                lable: element.name,
+              );
+            }).toList()),
+      ),
     );
   }
 }

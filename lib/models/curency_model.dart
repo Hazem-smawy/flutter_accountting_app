@@ -20,14 +20,14 @@ class CurencyField {
 }
 
 class Curency {
-  final int id;
+   int? id;
   final String name;
   final String symbol;
   final bool status;
   final DateTime createdAt;
   final DateTime modifiedAt;
   Curency({
-    required this.id,
+     this.id,
     required this.name,
     required this.symbol,
     required this.status,

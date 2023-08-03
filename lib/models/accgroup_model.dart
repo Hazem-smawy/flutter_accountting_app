@@ -17,13 +17,13 @@ class AccGroupField {
   ];
 }
 class AccGroup {
-  final int id;
+   int? id;
   final String name;
   final bool status;
   final DateTime createdAt;
   final DateTime modifiedAt;
   AccGroup({
-    required this.id,
+     this.id ,
     required this.name,
     required this.status,
     required this.createdAt,
@@ -67,7 +67,7 @@ class AccGroup {
     };
   }
 
-  factory AccGroup.fromMap(Map<String, dynamic> map) {
+  factory AccGroup.fromMap(Map<String, Object?> map) {
     return AccGroup(
       id: map['id'] as int,
       name: map['name'] as String,

@@ -20,8 +20,20 @@ class AccGroupController extends GetxController {
     super.onInit();
   }
 
+  Future<void> crFike() async {
+    final a = AccGroup(
+        id: 2,
+        name: "الموضفين",
+        status: true,
+        createdAt: DateTime.now(),
+        modifiedAt: DateTime.now());
+    accGroupData.create(a);
+    readAllAccGroup();
+  }
+
   Future<void> readAllAccGroup() async {
     allAccGroups.value = await accGroupData.readAllAccGroups();
+    
   }
 
   Future<void> createAccGroup(AccGroup accGroup) async {
