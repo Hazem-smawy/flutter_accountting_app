@@ -1,13 +1,11 @@
-import 'dart:ffi';
-
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
-import 'package:account_app/service/customer_account_data.dart';
 import 'package:get/get.dart';
 
 class NewAccountController extends GetxController {
@@ -16,7 +14,7 @@ class NewAccountController extends GetxController {
   JournalController journalController = JournalController();
   CustomerAccountController customerAccountController =
       CustomerAccountController();
-
+  HomeController homeController = HomeController();
   Future<void> createNewCustomerAccount() async {
     print(newAccount);
     final int? customerId;
@@ -34,6 +32,8 @@ class NewAccountController extends GetxController {
       CustomerAccount newCac = await addNewCustomerAccount(customerId);
 
       addJournal(newCac.id ?? 0);
+      homeController.allHomeData.value =
+          await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
     } else {
       CustomerAccount? old =
           await customerAccountController.findCustomerAccountIfExist(
@@ -47,7 +47,12 @@ class NewAccountController extends GetxController {
             await addNewCustomerAccount(newAccount['customerId']);
         addJournal(newCac.id ?? 0);
       } else {
-        print("it is exist and have custoemr account");
+        var currentCustomerAcccounter = old.copyWith(
+            operation: old.operation + 1,
+            totalCredit: old.totalCredit + newAccount['credit'],
+            totalDebit: old.totalDebit + newAccount['debit']);
+        customerAccountController
+            .updateCustomerAccount(currentCustomerAcccounter);
         addJournal(old.id ?? 0);
       }
     }
@@ -79,5 +84,15 @@ class NewAccountController extends GetxController {
         .createNewCusomerAccount(newCustomerAccount);
 
     return currentCustomerAccount;
+  }
+
+  Future<void> addNewJournalToCustomerAccount(CustomerAccount cac) async {
+    print("it is exist and have custoemr account");
+    var currentCustomerAcccounter = cac.copyWith(
+        operation: cac.operation + 1,
+        totalCredit: cac.totalCredit + newAccount['credit'],
+        totalDebit: cac.totalDebit + newAccount['debit']);
+    customerAccountController.updateCustomerAccount(currentCustomerAcccounter);
+    addJournal(cac.id ?? 0);
   }
 }

@@ -12,8 +12,7 @@ class HomeData {
     return result.map((e) => GroupCurency.fromMap(e)).toList();
   }
 
-  Future<List<HomeModel>> getCustomerAccountsForAccGroup(
-      int accGroupId, int curencyId) async {
+  Future<List<HomeModel>> getCustomerAccountsForAccGroup() async {
     var db = await ins.database;
     final result = await db.rawQuery(
         'SELECT cac.customerId AS caId, ca.name ,cac.id AS cacId,totalDebit ,cac.totalCredit , cac.operation, cac.accgroupId AS accGId,cac.curencyId AS curId FROM customeraccount AS cac  JOIN  customer AS ca ON cac.customerId = ca.id ');

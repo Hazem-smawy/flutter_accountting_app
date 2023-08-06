@@ -57,7 +57,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 children: [
                   SizedBox(
                       width: Get.width / 3,
-                      child:  CustomTextFieldWidget(textHint: "المبلغ")),
+                      child: CustomTextFieldWidget(textHint: "المبلغ")),
                   const SizedBox(width: 10),
                   Expanded(
                       child: Container(
@@ -99,24 +99,26 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         ))),
                   ),
                   const SizedBox(width: 10),
-                   Expanded(
-                      child: CustomTextFieldWidget(textHint: "التفاصل")),
+                  Expanded(child: CustomTextFieldWidget(textHint: "التفاصل")),
                 ],
               ),
               CurencyShowWidget(),
               const SizedBox(height: 20),
               Row(
-                children:  [
+                children: [
                   Flexible(
-                      child: CustomBtnWidget(color: Colors.red, label: "له",action: () {
-                        
-                      },)),
+                      child: CustomBtnWidget(
+                    color: Colors.red,
+                    label: "له",
+                    action: () {},
+                  )),
                   SizedBox(width: 10),
                   Flexible(
-                      child:
-                          CustomBtnWidget(color: Colors.green, label: "عليه",action: () {
-                            
-                          },))
+                      child: CustomBtnWidget(
+                    color: Colors.green,
+                    label: "عليه",
+                    action: () {},
+                  ))
                 ],
               ),
               const SizedBox(height: 30),
@@ -128,78 +130,76 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   }
 }
 
-class NewCustomerSheet extends StatelessWidget {
-  const NewCustomerSheet({super.key});
+// class NewCustomerSheet extends StatelessWidget {
+//   const NewCustomerSheet({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: MyColors.bg,
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
-          child: Column(
-            children: [
-              //   const CustomBackBtnWidget(),
-              const SizedBox(height: 30),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //  const FaIcon(
-                    //   FontAwesomeIcons.user,
-                    //   size: 50,
-                    //   color: MyColors.secondaryTextColor,
-                    // ),
-                    // Text(
-                    //   "اضافه عميل",
-                    //   style: myTextStyles.title1,
-                    // ),
-                    const SizedBox(height: 20),
-                     CustomTextFieldWidget(
-                      textHint: "العنوان",
-                    ),
-                    const SizedBox(height: 10),
-                     CustomTextFieldWidget(
-                      textHint: "الهاتف",
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children:  [
-                        Flexible(
-                          child: CustomBtnWidget(
-                              color: MyColors.secondaryTextColor,
-                              label: "الغاء",action: () {
-                                
-                              },),
-                        ),
-                        SizedBox(width: 10),
-                        Flexible(
-                          child: CustomBtnWidget(
-                            color: Colors.green,
-                            label: "اضافه",
-                            action: () {
-                              
-                            },
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.only(top: 5),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(10),
+//         color: MyColors.bg,
+//       ),
+//       child: SafeArea(
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(
+//             horizontal: 20,
+//             vertical: 10,
+//           ),
+//           child: Column(
+//             children: [
+//               //   const CustomBackBtnWidget(),
+//               const SizedBox(height: 30),
+//               Center(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     //  const FaIcon(
+//                     //   FontAwesomeIcons.user,
+//                     //   size: 50,
+//                     //   color: MyColors.secondaryTextColor,
+//                     // ),
+//                     // Text(
+//                     //   "اضافه عميل",
+//                     //   style: myTextStyles.title1,
+//                     // ),
+//                     const SizedBox(height: 20),
+//                     CustomTextFieldWidget(
+//                       textHint: "العنوان",
+//                     ),
+//                     const SizedBox(height: 10),
+//                     CustomTextFieldWidget(
+//                       textHint: "الهاتف",
+//                     ),
+//                     const SizedBox(height: 20),
+//                     Row(
+//                       children: [
+//                         Flexible(
+//                           child: CustomBtnWidget(
+//                             color: MyColors.secondaryTextColor,
+//                             label: "الغاء",
+//                             action: () {},
+//                           ),
+//                         ),
+//                         SizedBox(width: 10),
+//                         Flexible(
+//                           child: CustomBtnWidget(
+//                             color: Colors.green,
+//                             label: "اضافه",
+//                             action: () {},
+//                           ),
+//                         )
+//                       ],
+//                     )
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

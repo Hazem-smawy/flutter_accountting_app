@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/screen/details/details.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
@@ -9,7 +10,8 @@ import 'package:get/get.dart';
 
 class HomeRowView extends StatelessWidget {
   final HomeModel homeModel;
-  const HomeRowView({super.key, required this.homeModel});
+  HomeRowView({super.key, required this.homeModel});
+  NewAccountController newAccountController = Get.put(NewAccountController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +32,21 @@ class HomeRowView extends StatelessWidget {
               width: 25,
               height: 5,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: Colors.red),
+                  borderRadius: BorderRadius.circular(5), color: Colors.green),
             ),
-            const SizedBox(width: 25),
-            Text(
-              "${homeModel.totalCredit - homeModel.totalDebit}",
-              style: myTextStyles.title1.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
+            const SizedBox(width: 5),
+            SizedBox(
+              width: Get.width * 0.2,
+              child: Text(
+                "${homeModel.totalCredit - homeModel.totalDebit}",
+                textAlign: TextAlign.center,
+                style: myTextStyles.title1.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
               ),
             ),
-            const SizedBox(width: 25),
+            const SizedBox(width: 5),
             CircleAvatar(
               backgroundColor: MyColors.blackColor.withOpacity(0.9),
               radius: 13,
@@ -61,7 +67,7 @@ class HomeRowView extends StatelessWidget {
             const SizedBox(width: 15),
             GestureDetector(
               onTap: () {
-                Get.bottomSheet(const NewRecordScreen(),
+                Get.bottomSheet(NewRecordScreen(),
                     isScrollControlled: true,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)));

@@ -2,7 +2,6 @@ import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/service/database/database_service.dart';
 import 'package:account_app/service/database/tables_helpers.dart';
-import 'package:sqflite/sqflite.dart';
 
 class CustomerAccountData {
   final ins = DatabaseService.instance;
@@ -55,9 +54,14 @@ class CustomerAccountData {
       required int accGroupId,
       required int curencyId}) async {
     final db = await ins.database;
-    var maps = await db.rawQuery(
-        "SELECT id FROM ${TableName.customerAccountTbl}  WHERE ${CustomerAccountField.customerId} = ? AND ${CustomerAccountField.accgroupId} = ? AND ${CustomerAccountField.curencyId} = ?",
-        [customerId, accGroupId, curencyId]);
+    var maps = await db.query(TableName.customerAccountTbl,
+        columns: CustomerAccountField.values,
+        where:
+            "${CustomerAccountField.customerId} = ? AND ${CustomerAccountField.accgroupId} = ? AND ${CustomerAccountField.curencyId} = ?",
+        whereArgs: [customerId, accGroupId, curencyId]);
+    // var maps = await db.rawQuery(
+    //     "SELECT id FROM ${TableName.customerAccountTbl}  WHERE ${CustomerAccountField.customerId} = ? AND ${CustomerAccountField.accgroupId} = ? AND ${CustomerAccountField.curencyId} = ?",
+    //     ['$customerId', '$accGroupId', '$curencyId']);
     //int? count = Sqflite.firstIntValue(row);
     if (maps.isNotEmpty) {
       return CustomerAccount.fromMap(maps.first);

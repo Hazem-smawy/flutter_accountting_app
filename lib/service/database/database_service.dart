@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/customer_account.dart';
@@ -18,9 +20,20 @@ class DatabaseService {
     if (_database != null) {
       return _database!;
     }
+
     _database = await _initialize();
+
     return _database!;
   }
+
+  // Stream<List<HomeModel>> getallHomeRows() {
+  //   return _database
+  //           ?.rawQuery(
+  //               'SELECT cac.customerId AS caId, ca.name ,cac.id AS cacId,totalDebit ,cac.totalCredit , cac.operation, cac.accgroupId AS accGId,cac.curencyId AS curId FROM customeraccount AS cac  JOIN  customer AS ca ON cac.customerId = ca.id ')
+  //           .asStream()
+  //           .map((event) => event.map((e) => HomeModel.fromMap(e)).toList()) ??
+  //       Stream.empty();
+  // }
 
   Future<String> get fullPath async {
     const name = "account_sex.db";

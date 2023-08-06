@@ -210,11 +210,13 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
       (value) => widget.accGroupId.id,
       ifAbsent: () => widget.accGroupId.id,
     );
-    newAccountController.newAccount.update(
-      "curencyId",
-      (value) => widget.curencyId,
-      ifAbsent: () => widget.curencyId,
-    );
+    if (widget.curencyId != null) {
+      newAccountController.newAccount.update(
+        "curencyId",
+        (value) => widget.curencyId,
+        ifAbsent: () => widget.curencyId,
+      );
+    }
 
     if (credit) {
       newAccountController.newAccount.update(

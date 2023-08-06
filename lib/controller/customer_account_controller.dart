@@ -75,8 +75,8 @@ class CustomerAccountController extends GetxController {
       //     createdAt: DateTime.now()),
     ];
     print(allCustomerAccounts);
-    // list.forEach((element) {
-    //   createCusomerAccount(element);
+    // allCustomerAccounts.forEach((element) {
+    //   deleteCustomerAccount(element.id ?? 0);
     // });
   }
 
