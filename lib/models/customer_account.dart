@@ -14,6 +14,7 @@ class CustomerAccountField {
   static const String totalDebit = 'totalDebit';
   static const String createdAt = 'createdAt';
   static const String operation = "operation";
+
   static final List<String> values = [
     id,
     customerId,
@@ -22,6 +23,7 @@ class CustomerAccountField {
     totalCredit,
     totalDebit,
     createdAt,
+    operation
   ];
 }
 
@@ -86,7 +88,7 @@ class CustomerAccount {
         totalCredit: map['totalCredit'] as double,
         totalDebit: map['totalDebit'] as double,
         createdAt: DateTime.parse(map['createdAt'] as String),
-        operation: map['operation']);
+        operation: map['operation'] as int);
   }
 
   String toJson() => json.encode(toMap());

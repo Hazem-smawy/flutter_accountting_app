@@ -16,9 +16,21 @@ class JournalData {
       return journal.copyWith(id: id);
     } catch (e) {
       CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-      
+
       return null;
     }
+  }
+
+  Future<List<Journal>> readAllJournalForCustomerAccount(cacId) async {
+    final db = await ins.database;
+    final results = await db.query(
+      TableName.journalTbl,
+      columns: JournalField.values,
+      where: '${JournalField.customerAccountId} = ?',
+      whereArgs: [cacId],
+    );
+
+    return results.map((e) => Journal.fromMap(e)).toList();
   }
 
   Future<Journal?> readJournal(int id) async {
@@ -46,11 +58,11 @@ class JournalData {
 
   Future<int?> updateJournal(Journal journal) async {
     final db = await ins.database;
-    
 
-         try {
-      final updatedObject = await db.update(TableName.journalTbl, journal.toMap(),
-        where: '${CustomerField.id} = ?', whereArgs: [journal.id]);
+    try {
+      final updatedObject = await db.update(
+          TableName.journalTbl, journal.toMap(),
+          where: '${CustomerField.id} = ?', whereArgs: [journal.id]);
       Get.back();
       return updatedObject;
     } catch (e) {

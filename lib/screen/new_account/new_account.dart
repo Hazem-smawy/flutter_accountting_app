@@ -3,6 +3,7 @@
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/error_controller.dart';
+import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/curency_show_widget.dart';
@@ -16,10 +17,8 @@ import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
 
 class NewAccountScreen extends StatefulWidget {
-  const NewAccountScreen(
-      {super.key, required this.accGroupId, required this.curencyId});
+  const NewAccountScreen({super.key, required this.accGroupId});
   final accGroupId;
-  final curencyId;
 
   @override
   State<NewAccountScreen> createState() => _NewAccountScreenState();
@@ -54,14 +53,16 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
   }
 
+  bool isFindedIt = false;
+
   NewAccountController newAccountController = Get.put(NewAccountController());
   NewCustomerSheet mySheet = Get.put(NewCustomerSheet());
   CustomerController customerController = Get.find();
+  HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
     return Container(
-      //constraints: BoxConstraints(minHeight: Get.height / 2),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -77,6 +78,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (CEC.errorMessage.isNotEmpty) ErrorShowWidget(),
+                    if (isFindedIt) CorrectShowWidget(),
                     const SizedBox(height: 20),
                     Row(
                       children: [
@@ -102,6 +104,23 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                               (value) => p0,
                               ifAbsent: () => p0,
                             );
+                            if (customerController.allCustomers
+                                    .firstWhereOrNull(
+                                        (element) => element.name == p0) !=
+                                null) {
+                              print(customerController.allCustomers
+                                  .firstWhere(
+                                      (element) => element.name.contains(p0))
+                                  .name);
+                              setState(() {
+                                isFindedIt = true;
+                              });
+                            } else {
+                              setState(() {
+                                isFindedIt = false;
+                              });
+                              CEC.errorMessage.value = "";
+                            }
                           },
                         )),
                       ],
@@ -210,13 +229,6 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
       (value) => widget.accGroupId.id,
       ifAbsent: () => widget.accGroupId.id,
     );
-    if (widget.curencyId != null) {
-      newAccountController.newAccount.update(
-        "curencyId",
-        (value) => widget.curencyId,
-        ifAbsent: () => widget.curencyId,
-      );
-    }
 
     if (credit) {
       newAccountController.newAccount.update(
@@ -225,7 +237,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
         ifAbsent: () => double.parse(newAccountController.newAccount['money']),
       );
       newAccountController.newAccount.update(
-        'credit',
+        'debit',
         (value) => 0.0,
         ifAbsent: () => 0.0,
       );

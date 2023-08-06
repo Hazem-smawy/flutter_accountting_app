@@ -1,3 +1,4 @@
+import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
@@ -5,18 +6,21 @@ import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/models/home_model.dart';
+
 import 'package:account_app/models/journal_model.dart';
 import 'package:get/get.dart';
 
 class NewAccountController extends GetxController {
   var newAccount = {}.obs;
-  CustomerController customerController = CustomerController();
-  JournalController journalController = JournalController();
-  CustomerAccountController customerAccountController =
-      CustomerAccountController();
+  CustomerController customerController = Get.find();
+  JournalController journalController = Get.find();
+  CurencyController curencyController = Get.find();
+  CustomerAccountController customerAccountController = Get.find();
   HomeController homeController = HomeController();
   Future<void> createNewCustomerAccount() async {
     print(newAccount);
+    print(curencyController.selectedCurency);
+
     final int? customerId;
     if (newAccount['new'] != null) {
       var newCustomer = Customer(
@@ -37,9 +41,10 @@ class NewAccountController extends GetxController {
     } else {
       CustomerAccount? old =
           await customerAccountController.findCustomerAccountIfExist(
-              cid: int.parse(newAccount['customerId']),
-              accg: int.parse(newAccount['accGroupId']),
-              curid: int.parse(newAccount['curencyId']));
+              cid: newAccount['customerId'],
+              accg: newAccount['accGroupId'],
+              curid: curencyController.selectedCurency['crId'] ??
+                  curencyController.selectedCurency['id']);
 
       if (old == null) {
         print("it is exist put have not customerAccount");
@@ -73,15 +78,18 @@ class NewAccountController extends GetxController {
 
   Future<CustomerAccount> addNewCustomerAccount(int customerId) async {
     var newCustomerAccount = CustomerAccount(
-        customerId: customerId,
-        curencyId: newAccount['curencyId'],
-        accgroupId: newAccount['accGroupId'],
-        totalCredit: newAccount['credit'],
-        totalDebit: newAccount['debit'],
-        createdAt: DateTime.now(),
-        operation: 1);
+      customerId: customerId,
+      curencyId: curencyController.selectedCurency['crId'] ??
+          curencyController.selectedCurency['id'],
+      accgroupId: newAccount['accGroupId'],
+      totalCredit: newAccount['credit'],
+      totalDebit: newAccount['debit'],
+      createdAt: DateTime.now(),
+      operation: 1,
+    );
     var currentCustomerAccount = await customerAccountController
         .createNewCusomerAccount(newCustomerAccount);
+    print("new customerAccount : ${currentCustomerAccount}");
 
     return currentCustomerAccount;
   }
@@ -94,5 +102,15 @@ class NewAccountController extends GetxController {
         totalDebit: cac.totalDebit + newAccount['debit']);
     customerAccountController.updateCustomerAccount(currentCustomerAcccounter);
     addJournal(cac.id ?? 0);
+  }
+
+  Future<void> addNewRecordToCustomerAccount(HomeModel homeModel) async {
+    var currentCustomerAccount = customerAccountController.allCustomerAccounts
+        .firstWhere((element) =>
+            element.id == homeModel.cacId &&
+            element.curencyId == homeModel.curId &&
+            element.customerId == homeModel.caId);
+    addNewJournalToCustomerAccount(currentCustomerAccount);
+    homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
   }
 }

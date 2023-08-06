@@ -1,231 +1,237 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/controller/journal_controller.dart';
+import 'package:account_app/models/home_model.dart';
+import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as DateFormater;
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+class DetailsScreen extends StatefulWidget {
+  HomeModel homeModel;
+  DetailsScreen({super.key, required this.homeModel});
 
   @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  List<Journal> journals = [];
+  List<Journal> reviresedJournals = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAllJournals();
+  }
+
+  Future<void> getAllJournals() async {
+    var newJournals = await journalController
+        .getAllJournalsForCustomerAccount(widget.homeModel.cacId ?? 0);
+
+    setState(() {
+      journals = newJournals;
+    });
+  }
+
+  double getAccountMoney(Journal e) {
+    var index = journals.indexOf(e);
+    double result = 0.0;
+    for (int i = journals.length - 1; i > index - 1; i--) {
+      result += journals[i].credit - journals[i].debit;
+    }
+    return result;
+  }
+
+  JournalController journalController = Get.find();
+  CustomerController customerController = Get.find();
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: Column(
-            children: [
-              const CustomBackBtnWidget(
-                title: "حازم السماوي",
-              ),
-              const SizedBox(height: 10),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Row(
+    return journals.isEmpty
+        ? Text("data")
+        : Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: DataTable(
-                          headingRowColor:
-                              MaterialStateProperty.resolveWith<Color?>(
-                                  (Set<MaterialState> states) {
-                            return MyColors.lessBlackColor;
-                            // Use the default value.
-                          }),
-                          columnSpacing: 10,
-                          headingRowHeight: 45,
-                          dataRowHeight: 40,
-                          headingTextStyle: myTextStyles.title2.copyWith(
-                            color: MyColors.bg,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                          dataTextStyle: myTextStyles.subTitle.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                          ),
-                          decoration: BoxDecoration(
-                              color: MyColors.bg,
-                              borderRadius: BorderRadius.circular(12)),
-                          columns: const [
-                            DataColumn(label: Text('التأريخ')),
-                            DataColumn(label: Text('المبلغ')),
-                            DataColumn(
-                                label: Center(
-                              child: Text(
-                                '     تفاصيل',
-                              ),
-                            )),
-                            DataColumn(
-                                label: FaIcon(
-                              FontAwesomeIcons.chevronDown,
-                              color: MyColors.bg,
-                              size: 18,
-                            )),
-                            DataColumn(
-                              label: Text('الحساب'),
-                            ),
-                          ],
-                          rows: [
-                            DataRow(
-                                onLongPress: () {
-                                  Get.dialog(const DetialInfoSheet());
-                                },
-                                cells: [
-                                  const DataCell(Text('2020-2-4')),
-                                  DataCell(Text(
-                                    '3000',
-                                    style: myTextStyles.title2,
+                    CustomBackBtnWidget(
+                      title: customerController.allCustomers
+                          .firstWhere(
+                              (element) => element.id == widget.homeModel.caId)
+                          .name,
+                    ),
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: DataTable(
+                                headingRowColor:
+                                    MaterialStateProperty.resolveWith<Color?>(
+                                        (Set<MaterialState> states) {
+                                  return MyColors.lessBlackColor;
+                                  // Use the default value.
+                                }),
+                                columnSpacing: 10,
+                                headingRowHeight: 45,
+                                dataRowHeight: 40,
+                                headingTextStyle: myTextStyles.title2.copyWith(
+                                  color: MyColors.bg,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                                dataTextStyle: myTextStyles.subTitle.copyWith(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: MyColors.bg,
+                                    borderRadius: BorderRadius.circular(12)),
+                                columns: const [
+                                  DataColumn(label: Text('التأريخ')),
+                                  DataColumn(label: Text('المبلغ')),
+                                  DataColumn(
+                                      label: Center(
+                                    child: Text(
+                                      '     تفاصيل',
+                                    ),
                                   )),
-                                  const DataCell(Text(
-                                    'إب هي مدينة ',
-                                    textAlign: TextAlign.right,
-                                    overflow: TextOverflow.clip,
-                                    textDirection: TextDirection.rtl,
-                                  )),
-                                  const DataCell(FaIcon(
+                                  DataColumn(
+                                      label: FaIcon(
                                     FontAwesomeIcons.chevronDown,
-                                    color: Colors.green,
+                                    color: MyColors.bg,
                                     size: 18,
                                   )),
-                                  DataCell(Text(
-                                    '1000  ',
-                                    textAlign: TextAlign.right,
-                                    style: myTextStyles.title2,
-                                  )),
-                                ]),
-                            DataRow(cells: [
-                              const DataCell(Text('2020-2-4')),
-                              DataCell(Text(
-                                '3000',
-                                style: myTextStyles.title2,
-                              )),
-                              const DataCell(Text(
-                                'إب هي مدينة ',
-                                textAlign: TextAlign.right,
-                                overflow: TextOverflow.clip,
-                                textDirection: TextDirection.rtl,
-                              )),
-                              const DataCell(FaIcon(
-                                FontAwesomeIcons.chevronUp,
-                                color: Colors.red,
-                                size: 18,
-                              )),
-                              DataCell(Text(
-                                '1000  ',
-                                textAlign: TextAlign.right,
-                                style: myTextStyles.title2,
-                              )),
-                            ]),
-                            DataRow(cells: [
-                              const DataCell(Text('2020-2-4')),
-                              DataCell(Text(
-                                '3000',
-                                style: myTextStyles.title2,
-                              )),
-                              const DataCell(Text(
-                                'إب هي مدينة ',
-                                textAlign: TextAlign.right,
-                                overflow: TextOverflow.clip,
-                                textDirection: TextDirection.rtl,
-                              )),
-                              const DataCell(FaIcon(
-                                FontAwesomeIcons.chevronDown,
-                                color: Colors.green,
-                                size: 18,
-                              )),
-                              DataCell(Text(
-                                '1000',
-                                textAlign: TextAlign.left,
-                                style: myTextStyles.title2,
-                              )),
-                            ]),
-                          ],
-                        ),
+                                  DataColumn(
+                                    label: Text('الحساب'),
+                                  ),
+                                ],
+                                rows: journals
+                                    .map(
+                                      (e) => DataRow(cells: [
+                                        DataCell(Text(
+                                            DateFormater.DateFormat.MEd()
+                                                .format(e.registeredAt))),
+                                        DataCell(Text(
+                                          " ${e.credit - e.debit}",
+                                          style: myTextStyles.title2,
+                                        )),
+                                        DataCell(Text(
+                                          e.details,
+                                          textAlign: TextAlign.right,
+                                          overflow: TextOverflow.clip,
+                                          textDirection: TextDirection.rtl,
+                                        )),
+                                        DataCell(FaIcon(
+                                          e.credit > e.debit
+                                              ? FontAwesomeIcons.chevronUp
+                                              : FontAwesomeIcons.chevronUp,
+                                          color: e.credit > e.debit
+                                              ? Colors.green
+                                              : Colors.red,
+                                          size: 18,
+                                        )),
+                                        DataCell(Text(
+                                          getAccountMoney(e).toString(),
+                                          textAlign: TextAlign.left,
+                                          style: myTextStyles.title2,
+                                        )),
+                                      ]),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Row(
-                children: const [
-                  DetailsSammaryWidget(
-                      icon: FontAwesomeIcons.arrowDown,
-                      title: "3000",
-                      subTitle: "له",
-                      color: Colors.red),
-                  SizedBox(width: 5),
-                  DetailsSammaryWidget(
-                      icon: FontAwesomeIcons.arrowUp,
-                      title: "3000",
-                      subTitle: "عليه",
-                      color: Colors.green),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13),
-                  border: Border.all(color: MyColors.shadowColor),
-                  color: MyColors.bg,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "\$2000",
-                      style: myTextStyles.title1,
+                    const Spacer(),
+                    Row(
+                      children: const [
+                        DetailsSammaryWidget(
+                            icon: FontAwesomeIcons.arrowDown,
+                            title: "3000",
+                            subTitle: "له",
+                            color: Colors.red),
+                        SizedBox(width: 5),
+                        DetailsSammaryWidget(
+                            icon: FontAwesomeIcons.arrowUp,
+                            title: "3000",
+                            subTitle: "عليه",
+                            color: Colors.green),
+                      ],
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Container(
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(7),
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: MyColors.shadowColor,
-                        ),
+                        borderRadius: BorderRadius.circular(13),
+                        border: Border.all(color: MyColors.shadowColor),
+                        color: MyColors.bg,
                       ),
-                      child: const Center(
-                        child: FaIcon(
-                          FontAwesomeIcons.chevronDown,
-                          color: Colors.red,
-                          size: 15,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "\$2000",
+                            style: myTextStyles.title1,
+                          ),
+                          const SizedBox(width: 10),
+                          Container(
+                            width: 30,
+                            height: 30,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: MyColors.shadowColor,
+                              ),
+                            ),
+                            child: const Center(
+                              child: FaIcon(
+                                FontAwesomeIcons.chevronDown,
+                                color: Colors.red,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    const SizedBox(height: 9),
                   ],
                 ),
               ),
-              const SizedBox(height: 9),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MyColors.primaryColor,
-        onPressed: () {
-          Get.bottomSheet(
-            const NewRecordScreen(),
-            isScrollControlled: true,
+            ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: MyColors.primaryColor,
+              onPressed: () {
+                Get.bottomSheet(
+                  NewRecordScreen(
+                    homeModel: widget.homeModel,
+                  ),
+                  isScrollControlled: true,
+                );
+              },
+              child: const FaIcon(FontAwesomeIcons.plus),
+            ),
           );
-        },
-        child: const FaIcon(FontAwesomeIcons.plus),
-      ),
-    );
   }
 }
 
@@ -414,7 +420,7 @@ class DetialInfoSheet extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: MyColors.primaryColor,
                     elevation: 0,
-                    minimumSize: const Size.fromHeight(50),
+                    minimumSize: Size.fromHeight(50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
                 child: Text(

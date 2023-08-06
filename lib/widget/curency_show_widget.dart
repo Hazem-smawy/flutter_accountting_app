@@ -1,6 +1,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:get/get.dart';
 
 class CurencyShowWidget extends StatelessWidget {
   CurencyController curencyController = Get.find();
-  NewAccountController newAccountController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +28,8 @@ class CurencyShowWidget extends StatelessWidget {
                 action: () {
                   //curencyController.selectedCurency.clear();
                   curencyController.selectedCurency.addAll(element.toEditMap());
-                  newAccountController.newAccount.update(
-                    'curencyId',
+                  curencyController.selectedCurency.update(
+                    'crId',
                     (value) => element.id,
                     ifAbsent: () => element.id,
                   );

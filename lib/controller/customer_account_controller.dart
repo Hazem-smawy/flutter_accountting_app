@@ -26,20 +26,10 @@ class CustomerAccountController extends GetxController {
   void onInit() {
     readAllCustomerAccounts();
 
-    // acFike();
     super.onInit();
   }
 
   Future<void> acFike() async {
-    //   // CustomerAccount(
-    //   //     id: 0,
-    //   //     customerId: customer.id ?? 0,
-    //   //     curencyId: cu.id ?? 0,
-    //   //     accgroupId: acc.id ?? 0,
-    //   //     totalCredit: 0,
-    //   //     totalDebit: 300,
-    //   //     operation: 2,
-    //   //     createdAt: DateTime.now() ,);
     final list = [
       CustomerAccount(
           customerId: 214,
@@ -78,6 +68,8 @@ class CustomerAccountController extends GetxController {
     // allCustomerAccounts.forEach((element) {
     //   deleteCustomerAccount(element.id ?? 0);
     // });
+
+    deleteCustomerAccount(1);
   }
 
   Future<void> readAllCustomerAccounts() async {
@@ -89,6 +81,7 @@ class CustomerAccountController extends GetxController {
       CustomerAccount customerAccount) async {
     var newCustomerAccount = customerAccountData.create(customerAccount);
     // readAllCustomerAccounts();
+    readAllCustomerAccounts();
     return newCustomerAccount;
   }
 

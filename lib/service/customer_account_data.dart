@@ -64,6 +64,7 @@ class CustomerAccountData {
     //     ['$customerId', '$accGroupId', '$curencyId']);
     //int? count = Sqflite.firstIntValue(row);
     if (maps.isNotEmpty) {
+      print(maps);
       return CustomerAccount.fromMap(maps.first);
     } else {
       return null;

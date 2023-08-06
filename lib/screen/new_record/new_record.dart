@@ -1,6 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/controller/error_controller.dart';
+import 'package:account_app/controller/new_account_controller.dart';
+import 'package:account_app/models/home_model.dart';
 import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +15,8 @@ import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
 
 class NewRecordScreen extends StatefulWidget {
-  const NewRecordScreen({super.key});
+  HomeModel homeModel;
+  NewRecordScreen({super.key, required this.homeModel});
 
   @override
   State<NewRecordScreen> createState() => _NewRecordScreenState();
@@ -33,6 +38,9 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       });
     }
   }
+
+  CurencyController curencyController = Get.find();
+  NewAccountController newAccountController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +65,16 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 children: [
                   SizedBox(
                       width: Get.width / 3,
-                      child: CustomTextFieldWidget(textHint: "المبلغ")),
+                      child: CustomTextFieldWidget(
+                        textHint: "المبلغ",
+                        action: (p0) {
+                          newAccountController.newAccount.update(
+                            'money',
+                            (value) => p0,
+                            ifAbsent: () => p0,
+                          );
+                        },
+                      )),
                   const SizedBox(width: 10),
                   Expanded(
                       child: Container(
@@ -70,7 +87,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "الاسم",
+                        widget.homeModel.name,
                         textAlign: TextAlign.right,
                         style:
                             myTextStyles.title2.copyWith(color: Colors.white),
@@ -99,25 +116,60 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         ))),
                   ),
                   const SizedBox(width: 10),
-                  Expanded(child: CustomTextFieldWidget(textHint: "التفاصل")),
+                  Expanded(
+                      child: CustomTextFieldWidget(
+                    textHint: "التفاصل",
+                    action: (p0) {
+                      newAccountController.newAccount.update(
+                        'desc',
+                        (value) => p0,
+                        ifAbsent: () => p0,
+                      );
+                    },
+                  )),
                 ],
               ),
-              CurencyShowWidget(),
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: MyColors.containerColor.withOpacity(0.5),
+                ),
+                child: Row(
+                  children: [
+                    Text(curencyController.allCurency
+                        .firstWhere(
+                            (element) => element.id == widget.homeModel.curId)
+                        .symbol),
+                    Spacer(),
+                    Text(curencyController.allCurency
+                        .firstWhere(
+                            (element) => element.id == widget.homeModel.curId)
+                        .name)
+                  ],
+                ),
+              ),
+
               const SizedBox(height: 20),
               Row(
                 children: [
                   Flexible(
                       child: CustomBtnWidget(
-                    color: Colors.red,
+                    color: Colors.green,
                     label: "له",
-                    action: () {},
+                    action: () {
+                      addNewRecordFunction(true);
+                    },
                   )),
                   SizedBox(width: 10),
                   Flexible(
                       child: CustomBtnWidget(
-                    color: Colors.green,
+                    color: Colors.red,
                     label: "عليه",
-                    action: () {},
+                    action: () {
+                      addNewRecordFunction(false);
+                    },
                   ))
                 ],
               ),
@@ -127,6 +179,45 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> addNewRecordFunction(bool credit) async {
+    if (newAccountController.newAccount['money'] == null ||
+        newAccountController.newAccount['desc'] == null) {
+      CEC.errorMessage.value = "no data to puplished";
+      return;
+    }
+    newAccountController.newAccount.update(
+      "date",
+      (value) => _selectedDate,
+      ifAbsent: () => _selectedDate,
+    );
+
+    if (credit) {
+      newAccountController.newAccount.update(
+        'credit',
+        (value) => double.parse(newAccountController.newAccount['money']),
+        ifAbsent: () => double.parse(newAccountController.newAccount['money']),
+      );
+      newAccountController.newAccount.update(
+        'debit',
+        (value) => 0.0,
+        ifAbsent: () => 0.0,
+      );
+    } else {
+      newAccountController.newAccount.update(
+        'debit',
+        (value) => double.parse(newAccountController.newAccount['money']),
+        ifAbsent: () => double.parse(newAccountController.newAccount['money']),
+      );
+      newAccountController.newAccount.update(
+        'credit',
+        (value) => 0.0,
+        ifAbsent: () => 0.0,
+      );
+    }
+    newAccountController.addNewRecordToCustomerAccount(widget.homeModel);
+    Get.back();
   }
 }
 

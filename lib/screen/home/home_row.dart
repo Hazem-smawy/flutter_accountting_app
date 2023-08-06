@@ -10,7 +10,8 @@ import 'package:get/get.dart';
 
 class HomeRowView extends StatelessWidget {
   final HomeModel homeModel;
-  HomeRowView({super.key, required this.homeModel});
+  VoidCallback action;
+  HomeRowView({super.key, required this.homeModel, required this.action});
   NewAccountController newAccountController = Get.put(NewAccountController());
 
   @override
@@ -24,7 +25,9 @@ class HomeRowView extends StatelessWidget {
         // boxShadow: [myShadow.blackShadow],
       ),
       child: GestureDetector(
-        onTap: () => Get.to(() => const DetailsScreen()),
+        onTap: () => Get.to(() => DetailsScreen(
+              homeModel: homeModel,
+            )),
         child: Row(
           children: [
             const SizedBox(width: 5),
@@ -32,7 +35,10 @@ class HomeRowView extends StatelessWidget {
               width: 25,
               height: 5,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: Colors.green),
+                  borderRadius: BorderRadius.circular(5),
+                  color: homeModel.totalCredit > homeModel.totalDebit
+                      ? Colors.green
+                      : Colors.red),
             ),
             const SizedBox(width: 5),
             SizedBox(
@@ -42,7 +48,9 @@ class HomeRowView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: myTextStyles.title1.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.red,
+                  color: homeModel.totalCredit > homeModel.totalDebit
+                      ? Colors.green
+                      : Colors.red,
                 ),
               ),
             ),
@@ -67,10 +75,16 @@ class HomeRowView extends StatelessWidget {
             const SizedBox(width: 15),
             GestureDetector(
               onTap: () {
-                Get.bottomSheet(NewRecordScreen(),
-                    isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)));
+                Get.bottomSheet(
+                        NewRecordScreen(
+                          homeModel: homeModel,
+                        ),
+                        isScrollControlled: true,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)))
+                    .then((value) {
+                  action();
+                });
               },
               child: const FaIcon(FontAwesomeIcons.plus, size: 20),
             )
