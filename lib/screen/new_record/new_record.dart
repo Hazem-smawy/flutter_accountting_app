@@ -138,15 +138,21 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 ),
                 child: Row(
                   children: [
-                    Text(curencyController.allCurency
-                        .firstWhere(
-                            (element) => element.id == widget.homeModel.curId)
-                        .symbol),
+                    Text(
+                      curencyController.allCurency
+                          .firstWhere(
+                              (element) => element.id == widget.homeModel.curId)
+                          .symbol,
+                      style: myTextStyles.body,
+                    ),
                     Spacer(),
-                    Text(curencyController.allCurency
-                        .firstWhere(
-                            (element) => element.id == widget.homeModel.curId)
-                        .name)
+                    Text(
+                      curencyController.allCurency
+                          .firstWhere(
+                              (element) => element.id == widget.homeModel.curId)
+                          .name,
+                      style: myTextStyles.subTitle,
+                    )
                   ],
                 ),
               ),

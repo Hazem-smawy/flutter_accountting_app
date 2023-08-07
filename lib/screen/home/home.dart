@@ -169,15 +169,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 underline: Container(
                                   color: Colors.transparent,
                                 ),
-                                icon: const Icon(
-                                  Icons.abc,
-                                  color: Colors.white,
-                                ),
+                                // icon: const Icon(
+                                //   Icons.abc,
+                                //   color: Colors.black,
+                                // ),
                                 items: widget.curencies
                                     .map((e) => DropdownMenuItem(
                                           value: e.name,
                                           child: Container(
-                                            padding: EdgeInsets.all(5),
+                                            // padding: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),

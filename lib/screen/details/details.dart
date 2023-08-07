@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/models/home_model.dart';
@@ -64,6 +65,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   JournalController journalController = Get.find();
   CustomerController customerController = Get.find();
+  CurencyController curencyController = Get.find();
   @override
   Widget build(BuildContext context) {
     return journals.isEmpty
@@ -136,7 +138,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     .map(
                                       (e) => DataRow(cells: [
                                         DataCell(Text(
-                                            DateFormater.DateFormat.MEd()
+                                            DateFormater.DateFormat.yMd()
                                                 .format(e.registeredAt))),
                                         DataCell(Text(
                                           " ${(e.credit - e.debit).abs()}",
@@ -201,8 +203,50 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         color: MyColors.bg,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: MyColors.containerColor,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(width: 10),
+                                Text(
+                                  curencyController.selectedCurency['symbol'],
+                                  style: myTextStyles.body.copyWith(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: MyColors.lessBlackColor,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Container(
+                                  width: 1,
+                                  height: 15,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(3),
+                                    color: MyColors.secondaryTextColor
+                                        .withOpacity(0.7),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  curencyController.selectedCurency['name'],
+                                  style: myTextStyles.body.copyWith(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: MyColors.lessBlackColor,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                              ],
+                            ),
+                          ),
                           Text(
                             "\$$resultMoney",
                             style: myTextStyles.title1,

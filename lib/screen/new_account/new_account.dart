@@ -11,6 +11,7 @@ import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/error_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:account_app/constant/colors.dart';
@@ -86,17 +87,42 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                     Row(
                       children: [
                         SizedBox(
-                            width: Get.width / 3,
-                            child: CustomTextFieldWidget(
-                              textHint: "المبلغ",
-                              action: (p0) {
+                          width: Get.width / 3,
+                          child: Container(
+                            height: 55,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: MyColors.containerSecondColor,
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              initialValue:
+                                  newAccountController.newAccount['money'] ??
+                                      "",
+                              textAlign: TextAlign.right,
+                              textDirection: TextDirection.rtl,
+                              style: myTextStyles.title1,
+                              onChanged: (value) {
                                 newAccountController.newAccount.update(
                                   'money',
-                                  (value) => p0,
-                                  ifAbsent: () => p0,
+                                  (value) => value,
+                                  ifAbsent: () => value,
                                 );
+                                CEC.errorMessage.value = "";
                               },
-                            )),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "المبلغ",
+                                hintStyle: myTextStyles.subTitle,
+                              ),
+                            ),
+                          ),
+                        ),
                         const SizedBox(width: 10),
                         Expanded(
                             child: CustomTextFieldWidget(

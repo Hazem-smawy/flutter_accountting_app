@@ -250,7 +250,7 @@ class _CustomerAccountDetailsSheetState
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.red.withOpacity(0.09)),
@@ -277,10 +277,10 @@ class _CustomerAccountDetailsSheetState
                   ),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.green.withOpacity(0.09)),
@@ -291,8 +291,8 @@ class _CustomerAccountDetailsSheetState
                         widget.customerAccount.totalCredit.toString(),
                         style: myTextStyles.title1,
                       ),
-                      SizedBox(width: 10),
-                      FaIcon(
+                      const SizedBox(width: 10),
+                      const FaIcon(
                         FontAwesomeIcons.arrowUp,
                         size: 10,
                         color: Colors.green,
@@ -357,7 +357,8 @@ class _CustomerAccountDetailsSheetState
                 customerAccountController.updateCustomerAccount(
                     widget.customerAccount.copyWith(status: status));
               },
-              label: "تحد يث")
+              label: "تحد يث"),
+          SizedBox(height: 30),
         ],
       ),
     );
@@ -415,7 +416,9 @@ class CustomerAccountItem extends StatelessWidget {
       children: [
         Text(
           title,
-          style: myTextStyles.subTitle,
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+          style: myTextStyles.body.copyWith(overflow: TextOverflow.ellipsis),
         ),
         const SizedBox(
           width: 10,

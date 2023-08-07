@@ -25,7 +25,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
     return Container(
       height: 55,
       alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      //padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: MyColors.containerSecondColor,
@@ -42,10 +42,10 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
           }
         },
         decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: widget.textHint,
-          hintStyle: myTextStyles.subTitle,
-        ),
+            border: InputBorder.none,
+            hintText: widget.textHint,
+            hintStyle: myTextStyles.subTitle,
+            contentPadding: EdgeInsets.symmetric(horizontal: 10)),
       ),
     );
   }
