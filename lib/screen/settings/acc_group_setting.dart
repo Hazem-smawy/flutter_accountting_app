@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
+import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
@@ -14,7 +15,7 @@ import 'package:get/get.dart';
 class AccGroupSettingScreen extends StatelessWidget {
   AccGroupSettingScreen({super.key});
   AccGroupController accGroupController = Get.put(AccGroupController());
-
+  CustomerAccountController customerAccountController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,8 +120,8 @@ class AccGroupSettingScreen extends StatelessWidget {
                                         element.name,
                                         style: myTextStyles.title2,
                                       )),
-                                      const DataCell(Text(
-                                        '40',
+                                      DataCell(Text(
+                                        "${customerAccountController.allCustomerAccounts.where((p0) => p0.accgroupId == element.id).toList().length}",
                                         textAlign: TextAlign.center,
                                         overflow: TextOverflow.clip,
                                         textDirection: TextDirection.rtl,
@@ -211,7 +212,7 @@ class NewAccGroupSheet extends StatelessWidget {
                         );
                       }),
                   Text(
-                    "الحاله ",
+                    "الحالة ",
                     style: myTextStyles.subTitle,
                   )
                 ],
@@ -246,7 +247,7 @@ class NewAccGroupSheet extends StatelessWidget {
                   Flexible(
                       child: CustomBtnWidget(
                           color: MyColors.primaryColor,
-                          label: "اضافه",
+                          label: "اضافة",
                           action: () async {
                             try {
                               if (accGroupController

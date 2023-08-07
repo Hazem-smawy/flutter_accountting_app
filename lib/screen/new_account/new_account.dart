@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/error_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
-import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/error_widget.dart';
@@ -59,6 +60,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   NewCustomerSheet mySheet = Get.put(NewCustomerSheet());
   CustomerController customerController = Get.find();
   HomeController homeController = Get.find();
+  CustomerAccountController customerAccountController = Get.find();
+  CurencyController curencyController = Get.find();
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
@@ -77,8 +80,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                 () => Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (CEC.errorMessage.isNotEmpty) ErrorShowWidget(),
-                    if (isFindedIt) CorrectShowWidget(),
+                    if (CEC.errorMessage.isNotEmpty) const ErrorShowWidget(),
+                    if (isFindedIt) const CorrectShowWidget(),
                     const SizedBox(height: 20),
                     Row(
                       children: [
@@ -98,28 +101,35 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         Expanded(
                             child: CustomTextFieldWidget(
                           textHint: "الاسم",
-                          action: (p0) {
+                          action: (p0) async {
                             newAccountController.newAccount.update(
                               'name',
                               (value) => p0,
                               ifAbsent: () => p0,
                             );
+
                             if (customerController.allCustomers
                                     .firstWhereOrNull(
                                         (element) => element.name == p0) !=
                                 null) {
-                              print(customerController.allCustomers
-                                  .firstWhere(
-                                      (element) => element.name.contains(p0))
-                                  .name);
+                              var customer = customerController.allCustomers
+                                  .firstWhere((element) => element.name == p0);
+                              var customerAccount =
+                                  await customerAccountController
+                                      .findCustomerAccountIfExist(
+                                          cid: customer.id ?? 0,
+                                          accg: widget.accGroupId.id,
+                                          curid: curencyController
+                                              .selectedCurency['crId']);
+
                               setState(() {
-                                isFindedIt = true;
+                                isFindedIt =
+                                    customerAccount != null ? true : false;
                               });
                             } else {
                               setState(() {
                                 isFindedIt = false;
                               });
-                              CEC.errorMessage.value = "";
                             }
                           },
                         )),

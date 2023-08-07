@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/screen/customer_account/customer_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,6 +67,11 @@ class MyDrawerView extends StatelessWidget {
               padding: const EdgeInsets.only(right: 10),
               child: Column(
                 children: [
+                  DrawerItemWidget(
+                    onPress: () => Get.to(() => CustomerAccountsView()),
+                    icon: FontAwesomeIcons.users,
+                    title: "حسابات العملاء",
+                  ),
                   DrawerItemWidget(
                     onPress: () => Get.to(() => const SettingScreen()),
                     icon: FontAwesomeIcons.gear,

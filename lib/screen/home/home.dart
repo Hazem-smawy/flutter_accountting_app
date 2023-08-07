@@ -38,10 +38,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   CustomerAccountController customerAccountController = Get.find();
+  double onYou = 0.0;
+  double forYou = 0.0;
+
+  void calculateResultMoneyForYou() {
+    onYou = 0.0;
+    forYou = 0.0;
+    widget.rows?.forEach((e) {
+      print(e);
+      double res = e.totalCredit - e.totalDebit;
+      setState(() {
+        if (res > 0) {
+          onYou += res;
+        } else {
+          forYou += res;
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    calculateResultMoneyForYou();
+  }
 
   @override
   @override
   Widget build(BuildContext context) {
+    calculateResultMoneyForYou();
     return Scaffold(
         key: _globalKey,
         backgroundColor: MyColors.containerColor,
@@ -53,9 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
               globalKey: _globalKey,
               accGroup: widget.accGroup,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: HomePrivateSammaryWidget(),
+              child: widget.rows != null
+                  ? HomePrivateSammaryWidget(
+                      forYou: forYou,
+                      onYou: onYou,
+                    )
+                  : SizedBox(),
             ),
 
             Expanded(
@@ -68,20 +98,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         return HomeRowView(
                           homeModel: widget.rows?[index],
                           action: () {
-                            setState(() {
-                              homeController
-                                  .getCustomerAccountsFromCurencyAndAccGroupIds()
-                                  .then((value) {
-                                setState(() {
-                                  widget.rows = value
-                                      .where((element) =>
-                                          element.accGId ==
-                                              widget.accGroup.id &&
-                                          element.curId ==
-                                              curencyController
-                                                  .selectedCurency['crId'])
-                                      .toList();
-                                });
+                            homeController
+                                .getCustomerAccountsFromCurencyAndAccGroupIds()
+                                .then((value) {
+                              setState(() {
+                                widget.rows = value
+                                    .where((element) =>
+                                        element.accGId == widget.accGroup.id &&
+                                        element.curId ==
+                                            curencyController
+                                                .selectedCurency['crId'])
+                                    .toList();
                               });
                             });
                           },
@@ -101,48 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: MyColors.bg,
+                      color: widget.curencies.length > 1
+                          ? MyColors.bg
+                          : Colors.transparent,
                     ),
                     margin: const EdgeInsets.only(left: 7, bottom: 20),
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: Row(
                       children: [
-                        // Row(
-                        //   mainAxisSize: MainAxisSize.min,
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                        //     const SizedBox(width: 5),
-                        //     Text(
-                        //       widget.curencies.symbol,
-                        //       style: myTextStyles.body.copyWith(
-                        //         fontSize: 10,
-                        //         fontWeight: FontWeight.bold,
-                        //         color: MyColors.lessBlackColor,
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 3),
-                        //     Container(
-                        //       width: 1,
-                        //       height: 15,
-                        //       decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(3),
-                        //         color: MyColors.secondaryTextColor
-                        //             .withOpacity(0.7),
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 5),
-                        //     Text(
-                        //       widget.curencies.name,
-                        //       style: myTextStyles.body.copyWith(
-                        //         fontSize: 10,
-                        //         fontWeight: FontWeight.bold,
-                        //         color: MyColors.lessBlackColor,
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 5),
-                        //   ],
-                        // ),
-
                         widget.curencies.length > 1
                             ? DropdownButton<String>(
                                 borderRadius: BorderRadius.circular(15),
@@ -157,8 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .firstWhere((element) =>
                                               element.name == value)
                                           .toMap());
-                                  print(
-                                      "curency :${curencyController.selectedCurency}");
+
                                   setState(() {
                                     widget.rows = homeController.loadData
                                         .where((p0) =>
@@ -167,18 +159,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 curencyController
                                                     .selectedCurency['crId'])
                                         .toList();
-                                    print(widget.rows);
                                   });
                                 },
                                 alignment: Alignment.center,
                                 elevation: 0,
                                 isDense: true,
                                 itemHeight: kMinInteractiveDimension.toDouble(),
-                                dropdownColor: MyColors.background,
+                                dropdownColor: MyColors.secondaryTextColor,
                                 underline: Container(
                                   color: Colors.transparent,
                                 ),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.abc,
                                   color: Colors.white,
                                 ),
@@ -208,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MyColors.lessBlackColor,
                                                   ),
                                                 ),
-                                                const SizedBox(width: 3),
+                                                const SizedBox(width: 10),
                                                 Container(
                                                   width: 1,
                                                   height: 15,
@@ -221,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .withOpacity(0.7),
                                                   ),
                                                 ),
-                                                const SizedBox(width: 5),
+                                                const SizedBox(width: 10),
                                                 Text(
                                                   e.name,
                                                   style: myTextStyles.body
@@ -232,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MyColors.lessBlackColor,
                                                   ),
                                                 ),
-                                                const SizedBox(width: 5),
+                                                const SizedBox(width: 10),
                                               ],
                                             ),
                                           ),
@@ -242,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? Container(
                                     padding: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(15),
                                       color: MyColors.bg,
                                     ),
                                     child: Row(
@@ -250,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width: 10),
                                         Text(
                                           widget.curencies[0].symbol,
                                           style: myTextStyles.body.copyWith(
@@ -259,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: MyColors.lessBlackColor,
                                           ),
                                         ),
-                                        const SizedBox(width: 3),
+                                        const SizedBox(width: 10),
                                         Container(
                                           width: 1,
                                           height: 15,
@@ -270,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .withOpacity(0.7),
                                           ),
                                         ),
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width: 10),
                                         Text(
                                           widget.curencies[0].name,
                                           style: myTextStyles.body.copyWith(
@@ -279,11 +270,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: MyColors.lessBlackColor,
                                           ),
                                         ),
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width: 10),
                                       ],
                                     ),
                                   )
-                                : SizedBox(),
+                                : const SizedBox(),
                       ],
                     ),
                   ),
@@ -297,29 +288,35 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomePrivateSammaryWidget extends StatelessWidget {
+  final double onYou;
+  final double forYou;
   const HomePrivateSammaryWidget({
     super.key,
+    required this.onYou,
+    required this.forYou,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
-        HomeSammaryWidget(
-          icon: FontAwesomeIcons.angleDown,
-          title: "1000",
-          subTitle: "عليك",
-          color: Colors.red,
-        ),
+      children: [
+        if (forYou != null)
+          HomeSammaryWidget(
+            icon: FontAwesomeIcons.angleDown,
+            title: "$forYou ",
+            subTitle: " لك",
+            color: Colors.red,
+          ),
         SizedBox(
           width: 10,
         ),
-        HomeSammaryWidget(
-          icon: FontAwesomeIcons.angleUp,
-          title: "2000",
-          subTitle: "لك",
-          color: Colors.green,
-        )
+        if (onYou != null)
+          HomeSammaryWidget(
+            icon: FontAwesomeIcons.angleUp,
+            title: "$onYou ",
+            subTitle: "عليك",
+            color: Colors.green,
+          )
       ],
     );
   }

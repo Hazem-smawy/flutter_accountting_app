@@ -217,7 +217,6 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
       );
     }
     newAccountController.addNewRecordToCustomerAccount(widget.homeModel);
-    Get.back();
   }
 }
 

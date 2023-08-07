@@ -13,7 +13,8 @@ import 'package:intl/intl.dart' as DateFormater;
 
 class DetailsScreen extends StatefulWidget {
   HomeModel homeModel;
-  DetailsScreen({super.key, required this.homeModel});
+  VoidCallback action;
+  DetailsScreen({super.key, required this.homeModel, required this.action});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -21,7 +22,9 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   List<Journal> journals = [];
-  List<Journal> reviresedJournals = [];
+  double onHem = 0.0;
+  double onYou = 0.0;
+  double resultMoney = 0.0;
 
   @override
   void initState() {
@@ -36,7 +39,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
     setState(() {
       journals = newJournals;
+      journals.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     });
+    getAllCalculationForMoney();
+  }
+
+  void getAllCalculationForMoney() {
+    journals.forEach((element) {
+      onHem += element.debit;
+      onYou += element.credit;
+    });
+
+    resultMoney = onYou - onHem;
   }
 
   double getAccountMoney(Journal e) {
@@ -125,7 +139,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             DateFormater.DateFormat.MEd()
                                                 .format(e.registeredAt))),
                                         DataCell(Text(
-                                          " ${e.credit - e.debit}",
+                                          " ${(e.credit - e.debit).abs()}",
                                           style: myTextStyles.title2,
                                         )),
                                         DataCell(Text(
@@ -134,17 +148,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           overflow: TextOverflow.clip,
                                           textDirection: TextDirection.rtl,
                                         )),
-                                        DataCell(FaIcon(
-                                          e.credit > e.debit
-                                              ? FontAwesomeIcons.chevronUp
-                                              : FontAwesomeIcons.chevronUp,
-                                          color: e.credit > e.debit
-                                              ? Colors.green
-                                              : Colors.red,
-                                          size: 18,
+                                        DataCell(Container(
+                                          width: 20,
+                                          height: 5,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: e.credit > e.debit
+                                                ? Colors.green
+                                                : Colors.red,
+                                          ),
                                         )),
                                         DataCell(Text(
-                                          getAccountMoney(e).toString(),
+                                          getAccountMoney(e).abs().toString(),
                                           textAlign: TextAlign.left,
                                           style: myTextStyles.title2,
                                         )),
@@ -159,16 +175,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                     const Spacer(),
                     Row(
-                      children: const [
+                      children: [
                         DetailsSammaryWidget(
                             icon: FontAwesomeIcons.arrowDown,
-                            title: "3000",
+                            title: "$onYou",
                             subTitle: "له",
                             color: Colors.red),
                         SizedBox(width: 5),
                         DetailsSammaryWidget(
                             icon: FontAwesomeIcons.arrowUp,
-                            title: "3000",
+                            title: ' $onHem',
                             subTitle: "عليه",
                             color: Colors.green),
                       ],
@@ -188,7 +204,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "\$2000",
+                            "\$$resultMoney",
                             style: myTextStyles.title1,
                           ),
                           const SizedBox(width: 10),
@@ -203,10 +219,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 color: MyColors.shadowColor,
                               ),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: FaIcon(
-                                FontAwesomeIcons.chevronDown,
-                                color: Colors.red,
+                                resultMoney > 0
+                                    ? FontAwesomeIcons.chevronUp
+                                    : FontAwesomeIcons.chevronDown,
+                                color:
+                                    resultMoney > 0 ? Colors.green : Colors.red,
                                 size: 15,
                               ),
                             ),
@@ -227,7 +246,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     homeModel: widget.homeModel,
                   ),
                   isScrollControlled: true,
-                );
+                ).then((value) {
+                  getAllJournals();
+                  widget.action();
+                });
               },
               child: const FaIcon(FontAwesomeIcons.plus),
             ),

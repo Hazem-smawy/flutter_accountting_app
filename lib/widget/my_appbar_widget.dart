@@ -1,6 +1,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/models/accgroup_model.dart';
+import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -27,12 +28,10 @@ class MyAppBarWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.dialog(
-                AccCategoriesListSheet(),
-              );
+              Get.to(() => AccGroupSettingScreen());
             },
             child: const FaIcon(
-              FontAwesomeIcons.clipboardList,
+              FontAwesomeIcons.folderPlus,
               size: 20,
               color: MyColors.containerColor,
             ),

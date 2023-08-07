@@ -14,6 +14,7 @@ class CustomerAccountField {
   static const String totalDebit = 'totalDebit';
   static const String createdAt = 'createdAt';
   static const String operation = "operation";
+  static const String status = "status";
 
   static final List<String> values = [
     id,
@@ -23,7 +24,8 @@ class CustomerAccountField {
     totalCredit,
     totalDebit,
     createdAt,
-    operation
+    operation,
+    status
   ];
 }
 
@@ -36,6 +38,8 @@ class CustomerAccount {
   final double totalDebit;
   final DateTime createdAt;
   final int operation;
+  final bool status;
+
   CustomerAccount(
       {this.id,
       required this.customerId,
@@ -44,7 +48,8 @@ class CustomerAccount {
       required this.totalCredit,
       required this.totalDebit,
       required this.createdAt,
-      required this.operation});
+      required this.operation,
+      required this.status});
 
   CustomerAccount copyWith(
       {int? id,
@@ -54,7 +59,8 @@ class CustomerAccount {
       double? totalCredit,
       double? totalDebit,
       DateTime? createdAt,
-      int? operation}) {
+      int? operation,
+      bool? status}) {
     return CustomerAccount(
         id: id ?? this.id,
         customerId: customerId ?? this.customerId,
@@ -63,7 +69,8 @@ class CustomerAccount {
         totalCredit: totalCredit ?? this.totalCredit,
         totalDebit: totalDebit ?? this.totalDebit,
         createdAt: createdAt ?? this.createdAt,
-        operation: operation ?? this.operation);
+        operation: operation ?? this.operation,
+        status: status ?? this.status);
   }
 
   Map<String, dynamic> toMap() {
@@ -75,7 +82,8 @@ class CustomerAccount {
       'totalCredit': totalCredit,
       'totalDebit': totalDebit,
       'createdAt': createdAt.toIso8601String(),
-      'operation': operation
+      'operation': operation,
+      'status': status ? 1 : 0,
     };
   }
 
@@ -88,7 +96,8 @@ class CustomerAccount {
         totalCredit: map['totalCredit'] as double,
         totalDebit: map['totalDebit'] as double,
         createdAt: DateTime.parse(map['createdAt'] as String),
-        operation: map['operation'] as int);
+        operation: map['operation'] as int,
+        status: map['status'] == 1);
   }
 
   String toJson() => json.encode(toMap());
@@ -98,7 +107,7 @@ class CustomerAccount {
 
   @override
   String toString() {
-    return 'CustomerAccount(id: $id, customerId: $customerId, curencyId: $curencyId, accgroupId: $accgroupId, totalCredit: $totalCredit, totalDebit: $totalDebit, createdAt: $createdAt,operation:$operation)';
+    return 'CustomerAccount(id: $id, customerId: $customerId, curencyId: $curencyId, accgroupId: $accgroupId, totalCredit: $totalCredit, totalDebit: $totalDebit, createdAt: $createdAt,operation:$operation,status:$status)';
   }
 
   @override
@@ -112,7 +121,8 @@ class CustomerAccount {
         other.totalCredit == totalCredit &&
         other.totalDebit == totalDebit &&
         other.createdAt == createdAt &&
-        other.operation == operation;
+        other.operation == operation &&
+        other.status == status;
   }
 
   @override
@@ -124,6 +134,7 @@ class CustomerAccount {
         totalCredit.hashCode ^
         totalDebit.hashCode ^
         createdAt.hashCode ^
-        operation.hashCode;
+        operation.hashCode ^
+        status.hashCode;
   }
 }

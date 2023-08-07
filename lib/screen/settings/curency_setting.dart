@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 
@@ -15,6 +16,7 @@ import 'package:get/get.dart';
 class CurencySettingScreen extends StatelessWidget {
   CurencySettingScreen({super.key});
   CurencyController curencyController = Get.find();
+  CustomerAccountController customerAccountController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +92,7 @@ class CurencySettingScreen extends StatelessWidget {
                                     onTap: () => CustomDialog.showDialog(
                                         title: "تعد يل",
                                         description:
-                                            "هل انت متاكد من تعد يل هذه العمله",
+                                            "هل انت متاكد من تعد يل هذه العملة",
                                         color: Colors.green,
                                         icon: FontAwesomeIcons.penToSquare,
                                         action: () {
@@ -129,8 +131,8 @@ class CurencySettingScreen extends StatelessWidget {
                                         text: '${element.symbol}',
                                         style: myTextStyles.title2,
                                       ))),
-                                  const DataCell(Text(
-                                    '10          ',
+                                  DataCell(Text(
+                                    '${customerAccountController.allCustomerAccounts.where((p0) => p0.accgroupId == element.id).toList().length}',
                                     textAlign: TextAlign.center,
                                     overflow: TextOverflow.clip,
                                     textDirection: TextDirection.rtl,
@@ -197,7 +199,7 @@ class NewCurencySheet extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              isEdding ? " تعد يل عمله" : "اضافه عمله",
+              isEdding ? " تعد يل عملة" : "اضافه عملة",
               style: myTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
@@ -218,7 +220,7 @@ class NewCurencySheet extends StatelessWidget {
                       );
                     }),
                 Text(
-                  "الحاله ",
+                  "الحالة ",
                   style: myTextStyles.subTitle,
                 )
               ],
@@ -230,7 +232,7 @@ class NewCurencySheet extends StatelessWidget {
                 SizedBox(
                     width: Get.width / 3,
                     child: CustomTextFieldWidget(
-                      textHint: 'رمز العمله',
+                      textHint: 'رمز العملة',
                       placeHolder:
                           curencyController.newCurency[CurencyField.symbol],
                       action: (p0) {
@@ -272,7 +274,7 @@ class NewCurencySheet extends StatelessWidget {
                 Flexible(
                     child: CustomBtnWidget(
                   color: MyColors.primaryColor,
-                  label: "اضافه",
+                  label: "اضافة",
                   action: () async {
                     try {
                       if (curencyController.newCurency[CurencyField.name] !=
@@ -310,11 +312,11 @@ class NewCurencySheet extends StatelessWidget {
             const SizedBox(height: 20),
             if (isEdding)
               CustomDeleteBtnWidget(
-                lable: "حذف العمله",
+                lable: "حذف العملة",
                 action: () {
                   CustomDialog.showDialog(
-                      title: "حذف العمله",
-                      description: "هل انت متاكد من حذف هذه العمله",
+                      title: "حذف العملة",
+                      description: "هل انت متاكد من حذف هذه العملة",
                       color: Colors.red,
                       icon: FontAwesomeIcons.trashCan,
                       action: () {

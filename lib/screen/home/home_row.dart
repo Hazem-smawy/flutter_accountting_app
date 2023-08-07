@@ -27,6 +27,7 @@ class HomeRowView extends StatelessWidget {
       child: GestureDetector(
         onTap: () => Get.to(() => DetailsScreen(
               homeModel: homeModel,
+              action: action,
             )),
         child: Row(
           children: [

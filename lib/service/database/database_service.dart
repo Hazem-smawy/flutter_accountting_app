@@ -36,7 +36,7 @@ class DatabaseService {
   // }
 
   Future<String> get fullPath async {
-    const name = "account_seven.db";
+    const name = "account_eight.db";
     final path = await getDatabasesPath();
     return join(path, name);
   }
@@ -97,7 +97,8 @@ class DatabaseService {
           ${CustomerAccountField.totalCredit} ${FieldType.doubleType},
           ${CustomerAccountField.totalDebit} ${FieldType.doubleType},
           ${CustomerAccountField.createdAt} ${FieldType.timeType},
-          ${CustomerAccountField.operation} ${FieldType.integerType}
+          ${CustomerAccountField.operation} ${FieldType.integerType},
+          ${CustomerAccountField.status} ${FieldType.boolType}
         
         )
     ''');

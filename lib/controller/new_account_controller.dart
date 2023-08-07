@@ -86,6 +86,7 @@ class NewAccountController extends GetxController {
       totalDebit: newAccount['debit'],
       createdAt: DateTime.now(),
       operation: 1,
+      status: true,
     );
     var currentCustomerAccount = await customerAccountController
         .createNewCusomerAccount(newCustomerAccount);

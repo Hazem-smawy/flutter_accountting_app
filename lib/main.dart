@@ -5,6 +5,7 @@ import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
+import 'package:account_app/screen/customer_account/customer_account.dart';
 
 import 'package:account_app/screen/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';

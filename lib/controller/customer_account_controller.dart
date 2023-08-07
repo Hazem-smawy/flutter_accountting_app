@@ -1,19 +1,15 @@
 import 'package:account_app/controller/accgroup_controller.dart';
-import 'package:account_app/controller/customers_controller.dart';
-import 'package:account_app/models/accgroup_model.dart';
-import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/customer_account.dart';
-import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/service/customer_account_data.dart';
 import 'package:get/get.dart';
-import 'package:account_app/models/customer_account.dart';
 
 class CustomerAccountController extends GetxController {
   CustomerAccountData customerAccountData = CustomerAccountData();
   AccGroupController accGroupController = AccGroupController();
-
+  final customerAccountSearchTextField = "".obs;
   final allCustomerAccounts = <CustomerAccount>[].obs;
   final newCustomerAccount = {}.obs;
+  final searchedList = <CustomerAccount>[].obs;
 
   /*
   _productsController.newProduct.update(
@@ -30,51 +26,13 @@ class CustomerAccountController extends GetxController {
   }
 
   Future<void> acFike() async {
-    final list = [
-      CustomerAccount(
-          customerId: 214,
-          curencyId: 5718,
-          accgroupId: 7353,
-          totalCredit: 200,
-          totalDebit: 0,
-          operation: 4,
-          createdAt: DateTime.now()),
-      CustomerAccount(
-          customerId: 214,
-          curencyId: 5718,
-          accgroupId: 7353,
-          totalCredit: 200,
-          totalDebit: 0,
-          operation: 4,
-          createdAt: DateTime.now()),
-      // CustomerAccount(
-      //     customerId: 214,
-      //     curencyId: 7014,
-      //     accgroupId: 4684,
-      //     totalCredit: 200,
-      //     totalDebit: 0,
-      //     operation: 4,
-      //     createdAt: DateTime.now()),
-      // CustomerAccount(
-      //     customerId: 588,
-      //     curencyId: 5718,
-      //     accgroupId: 4267,
-      //     totalCredit: 200,
-      //     totalDebit: 0,
-      //     operation: 4,
-      //     createdAt: DateTime.now()),
-    ];
-    print(allCustomerAccounts);
-    // allCustomerAccounts.forEach((element) {
-    //   deleteCustomerAccount(element.id ?? 0);
-    // });
-
-    deleteCustomerAccount(1);
+    // deleteCustomerAccount(1);
   }
 
   Future<void> readAllCustomerAccounts() async {
     allCustomerAccounts.value =
         await customerAccountData.readAllCustomerAccounts();
+    searchedList.value = allCustomerAccounts;
   }
 
   Future<CustomerAccount> createNewCusomerAccount(

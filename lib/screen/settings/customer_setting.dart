@@ -215,7 +215,7 @@ class NewCustomerSheet extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              "اضافه عميل",
+              "اضافة عميل",
               style: myTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
@@ -237,7 +237,7 @@ class NewCustomerSheet extends StatelessWidget {
                       );
                     }),
                 Text(
-                  "حاله العميل",
+                  "حالة العميل",
                   style: myTextStyles.subTitle,
                 )
               ],
@@ -302,7 +302,7 @@ class NewCustomerSheet extends StatelessWidget {
                 Flexible(
                     child: CustomBtnWidget(
                   color: MyColors.primaryColor,
-                  label: "اضافه",
+                  label: "اضافة",
                   action: () async {
                     // Customer? curentCustomer =
                     //     customerController.allCustomers.firstWhere(

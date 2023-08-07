@@ -33,7 +33,9 @@ class CustomerAccountData {
   Future<List<CustomerAccount>> readAllCustomerAccounts() async {
     final db = await ins.database;
 
-    final result = await db.query(TableName.customerAccountTbl);
+    final result = await db.query(TableName.customerAccountTbl,
+        orderBy:
+            " ${CustomerAccountField.customerId}, ${CustomerAccountField.accgroupId}");
     return result.map((e) => CustomerAccount.fromMap(e)).toList();
   }
 
