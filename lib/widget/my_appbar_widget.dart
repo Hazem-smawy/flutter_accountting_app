@@ -8,10 +8,12 @@ import 'package:get/get.dart';
 
 class MyAppBarWidget extends StatelessWidget {
   final AccGroup accGroup;
-  const MyAppBarWidget({
+  VoidCallback action;
+  MyAppBarWidget({
     super.key,
     required GlobalKey<ScaffoldState> globalKey,
     required this.accGroup,
+    required this.action,
   }) : _globalKey = globalKey;
 
   final GlobalKey<ScaffoldState> _globalKey;
@@ -28,7 +30,9 @@ class MyAppBarWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(() => AccGroupSettingScreen());
+              Get.to(() => AccGroupSettingScreen())?.then((value) {
+                action();
+              });
             },
             child: const FaIcon(
               FontAwesomeIcons.folderPlus,
@@ -45,6 +49,7 @@ class MyAppBarWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               _globalKey.currentState?.openEndDrawer();
+              action();
             },
             child: const FaIcon(
               FontAwesomeIcons.bars,

@@ -23,7 +23,9 @@ class CurencyShowWidget extends StatelessWidget {
         ),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: curencyController.allCurency.map((element) {
+            children: curencyController.allCurency
+                .where((element) => element.status == true)
+                .map((element) {
               return CurencyShowItem(
                 action: () {
                   //curencyController.selectedCurency.clear();

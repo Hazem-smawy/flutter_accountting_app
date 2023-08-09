@@ -45,7 +45,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             border: InputBorder.none,
             hintText: widget.textHint,
             hintStyle: myTextStyles.subTitle,
-            contentPadding: EdgeInsets.symmetric(horizontal: 10)),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );
   }

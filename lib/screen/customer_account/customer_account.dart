@@ -119,11 +119,11 @@ class CustomerAccountsView extends StatelessWidget {
                                       .searchedList[index].curencyId)
                               .name;
                           var customer = customerController.allCustomers
-                              .firstWhere((element) =>
+                              .firstWhereOrNull((element) =>
                                   element.id ==
                                   customerAccountController
                                       .searchedList[index].customerId)
-                              .name;
+                              ?.name;
 
                           var accGroup = accGroupController.allAccGroups
                               .firstWhere((element) =>
@@ -171,7 +171,7 @@ class CustomerAccountsView extends StatelessWidget {
                                   SizedBox(
                                     width: Get.width / 3.5,
                                     child: CustomerAccountItem(
-                                        title: customer,
+                                        title: customer ?? "",
                                         icon: FontAwesomeIcons.user),
                                   ),
                                 ],

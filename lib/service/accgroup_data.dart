@@ -14,7 +14,7 @@ class AccGroupData {
       Get.back();
       return accGroup.copyWith(id: id);
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
     }
   }
 
@@ -38,7 +38,7 @@ class AccGroupData {
     final db = await ins.database;
 
     final result = await db.query(TableName.accGroupTbl);
-    
+
     return result.map((e) => AccGroup.fromMap(e)).toList();
   }
 
@@ -50,7 +50,7 @@ class AccGroupData {
       Get.back();
       return upOb;
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
     }
   }
 

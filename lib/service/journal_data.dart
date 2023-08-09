@@ -15,8 +15,7 @@ class JournalData {
       Get.back();
       return journal.copyWith(id: id);
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-
+      print("create journal eror");
       return null;
     }
   }
@@ -66,7 +65,7 @@ class JournalData {
       Get.back();
       return updatedObject;
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      print('update journal error');
     }
   }
 

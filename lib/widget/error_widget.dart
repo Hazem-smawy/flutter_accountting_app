@@ -14,15 +14,15 @@ class ErrorShowWidget extends StatelessWidget {
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.red[100],
+        color: Colors.red.withOpacity(0.1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            "there is some eror",
+            "كل الحقول مطلوبة",
             textAlign: TextAlign.right,
-            style: myTextStyles.body.copyWith(color: Colors.red),
+            style: myTextStyles.subTitle.copyWith(color: Colors.red),
           ),
           SizedBox(width: 10),
           FaIcon(

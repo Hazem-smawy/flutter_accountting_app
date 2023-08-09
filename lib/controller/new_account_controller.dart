@@ -24,7 +24,7 @@ class NewAccountController extends GetxController {
     final int? customerId;
     if (newAccount['new'] != null) {
       var newCustomer = Customer(
-        name: newAccount['name'],
+        name: newAccount['name'].toString().trim(),
         phone: newAccount['phone'] ?? "لايوجد رقم",
         address: newAccount['address'] ?? "لايوجد عنوان",
         status: true,

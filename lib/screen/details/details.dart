@@ -7,6 +7,7 @@ import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,12 @@ import 'package:intl/intl.dart' as DateFormater;
 class DetailsScreen extends StatefulWidget {
   HomeModel homeModel;
   VoidCallback action;
-  DetailsScreen({super.key, required this.homeModel, required this.action});
+  bool accGoupStatus;
+  DetailsScreen(
+      {super.key,
+      required this.homeModel,
+      required this.action,
+      required this.accGoupStatus});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -283,21 +289,38 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              backgroundColor: MyColors.primaryColor,
+              backgroundColor:
+                  getStatus() ? MyColors.primaryColor : MyColors.blackColor,
               onPressed: () {
-                Get.bottomSheet(
-                  NewRecordScreen(
-                    homeModel: widget.homeModel,
-                  ),
-                  isScrollControlled: true,
-                ).then((value) {
-                  getAllJournals();
-                  widget.action();
-                });
+                if (getStatus()) {
+                  Get.bottomSheet(
+                    NewRecordScreen(
+                      homeModel: widget.homeModel,
+                    ),
+                    isScrollControlled: true,
+                  ).then((value) {
+                    getAllJournals();
+                    widget.action();
+                  });
+                } else {
+                  CustomDialog.customSnackBar(
+                      "تم ايقاف هذه العمله من الاعدادات", SnackPosition.BOTTOM);
+                  return;
+                }
               },
               child: const FaIcon(FontAwesomeIcons.plus),
             ),
           );
+  }
+
+  bool getStatus() {
+    if (widget.accGoupStatus &&
+        widget.homeModel.caStatus &&
+        widget.homeModel.cacStatus) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

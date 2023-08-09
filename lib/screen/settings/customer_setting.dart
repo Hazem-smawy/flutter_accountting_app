@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
@@ -67,6 +68,7 @@ class CustomerSettingScreen extends StatelessWidget {
 
 class CustomerSettingItemWidget extends StatelessWidget {
   final Customer customer;
+  CustomerAccountController customerAccountController = Get.find();
   CustomerSettingItemWidget({
     super.key,
     required this.customer,
@@ -125,22 +127,23 @@ class CustomerSettingItemWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              GestureDetector(
-                onTap: () => CustomDialog.showDialog(
-                    title: "حذف",
-                    description: "هل انت متاكد من حذف هذا الحساب",
+              if (isHasAAccountsOnIt())
+                GestureDetector(
+                  onTap: () => CustomDialog.showDialog(
+                      title: "حذف",
+                      description: "هل انت متاكد من حذف هذا الحساب",
+                      color: Colors.red,
+                      icon: FontAwesomeIcons.trashCan,
+                      action: () {
+                        customerController.deleteCustomer(customer.id ?? 0);
+                        Get.back();
+                      }),
+                  child: const FaIcon(
+                    FontAwesomeIcons.trashCan,
+                    size: 15,
                     color: Colors.red,
-                    icon: FontAwesomeIcons.trashCan,
-                    action: () {
-                      customerController.deleteCustomer(customer.id ?? 0);
-                      Get.back();
-                    }),
-                child: const FaIcon(
-                  FontAwesomeIcons.trashCan,
-                  size: 15,
-                  color: Colors.red,
+                  ),
                 ),
-              ),
               const SizedBox(width: 10),
               GestureDetector(
                 onTap: () => CustomDialog.showDialog(
@@ -186,6 +189,12 @@ class CustomerSettingItemWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool isHasAAccountsOnIt() {
+    var accGoup = customerAccountController.allCustomerAccounts
+        .firstWhereOrNull((element) => element.customerId == customer.id);
+    return accGoup == null;
   }
 }
 
@@ -331,8 +340,9 @@ class NewCustomerSheet extends StatelessWidget {
                                 ? customerController
                                     .newCustomer[CustomerField.id]
                                 : null,
-                            name: customerController
-                                .newCustomer[CustomerField.name],
+                            name: customerController.newCustomer[CustomerField.name]
+                                .toString()
+                                .trim(),
                             phone: customerController
                                     .newCustomer[CustomerField.phone] ??
                                 'لا يوجد رقم',

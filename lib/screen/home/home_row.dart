@@ -1,9 +1,11 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/screen/details/details.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -11,9 +13,14 @@ import 'package:get/get.dart';
 class HomeRowView extends StatelessWidget {
   final HomeModel homeModel;
   VoidCallback action;
-  HomeRowView({super.key, required this.homeModel, required this.action});
+  HomeRowView(
+      {super.key,
+      required this.homeModel,
+      required this.action,
+      required this.status});
   NewAccountController newAccountController = Get.put(NewAccountController());
-
+  CurencyController curencyController = Get.find();
+  bool status;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,30 +35,31 @@ class HomeRowView extends StatelessWidget {
         onTap: () => Get.to(() => DetailsScreen(
               homeModel: homeModel,
               action: action,
+              accGoupStatus: status,
             )),
         child: Row(
           children: [
             const SizedBox(width: 5),
             Container(
-              width: 25,
+              width: 20,
               height: 5,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: homeModel.totalCredit > homeModel.totalDebit
-                      ? Colors.green
-                      : Colors.red),
+                  color: homeModel.totalCredit < homeModel.totalDebit
+                      ? Colors.red
+                      : Colors.green),
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 10),
             SizedBox(
               width: Get.width * 0.2,
               child: Text(
-                "${homeModel.totalCredit - homeModel.totalDebit}",
-                textAlign: TextAlign.center,
+                "${((homeModel.totalCredit - homeModel.totalDebit) * -1).obs}",
+                textAlign: TextAlign.left,
                 style: myTextStyles.title2.copyWith(
                   //   fontWeight: FontWeight.bold,
-                  color: homeModel.totalCredit > homeModel.totalDebit
-                      ? Colors.green
-                      : Colors.red,
+                  color: homeModel.totalCredit < homeModel.totalDebit
+                      ? Colors.red
+                      : Colors.green,
                 ),
               ),
             ),
@@ -74,24 +82,53 @@ class HomeRowView extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 15),
-            GestureDetector(
-              onTap: () {
-                Get.bottomSheet(
-                        NewRecordScreen(
-                          homeModel: homeModel,
-                        ),
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)))
-                    .then((value) {
-                  action();
-                });
-              },
-              child: const FaIcon(FontAwesomeIcons.plus, size: 20),
-            )
+            if (!status || !homeModel.caStatus || !homeModel.cacStatus)
+              const FaIcon(
+                FontAwesomeIcons.folderOpen,
+                size: 20,
+                color: MyColors.secondaryTextColor,
+              ),
+            if (status && homeModel.caStatus && homeModel.cacStatus)
+              GestureDetector(
+                onTap: () {
+                  if (curencyController.allCurency
+                      .firstWhere((element) =>
+                          element.id ==
+                          curencyController.selectedCurency['crId'])
+                      .status) {
+                    Get.bottomSheet(
+                            NewRecordScreen(
+                              homeModel: homeModel,
+                            ),
+                            isScrollControlled: true,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)))
+                        .then((value) {
+                      action();
+                    });
+                  } else {
+                    CustomDialog.customSnackBar(
+                        "تم ايقاف هذه العمله من الاعدادات",
+                        SnackPosition.BOTTOM);
+                    return;
+                  }
+                },
+                child: const FaIcon(FontAwesomeIcons.plus, size: 20),
+              )
           ],
         ),
       ),
     );
+  }
+
+  bool getRowStatus() {
+    if (!homeModel.caStatus ||
+        !homeModel.cacStatus ||
+        (curencyController.selectedCurency['status'] != null &&
+            curencyController.selectedCurency['status'] == false)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

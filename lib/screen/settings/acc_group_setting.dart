@@ -165,6 +165,7 @@ class NewAccGroupSheet extends StatelessWidget {
   final bool isEditing;
   NewAccGroupSheet({super.key, this.isEditing = false});
   AccGroupController accGroupController = Get.find();
+  CustomerAccountController customerAccountController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -259,7 +260,9 @@ class NewAccGroupSheet extends StatelessWidget {
                                           .newAccGroup[AccGroupField.id]
                                       : null,
                                   name: accGroupController
-                                      .newAccGroup[AccGroupField.name],
+                                      .newAccGroup[AccGroupField.name]
+                                      .toString()
+                                      .trim(),
                                   status: accGroupController
                                           .newAccGroup[AccGroupField.status] ??
                                       true,
@@ -284,7 +287,7 @@ class NewAccGroupSheet extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               //CustomBtnWidget(color: Colors.red, label: "حذف التصنيف"),
-              if (isEditing)
+              if (isEditing && isHasAAccountsOnIt())
                 CustomDeleteBtnWidget(
                   lable: "حذف التصنيف",
                   action: () {
@@ -308,5 +311,13 @@ class NewAccGroupSheet extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isHasAAccountsOnIt() {
+    var accGoup = customerAccountController.allCustomerAccounts
+        .firstWhereOrNull((element) =>
+            element.accgroupId ==
+            accGroupController.newAccGroup[AccGroupField.id]);
+    return accGoup == null;
   }
 }

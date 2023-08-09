@@ -5,10 +5,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class CustomDialog {
-  static void customSnackBar( description) {
+  static void customSnackBar(description, SnackPosition? snackPosition) {
     Get.rawSnackbar(
       backgroundColor: MyColors.lessBlackColor.withOpacity(0.9),
       //duration: const Duration(seconds: 10),
+      snackPosition: snackPosition ?? SnackPosition.TOP,
       messageText: Text(
         description,
         textAlign: TextAlign.right,

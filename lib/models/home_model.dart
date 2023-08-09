@@ -8,6 +8,8 @@ class HomeModel {
   final int? accGId;
   final int? curId;
   final String name;
+  final bool caStatus;
+  final bool cacStatus;
   final double totalDebit;
   final double totalCredit;
   HomeModel({
@@ -17,6 +19,8 @@ class HomeModel {
     this.accGId,
     this.curId,
     required this.name,
+    required this.caStatus,
+    required this.cacStatus,
     required this.totalDebit,
     required this.totalCredit,
   });
@@ -28,6 +32,8 @@ class HomeModel {
     int? accGId,
     int? curId,
     String? name,
+    bool? caStatus,
+    bool? cacStatus,
     double? totalDebit,
     double? totalCredit,
   }) {
@@ -38,6 +44,8 @@ class HomeModel {
       accGId: accGId ?? this.accGId,
       curId: curId ?? this.curId,
       name: name ?? this.name,
+      caStatus: caStatus ?? this.caStatus,
+      cacStatus: cacStatus ?? this.cacStatus,
       totalDebit: totalDebit ?? this.totalDebit,
       totalCredit: totalCredit ?? this.totalCredit,
     );
@@ -51,6 +59,8 @@ class HomeModel {
       'accGId': accGId,
       'curId': curId,
       'name': name,
+      'caStatus': caStatus ? 1 : 0,
+      'cacStatus': cacStatus ? 1 : 0,
       'totalDebit': totalDebit,
       'totalCredit': totalCredit,
     };
@@ -64,6 +74,8 @@ class HomeModel {
       accGId: map['accGId'] != null ? map['accGId'] as int : null,
       curId: map['curId'] != null ? map['curId'] as int : null,
       name: map['name'] as String,
+      caStatus: map['caStatus'] == 1,
+      cacStatus: map['cacStatus'] == 1,
       totalDebit: map['totalDebit'] as double,
       totalCredit: map['totalCredit'] as double,
     );
@@ -76,7 +88,7 @@ class HomeModel {
 
   @override
   String toString() {
-    return 'HomeModel(caId: $caId, cacId: $cacId, operation: $operation, accGId: $accGId, curId: $curId, name: $name, totalDebit: $totalDebit, totalCredit: $totalCredit)';
+    return 'HomeModel(caId: $caId, cacId: $cacId, operation: $operation, accGId: $accGId, curId: $curId, name: $name, caStatus: $caStatus, cacStatus: $cacStatus, totalDebit: $totalDebit, totalCredit: $totalCredit)';
   }
 
   @override
@@ -89,6 +101,8 @@ class HomeModel {
         other.accGId == accGId &&
         other.curId == curId &&
         other.name == name &&
+        other.caStatus == caStatus &&
+        other.cacStatus == cacStatus &&
         other.totalDebit == totalDebit &&
         other.totalCredit == totalCredit;
   }
@@ -101,6 +115,8 @@ class HomeModel {
         accGId.hashCode ^
         curId.hashCode ^
         name.hashCode ^
+        caStatus.hashCode ^
+        cacStatus.hashCode ^
         totalDebit.hashCode ^
         totalCredit.hashCode;
   }

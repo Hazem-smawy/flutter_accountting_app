@@ -14,7 +14,7 @@ class CustomerData {
       Get.back();
       return customer.copyWith(id: id);
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
     }
   }
 
@@ -51,7 +51,7 @@ class CustomerData {
       Get.back();
       return updatedObject;
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
     }
   }
 

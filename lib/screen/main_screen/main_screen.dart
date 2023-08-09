@@ -1,17 +1,16 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
-import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/screen/home/home.dart';
 import 'package:account_app/screen/new_account/new_account.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
-import 'package:account_app/widget/custom_btns_widges.dart';
-import 'package:account_app/widget/drawer_widget.dart';
-import 'package:account_app/widget/my_appbar_widget.dart';
+import 'package:account_app/widget/custom_dialog.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -77,91 +76,166 @@ class _MyMainScreenState extends State<MyMainScreen> {
   @override
   void initState() {
     super.initState();
-
     allMyRows = homeController.loadData;
+    // getAllUserAccount();
+  }
+
+  getAllUserAccount() async {
+    var allUser =
+        await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
+    setState(() {
+      allMyRows = allUser;
+    });
   }
 
   final GlobalKey<ScaffoldState> _globalKeyOne = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Obx(
-          () => accGroupController.allAccGroups.isEmpty
-              ? Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+    return Obx(
+      () => accGroupController.allAccGroups.isEmpty
+          ? Scaffold(
+              body: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Center(
-                    child: CustomBtnWidget(
-                      color: MyColors.primaryColor,
-                      label: "اضافة",
-                      action: () {
-                        Get.to(() => AccGroupSettingScreen());
-                      },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const FaIcon(
+                          FontAwesomeIcons.folderPlus,
+                          size: 50,
+                          color: MyColors.blackColor,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "قم بإضافة بعض التصنيفات ",
+                          style: myTextStyles.body,
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 60),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(() => AccGroupSettingScreen());
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    border: Border.all(
+                                      color: MyColors.blackColor,
+                                      width: 1,
+                                    )),
+                                child: Text(
+                                  "إضافة",
+                                  textAlign: TextAlign.center,
+                                  style: myTextStyles.title1,
+                                ),
+                              ),
+                            )),
+                      ],
                     ),
-                  ))
-              : PageView.builder(
-                  reverse: true,
-                  itemCount: accGroupController.allAccGroups.length,
-                  onPageChanged: (value) {
-                    setState(() {
-                      i = value;
-                    });
-                  },
-                  itemBuilder: ((context, index) {
-                    return FutureBuilder<List<GroupCurency>>(
-                        future: homeController.getCurencyInAccGroup(
-                            accGroupController.allAccGroups[index].id!),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData && snapshot.data.length > 0) {
-                            return HomeScreen(
-                              rows: allMyRows
-                                  .where((p0) =>
-                                      p0.accGId ==
-                                          accGroupController
-                                              .allAccGroups[index].id &&
-                                      p0.curId ==
-                                          curencyController
-                                              .selectedCurency['crId'])
-                                  .toList(),
-                              accGroup: accGroupController.allAccGroups[index],
-                              curencies: snapshot.data,
-                            );
-                          } else {
-                            return HomeScreen(
-                                accGroup:
-                                    accGroupController.allAccGroups[index],
-                                curencies: [],
-                                rows: null);
-                          }
+                  )),
+            )
+          : Scaffold(
+              body: SafeArea(
+                child: Obx(
+                  () => PageView.builder(
+                      reverse: true,
+                      itemCount: accGroupController.allAccGroups.length,
+                      onPageChanged: (value) {
+                        setState(() {
+                          i = value;
                         });
-                  })),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 0,
-        backgroundColor: MyColors.primaryColor,
-        onPressed: () {
-          //customerAccountController.acFike();
-          Get.bottomSheet(
-            NewAccountScreen(
-              accGroupId: accGroupController.allAccGroups[i],
+                      },
+                      itemBuilder: ((context, index) {
+                        return FutureBuilder<List<GroupCurency>>(
+                            future: homeController.getCurencyInAccGroup(
+                                accGroupController.allAccGroups[index].id!),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData &&
+                                  snapshot.data.length > 0) {
+                                return HomeScreen(
+                                  appbarAction: () {
+                                    setState(() {
+                                      homeController
+                                          .getCustomerAccountsFromCurencyAndAccGroupIds()
+                                          .then((value) {
+                                        setState(() {
+                                          allMyRows = value;
+                                        });
+                                      });
+                                    });
+                                  },
+                                  stauts: accGroupController
+                                      .allAccGroups[index].status,
+                                  rows: allMyRows
+                                      .where((p0) =>
+                                          p0.accGId ==
+                                              accGroupController
+                                                  .allAccGroups[index].id &&
+                                          p0.curId ==
+                                              curencyController
+                                                  .selectedCurency['crId'])
+                                      .toList(),
+                                  accGroup:
+                                      accGroupController.allAccGroups[index],
+                                  curencies: snapshot.data,
+                                );
+                              } else {
+                                return HomeScreen(
+                                    appbarAction: () {},
+                                    stauts: true,
+                                    accGroup:
+                                        accGroupController.allAccGroups[index],
+                                    curencies: const [],
+                                    rows: null);
+                              }
+                            });
+                      })),
+                ),
+              ),
+              floatingActionButton: Obx(
+                () => FloatingActionButton(
+                  elevation: 0,
+                  backgroundColor: accGroupController.allAccGroups[i].status
+                      ? MyColors.primaryColor
+                      : MyColors.blackColor,
+                  onPressed: () {
+                    if (accGroupController.allAccGroups[i].status == true) {
+                      if (accGroupController.allAccGroups.isNotEmpty &&
+                          curencyController.allCurency.isNotEmpty) {
+                        Get.bottomSheet(
+                          NewAccountScreen(
+                            accGroupId: accGroupController.allAccGroups[i],
+                          ),
+                          isScrollControlled: true,
+                        ).then((value) async {
+                          setState(() {
+                            homeController
+                                .getCustomerAccountsFromCurencyAndAccGroupIds()
+                                .then((value) {
+                              setState(() {
+                                allMyRows = value;
+                              });
+                            });
+                          });
+                        });
+                      }
+                    } else {
+                      CustomDialog.customSnackBar(
+                          "هذا التصنيف موقف", SnackPosition.BOTTOM);
+                      return;
+                    }
+                  },
+                  child: const FaIcon(FontAwesomeIcons.plus),
+                ),
+              ),
             ),
-            isScrollControlled: true,
-          ).then((value) async {
-            setState(() {
-              homeController
-                  .getCustomerAccountsFromCurencyAndAccGroupIds()
-                  .then((value) {
-                setState(() {
-                  allMyRows = value;
-                });
-              });
-            });
-          });
-        },
-        child: const FaIcon(FontAwesomeIcons.plus),
-      ),
     );
   }
 }

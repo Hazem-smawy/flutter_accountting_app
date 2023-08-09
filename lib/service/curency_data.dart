@@ -14,7 +14,7 @@ class CurencyData {
       Get.back();
       return curency.copyWith(id: id);
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
     }
   }
 
@@ -51,7 +51,7 @@ class CurencyData {
       Get.back();
       return updatedObject;
     } catch (e) {
-      CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
+      CustomDialog.customSnackBar('هذا الاسم موجود من قبل', SnackPosition.TOP);
     }
   }
 

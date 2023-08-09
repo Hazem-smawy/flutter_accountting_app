@@ -174,7 +174,7 @@ class NewCurencySheet extends StatelessWidget {
   NewCurencySheet({super.key, this.isEdding = false});
   final bool isEdding;
   CurencyController curencyController = Get.find();
-
+  CustomerAccountController customerAccountController = Get.find();
   @override
   Widget build(BuildContext context) {
     //print(curencyController.newCurency);
@@ -285,7 +285,9 @@ class NewCurencySheet extends StatelessWidget {
                           id: isEdding
                               ? curencyController.newCurency[CurencyField.id]
                               : null,
-                          name: curencyController.newCurency[CurencyField.name],
+                          name: curencyController.newCurency[CurencyField.name]
+                              .toString()
+                              .trim(),
                           symbol:
                               curencyController.newCurency[CurencyField.symbol],
                           status: curencyController
@@ -310,7 +312,7 @@ class NewCurencySheet extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            if (isEdding)
+            if (isEdding && isHasAAccountsOnIt())
               CustomDeleteBtnWidget(
                 lable: "حذف العملة",
                 action: () {
@@ -332,5 +334,13 @@ class NewCurencySheet extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool isHasAAccountsOnIt() {
+    var accGoup = customerAccountController.allCustomerAccounts
+        .firstWhereOrNull((element) =>
+            element.accgroupId ==
+            curencyController.newCurency[CurencyField.id]);
+    return accGoup == null;
   }
 }

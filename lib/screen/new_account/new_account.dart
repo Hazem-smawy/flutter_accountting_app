@@ -7,8 +7,10 @@ import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/error_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
+import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +30,8 @@ class NewAccountScreen extends StatefulWidget {
 
 class _NewAccountScreenState extends State<NewAccountScreen> {
   DateTime _selectedDate = DateTime.now();
+  List<Customer> customers = [];
+  Customer? selectionCustomer;
   @override
   void initState() {
     // TODO: implement initState
@@ -63,6 +67,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   HomeController homeController = Get.find();
   CustomerAccountController customerAccountController = Get.find();
   CurencyController curencyController = Get.find();
+  TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
@@ -87,77 +92,63 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                     Row(
                       children: [
                         SizedBox(
-                          width: Get.width / 3,
-                          child: Container(
-                            height: 55,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: MyColors.containerSecondColor,
-                            ),
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              initialValue:
-                                  newAccountController.newAccount['money'] ??
-                                      "",
-                              textAlign: TextAlign.right,
-                              textDirection: TextDirection.rtl,
-                              style: myTextStyles.title1,
-                              onChanged: (value) {
+                            width: Get.width / 3,
+                            child: CustomTextFieldWidget(
+                              textHint: "المبلغ",
+                              action: (p0) {
+                                setState(() {
+                                  customers.clear();
+                                });
                                 newAccountController.newAccount.update(
                                   'money',
-                                  (value) => value,
-                                  ifAbsent: () => value,
+                                  (value) => p0,
+                                  ifAbsent: () => p0,
                                 );
-                                CEC.errorMessage.value = "";
                               },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "المبلغ",
-                                hintStyle: myTextStyles.subTitle,
-                              ),
-                            ),
-                          ),
-                        ),
+                            )),
                         const SizedBox(width: 10),
                         Expanded(
-                            child: CustomTextFieldWidget(
-                          textHint: "الاسم",
-                          action: (p0) async {
-                            newAccountController.newAccount.update(
-                              'name',
-                              (value) => p0,
-                              ifAbsent: () => p0,
-                            );
-
-                            if (customerController.allCustomers
-                                    .firstWhereOrNull(
-                                        (element) => element.name == p0) !=
-                                null) {
-                              var customer = customerController.allCustomers
-                                  .firstWhere((element) => element.name == p0);
-                              var customerAccount =
-                                  await customerAccountController
-                                      .findCustomerAccountIfExist(
-                                          cid: customer.id ?? 0,
-                                          accg: widget.accGroupId.id,
-                                          curid: curencyController
-                                              .selectedCurency['crId']);
-
-                              setState(() {
-                                isFindedIt =
-                                    customerAccount != null ? true : false;
-                              });
-                            } else {
-                              setState(() {
-                                isFindedIt = false;
-                              });
-                            }
-                          },
+                            child: Container(
+                          height: 55,
+                          alignment: Alignment.center,
+                          //padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: MyColors.containerSecondColor,
+                          ),
+                          child: TextFormField(
+                            controller: nameController,
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            style: myTextStyles.title1,
+                            onChanged: (p0) {
+                              selectionCustomer = null;
+                              CEC.errorMessage.value = "";
+                              newAccountController.newAccount.update(
+                                'name',
+                                (value) => p0,
+                                ifAbsent: () => p0,
+                              );
+                              if (p0.length > 0) {
+                                setState(() {
+                                  customers = customerController.allCustomers
+                                      .where((element) => element.name
+                                          .contains(p0.toString().trim()))
+                                      .toList();
+                                });
+                              } else {
+                                setState(() {
+                                  customers.clear();
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "الاسم",
+                                hintStyle: myTextStyles.subTitle,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10)),
+                          ),
                         )),
                       ],
                     ),
@@ -221,26 +212,34 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                   ],
                 ),
               ),
-              // Positioned(
-              //   top: 80,
-              //   right: 0,
-              //   left: 0,
-              //   child: Container(
-              //     padding: EdgeInsets.symmetric(vertical: 10),
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       color: MyColors.secondaryTextColor,
-              //     ),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.end,
-              //       children: [
-              //         ExitCustomerItemWidget(),
-              //         ExitCustomerItemWidget(),
-              //         ExitCustomerItemWidget(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+              if (customers.isNotEmpty)
+                Positioned(
+                  top: 80,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: MyColors.secondaryTextColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: customers
+                          .map((e) => ExitCustomerItemWidget(
+                                customer: e,
+                                action: () {
+                                  setState(() {
+                                    selectionCustomer = e;
+                                    nameController.text = e.name;
+                                    customers.clear();
+                                  });
+                                },
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -249,12 +248,39 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   }
 
   void createCustomerAccount(bool credit) {
+    if (nameController.text.length < 1) {
+      CEC.errorMessage.value = "قم يملئ حقل الاسم بطريقة صحيحة";
+      return;
+    }
+    if (selectionCustomer != null) {
+      newAccountController.newAccount.update(
+        "name",
+        (value) => selectionCustomer?.name,
+        ifAbsent: () => selectionCustomer?.name,
+      );
+    } else {
+      newAccountController.newAccount.update(
+        "name",
+        (value) => nameController.text.trim(),
+        ifAbsent: () => nameController.text.trim(),
+      );
+    }
     if (newAccountController.newAccount['name'] == null ||
         newAccountController.newAccount['money'] == null ||
         newAccountController.newAccount['desc'] == null) {
       CEC.errorMessage.value = "no data to puplished";
       return;
     }
+
+    if (curencyController.allCurency
+            .firstWhereOrNull((element) =>
+                element.id == curencyController.selectedCurency['crId'])
+            ?.status ==
+        false) {
+      CustomDialog.customSnackBar("لم تقم بتحديد العمله", SnackPosition.BOTTOM);
+      return;
+    }
+
     newAccountController.newAccount.update(
       "date",
       (value) => _selectedDate,
@@ -291,7 +317,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
     }
 
     var findCustomer = customerController.allCustomers.firstWhereOrNull(
-      (element) => element.name == newAccountController.newAccount['name'],
+      (element) =>
+          element.name ==
+          newAccountController.newAccount['name'].toString().trim(),
     );
     if (findCustomer != null) {
       newAccountController.newAccount.update(
@@ -307,9 +335,10 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 }
 
 class ExitCustomerItemWidget extends StatelessWidget {
-  const ExitCustomerItemWidget({
-    super.key,
-  });
+  Customer customer;
+  VoidCallback action;
+  ExitCustomerItemWidget(
+      {super.key, required this.customer, required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -318,12 +347,17 @@ class ExitCustomerItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            "حازم السماوي",
-            textAlign: TextAlign.right,
-            style: myTextStyles.subTitle.copyWith(
-              fontWeight: FontWeight.normal,
-              color: MyColors.containerColor,
+          GestureDetector(
+            onTap: () {
+              action();
+            },
+            child: Text(
+              customer.name,
+              textAlign: TextAlign.right,
+              style: myTextStyles.subTitle.copyWith(
+                fontWeight: FontWeight.normal,
+                color: MyColors.containerColor,
+              ),
             ),
           ),
           Divider(),

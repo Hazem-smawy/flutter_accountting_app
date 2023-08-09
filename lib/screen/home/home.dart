@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:ui';
+
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
@@ -19,13 +21,17 @@ import 'package:account_app/widget/my_appbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   final AccGroup accGroup;
+  bool stauts;
   List<GroupCurency> curencies;
   List? rows;
+  VoidCallback appbarAction;
   HomeScreen(
       {super.key,
       required this.accGroup,
       required this.curencies,
-      this.rows = const []});
+      this.rows = const [],
+      required this.stauts,
+      required this.appbarAction});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -70,13 +76,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         key: _globalKey,
         backgroundColor: MyColors.containerColor,
-        endDrawer: const MyDrawerView(),
+        endDrawer: MyDrawerView(
+          action: widget.appbarAction,
+        ),
         body: SafeArea(
           child: Column(children: [
             const SizedBox(height: 10),
             MyAppBarWidget(
               globalKey: _globalKey,
               accGroup: widget.accGroup,
+              action: widget.appbarAction,
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -97,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         return HomeRowView(
                           homeModel: widget.rows?[index],
+                          status: widget.stauts,
                           action: () {
                             homeController
                                 .getCustomerAccountsFromCurencyAndAccGroupIds()

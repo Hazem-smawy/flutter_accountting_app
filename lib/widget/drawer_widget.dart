@@ -11,9 +11,8 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/screen/settings/setting_screen.dart';
 
 class MyDrawerView extends StatelessWidget {
-  const MyDrawerView({
-    super.key,
-  });
+  VoidCallback action;
+  MyDrawerView({super.key, required this.action});
 
   void closeApp() {
     exit(0);
@@ -68,12 +67,18 @@ class MyDrawerView extends StatelessWidget {
               child: Column(
                 children: [
                   DrawerItemWidget(
-                    onPress: () => Get.to(() => CustomerAccountsView()),
+                    onPress: () =>
+                        Get.to(() => CustomerAccountsView())?.then((value) {
+                      action();
+                    }),
                     icon: FontAwesomeIcons.users,
                     title: "حسابات العملاء",
                   ),
                   DrawerItemWidget(
-                    onPress: () => Get.to(() => const SettingScreen()),
+                    onPress: () =>
+                        Get.to(() => const SettingScreen())?.then((value) {
+                      action();
+                    }),
                     icon: FontAwesomeIcons.gear,
                     title: "الاعدادات",
                   ),
