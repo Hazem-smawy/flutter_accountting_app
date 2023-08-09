@@ -1,5 +1,7 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/acc_curency_controller.dart';
+import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:flutter/material.dart';
@@ -17,47 +19,60 @@ class MyAppBarWidget extends StatelessWidget {
   }) : _globalKey = globalKey;
 
   final GlobalKey<ScaffoldState> _globalKey;
+  AccGroupController accGroupController = Get.find();
+  AccGroupCurencyController accGroupCurencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-          color: MyColors.lessBlackColor,
-          borderRadius: BorderRadius.circular(12)),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.to(() => AccGroupSettingScreen())?.then((value) {
+    return Obx(
+      () => Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+            color: MyColors.lessBlackColor,
+            borderRadius: BorderRadius.circular(12)),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.to(() => AccGroupSettingScreen())?.then((value) {
+                  action();
+                });
+              },
+              child: const FaIcon(
+                FontAwesomeIcons.folderPlus,
+                size: 20,
+                color: MyColors.containerColor,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              accGroupController.allAccGroups
+                      .firstWhereOrNull((element) =>
+                          element.id ==
+                          accGroupCurencyController
+                              .allAccgroupsAndCurency[
+                                  accGroupCurencyController.pageViewCount.value]
+                              .accGroupId)
+                      ?.name ??
+                  "",
+              style:
+                  myTextStyles.title2.copyWith(color: MyColors.containerColor),
+            ),
+            const SizedBox(width: 15),
+            GestureDetector(
+              onTap: () {
+                _globalKey.currentState?.openEndDrawer();
                 action();
-              });
-            },
-            child: const FaIcon(
-              FontAwesomeIcons.folderPlus,
-              size: 20,
-              color: MyColors.containerColor,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            accGroup.name,
-            style: myTextStyles.title2.copyWith(color: MyColors.containerColor),
-          ),
-          const SizedBox(width: 15),
-          GestureDetector(
-            onTap: () {
-              _globalKey.currentState?.openEndDrawer();
-              action();
-            },
-            child: const FaIcon(
-              FontAwesomeIcons.bars,
-              color: MyColors.containerColor,
-              size: 20,
-            ),
-          )
-        ],
+              },
+              child: const FaIcon(
+                FontAwesomeIcons.bars,
+                color: MyColors.containerColor,
+                size: 20,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -25,13 +25,15 @@ class HomeScreen extends StatefulWidget {
   List<GroupCurency> curencies;
   List? rows;
   VoidCallback appbarAction;
-  HomeScreen(
-      {super.key,
-      required this.accGroup,
-      required this.curencies,
-      this.rows = const [],
-      required this.stauts,
-      required this.appbarAction});
+
+  HomeScreen({
+    super.key,
+    required this.accGroup,
+    required this.curencies,
+    this.rows = const [],
+    required this.stauts,
+    required this.appbarAction,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
