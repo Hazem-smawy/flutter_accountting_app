@@ -58,7 +58,7 @@ class CustomDeleteBtnWidget extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: Colors.red[100],
+          backgroundColor: Colors.red.withOpacity(0.15),
           minimumSize: const Size.fromHeight(50),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
@@ -68,7 +68,7 @@ class CustomDeleteBtnWidget extends StatelessWidget {
       child: Text(
         lable,
         style: myTextStyles.title1.copyWith(
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.bold,
           color: Colors.red,
         ),
       ),

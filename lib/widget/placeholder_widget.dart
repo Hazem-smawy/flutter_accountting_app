@@ -16,6 +16,9 @@ class PlaceHolderWidget extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
+          SizedBox(
+            height: 40,
+          ),
           if (curencyController.allCurency.isEmpty)
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -28,8 +31,9 @@ class PlaceHolderWidget extends StatelessWidget {
               child: Column(
                 children: [
                   const FaIcon(
-                    FontAwesomeIcons.dollarSign,
-                    color: Colors.red,
+                    FontAwesomeIcons.circleDollarToSlot,
+                    size: 50,
+                    color: MyColors.lessBlackColor,
                   ),
                   const SizedBox(
                     height: 10,
@@ -41,7 +45,7 @@ class PlaceHolderWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 60),
@@ -55,14 +59,16 @@ class PlaceHolderWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                color: Colors.red,
+                                color: Colors.grey,
                                 width: 1,
                               )),
                           child: Text(
                             "إضافة",
                             textAlign: TextAlign.center,
-                            style:
-                                myTextStyles.title1.copyWith(color: Colors.red),
+                            style: myTextStyles.title1.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                       )),
@@ -70,12 +76,14 @@ class PlaceHolderWidget extends StatelessWidget {
               ),
             ),
           Container(
-            margin: EdgeInsets.only(
-                top: 50, right: 20, left: 20, bottom: Get.height / 3),
+            margin: const EdgeInsets.only(
+              right: 20,
+              left: 20,
+            ),
             width: double.infinity,
             constraints: BoxConstraints(maxHeight: Get.height / 4),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(12),
               color: MyColors.bg,
               //boxShadow: [myShadow.blackShadow]
             ),

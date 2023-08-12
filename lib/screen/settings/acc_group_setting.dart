@@ -185,7 +185,7 @@ class NewAccGroupSheet extends StatelessWidget {
               CustomSheetBackBtnWidget(),
               const SizedBox(height: 30),
               const FaIcon(
-                FontAwesomeIcons.fileCircleCheck,
+                FontAwesomeIcons.folderPlus,
                 size: 40,
                 color: MyColors.secondaryTextColor,
               ),
@@ -290,7 +290,7 @@ class NewAccGroupSheet extends StatelessWidget {
               //CustomBtnWidget(color: Colors.red, label: "حذف التصنيف"),
               if (isEditing && isHasAAccountsOnIt())
                 CustomDeleteBtnWidget(
-                  lable: "حذف التصنيف",
+                  lable: "حذف ",
                   action: () {
                     CustomDialog.showDialog(
                         title: "حذف التصنيف",
