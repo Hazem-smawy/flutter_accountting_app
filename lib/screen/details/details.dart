@@ -2,6 +2,7 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
+import 'package:account_app/models/curency_model.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/screen/new_record/new_record.dart';
@@ -142,37 +143,56 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ],
                                 rows: journals
                                     .map(
-                                      (e) => DataRow(cells: [
-                                        DataCell(Text(
-                                            DateFormater.DateFormat.yMd()
-                                                .format(e.registeredAt))),
-                                        DataCell(Text(
-                                          " ${(e.credit - e.debit).abs()}",
-                                          style: myTextStyles.title2,
-                                        )),
-                                        DataCell(Text(
-                                          e.details,
-                                          textAlign: TextAlign.right,
-                                          overflow: TextOverflow.clip,
-                                          textDirection: TextDirection.rtl,
-                                        )),
-                                        DataCell(Container(
-                                          width: 20,
-                                          height: 5,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: e.credit > e.debit
-                                                ? Colors.green
-                                                : Colors.red,
-                                          ),
-                                        )),
-                                        DataCell(Text(
-                                          getAccountMoney(e).abs().toString(),
-                                          textAlign: TextAlign.left,
-                                          style: myTextStyles.title2,
-                                        )),
-                                      ]),
+                                      (e) => DataRow(
+                                          onLongPress: () {
+                                            Get.dialog(DetialInfoSheet(
+                                              name: customerController
+                                                  .allCustomers
+                                                  .firstWhere((element) =>
+                                                      element.id ==
+                                                      widget.homeModel.caId)
+                                                  .name,
+                                              detailsRows: e,
+                                              curency: curencyController
+                                                  .allCurency
+                                                  .firstWhere((element) =>
+                                                      element.id ==
+                                                      widget.homeModel.curId),
+                                            ));
+                                          },
+                                          cells: [
+                                            DataCell(Text(
+                                                DateFormater.DateFormat.yMd()
+                                                    .format(e.registeredAt))),
+                                            DataCell(Text(
+                                              " ${(e.credit - e.debit).abs()}",
+                                              style: myTextStyles.title2,
+                                            )),
+                                            DataCell(Text(
+                                              e.details,
+                                              textAlign: TextAlign.right,
+                                              overflow: TextOverflow.clip,
+                                              textDirection: TextDirection.rtl,
+                                            )),
+                                            DataCell(Container(
+                                              width: 20,
+                                              height: 5,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: e.credit > e.debit
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                              ),
+                                            )),
+                                            DataCell(Text(
+                                              getAccountMoney(e)
+                                                  .abs()
+                                                  .toString(),
+                                              textAlign: TextAlign.left,
+                                              style: myTextStyles.title2,
+                                            )),
+                                          ]),
                                     )
                                     .toList(),
                               ),
@@ -384,13 +404,21 @@ class DetailsSammaryWidget extends StatelessWidget {
 }
 
 class DetialInfoSheet extends StatelessWidget {
-  const DetialInfoSheet({super.key});
+  final name;
+  Journal detailsRows;
+  Curency curency;
+
+  DetialInfoSheet(
+      {super.key,
+      required this.name,
+      required this.detailsRows,
+      required this.curency});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        horizontal: 50,
+        horizontal: 30,
         vertical: 100,
       ),
       decoration: BoxDecoration(
@@ -405,7 +433,7 @@ class DetialInfoSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "حازم السماوي",
+                name,
                 style: myTextStyles.title1,
               ),
               //Divider(),
@@ -413,14 +441,18 @@ class DetialInfoSheet extends StatelessWidget {
               Row(
                 children: [
                   const SizedBox(width: 5),
-                  const FaIcon(
-                    FontAwesomeIcons.chevronDown,
+                  FaIcon(
+                    detailsRows.credit > detailsRows.debit
+                        ? FontAwesomeIcons.chevronUp
+                        : FontAwesomeIcons.chevronDown,
                     size: 17,
-                    color: Colors.red,
+                    color: detailsRows.credit > detailsRows.debit
+                        ? Colors.green
+                        : Colors.red,
                   ),
                   const Spacer(),
                   Text(
-                    "3000",
+                    "${detailsRows.credit - detailsRows.debit}",
                     style: myTextStyles.title2,
                   ),
                   const Spacer(),
@@ -435,12 +467,12 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "ر.س",
+                    curency.symbol,
                     style: myTextStyles.subTitle
                         .copyWith(color: MyColors.blackColor),
                   ),
                   Text(
-                    "دولار",
+                    curency.name,
                     style: myTextStyles.subTitle,
                   ),
                   const InfoTitleWidget(
@@ -454,7 +486,8 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "2022-06-22",
+                    DateFormater.DateFormat.yMMMd()
+                        .format(detailsRows.createdAt),
                     style: myTextStyles.subTitle
                         .copyWith(color: MyColors.blackColor),
                   ),
@@ -469,7 +502,7 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "11:00 pm",
+                    DateFormater.DateFormat.Hms().format(detailsRows.createdAt),
                     style: myTextStyles.subTitle
                         .copyWith(color: MyColors.blackColor),
                   ),
@@ -480,6 +513,38 @@ class DetialInfoSheet extends StatelessWidget {
                 ],
               ),
               const Divider(),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "2022-06-22",
+              //       style: myTextStyles.subTitle
+              //           .copyWith(color: MyColors.blackColor),
+              //     ),
+              //     const InfoTitleWidget(
+              //       title: "التاريخ",
+              //       icon: FontAwesomeIcons.calendarCheck,
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text(
+              //       "11:00 pm",
+              //       style: myTextStyles.subTitle
+              //           .copyWith(color: MyColors.blackColor),
+              //     ),
+              //     const InfoTitleWidget(
+              //       title: "الوقت",
+              //       icon: FontAwesomeIcons.clock,
+              //     ),
+              //   ],
+              // ),
+              // const Divider(),
               const SizedBox(height: 10),
               Column(
                 children: [
@@ -492,7 +557,7 @@ class DetialInfoSheet extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    ' خلال المؤتمر أعلنت تعهدات بتقديم ملياري دولار لدعم الاستجابة الإنسانية في اليمن. والخطة هي أكبر نداء تطلقه ',
+                    detailsRows.details,
                     textAlign: TextAlign.center,
                     maxLines: 4,
                     style: myTextStyles.body,
@@ -507,9 +572,9 @@ class DetialInfoSheet extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: MyColors.primaryColor,
+                    backgroundColor: MyColors.lessBlackColor,
                     elevation: 0,
-                    minimumSize: Size.fromHeight(50),
+                    minimumSize: const Size.fromHeight(50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
                 child: Text(
@@ -519,11 +584,11 @@ class DetialInfoSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               GestureDetector(
                 onTap: () => Get.back(),
                 child: Text(
-                  "موافق",
+                  "إلغاء",
                   textAlign: TextAlign.center,
                   style: myTextStyles.subTitle,
                 ),

@@ -50,3 +50,53 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
     );
   }
 }
+
+class CustomNumberFieldWidget extends StatefulWidget {
+  final String textHint;
+  Function(String)? action;
+  String? placeHolder;
+
+  CustomNumberFieldWidget({
+    required this.textHint,
+    this.action,
+    this.placeHolder = "",
+    super.key,
+  });
+
+  @override
+  State<CustomNumberFieldWidget> createState() =>
+      _CustomNumberFieldWidgetState();
+}
+
+class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 55,
+      alignment: Alignment.center,
+      //padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: MyColors.containerSecondColor,
+      ),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        initialValue: widget.placeHolder ?? "",
+        textAlign: TextAlign.right,
+        textDirection: TextDirection.rtl,
+        style: myTextStyles.title1,
+        onChanged: (value) {
+          if (widget.action != null) {
+            widget.action!(value);
+            CEC.errorMessage.value = "";
+          }
+        },
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: widget.textHint,
+            hintStyle: myTextStyles.subTitle,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
+      ),
+    );
+  }
+}

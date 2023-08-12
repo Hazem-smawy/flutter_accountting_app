@@ -93,8 +93,7 @@ class HomeRowView extends StatelessWidget {
                 onTap: () {
                   if (curencyController.allCurency
                       .firstWhere((element) =>
-                          element.id ==
-                          curencyController.selectedCurency['crId'])
+                          element.id == curencyController.selectedCurency['id'])
                       .status) {
                     Get.bottomSheet(
                             NewRecordScreen(

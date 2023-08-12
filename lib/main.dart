@@ -1,34 +1,36 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
-import 'package:account_app/screen/acc_curency_views/acc_curency_screen.dart';
-import 'package:account_app/screen/customer_account/customer_account.dart';
-
+import 'package:account_app/controller/new_account_controller.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
-import 'package:account_app/widget/my_appbar_widget.dart';
+import 'package:account_app/widget/empty_accGroup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  AccGroupCurencyController accGroupCurencyController =
+      Get.put(AccGroupCurencyController());
   CustomerController customerController = Get.put(CustomerController());
   AccGroupController accGroupController = Get.put(AccGroupController());
   CurencyController curencyController = Get.put(CurencyController());
   JournalController journalController = Get.put(JournalController());
   CustomerAccountController customerAccountController =
       Get.put(CustomerAccountController());
-  HomeController homeController = Get.put(HomeController());
 
-  print(accGroupController.allAccGroups);
+  HomeController homeController = Get.put(HomeController());
+  NewAccountController newAccountController = Get.put(NewAccountController());
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  AccGroupController accGroupController = Get.find();
   MyApp({super.key});
 
   @override
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: MyColors.containerColor,
         ),
         // theme: AppThemes.darkTheme,
-        home: AccGroupCurencyScreen());
+        home: Obx(() => accGroupController.allAccGroups.isEmpty
+            ? Scaffold(body: EmptyAccGroupsWidget())
+            : MyMainScreen()));
   }
 }
 

@@ -21,8 +21,10 @@ import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
 
 class NewAccountScreen extends StatefulWidget {
-  const NewAccountScreen({super.key, required this.accGroupId});
+  const NewAccountScreen(
+      {super.key, required this.accGroupId, required this.curencyId});
   final accGroupId;
+  final curencyId;
 
   @override
   State<NewAccountScreen> createState() => _NewAccountScreenState();
@@ -61,7 +63,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 
   bool isFindedIt = false;
 
-  NewAccountController newAccountController = Get.put(NewAccountController());
+  NewAccountController newAccountController = Get.find();
   NewCustomerSheet mySheet = Get.put(NewCustomerSheet());
   CustomerController customerController = Get.find();
   HomeController homeController = Get.find();
@@ -93,7 +95,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                       children: [
                         SizedBox(
                             width: Get.width / 3,
-                            child: CustomTextFieldWidget(
+                            child: CustomNumberFieldWidget(
                               textHint: "المبلغ",
                               action: (p0) {
                                 setState(() {
@@ -218,12 +220,39 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                   right: 0,
                   left: 0,
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.only(top: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: MyColors.secondaryTextColor,
+                      color: MyColors.secondaryTextColor.withOpacity(0.7),
                     ),
-                    child: Column(
+                    child: ListView.builder(
+                      itemCount: customers.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ExitCustomerItemWidget(
+                          customer: customers[index],
+                          action: () {
+                            setState(() {
+                              selectionCustomer = customers[index];
+                              nameController.text = customers[index].name;
+                              customers.clear();
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  /*
+
+
+Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: customers
                           .map((e) => ExitCustomerItemWidget(
@@ -238,14 +267,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                               ))
                           .toList(),
                     ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  */
 
   void createCustomerAccount(bool credit) {
     if (nameController.text.length < 1) {
@@ -288,9 +310,14 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
     );
     newAccountController.newAccount.update(
       "accGroupId",
-      (value) => widget.accGroupId.id,
-      ifAbsent: () => widget.accGroupId.id,
+      (value) => widget.accGroupId,
+      ifAbsent: () => widget.accGroupId,
     );
+    // newAccountController.newAccount.update(
+    //   "curencyId",
+    //   (value) => widget.curencyId,
+    //   ifAbsent: () => widget.curencyId,
+    // );
 
     if (credit) {
       newAccountController.newAccount.update(
@@ -337,31 +364,33 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 class ExitCustomerItemWidget extends StatelessWidget {
   Customer customer;
   VoidCallback action;
+
   ExitCustomerItemWidget(
       {super.key, required this.customer, required this.action});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: 40,
+      alignment: Alignment.centerRight,
+      margin: EdgeInsets.only(left: 5, bottom: 5, right: 5),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          GestureDetector(
-            onTap: () {
-              action();
-            },
-            child: Text(
-              customer.name,
-              textAlign: TextAlign.right,
-              style: myTextStyles.subTitle.copyWith(
-                fontWeight: FontWeight.normal,
-                color: MyColors.containerColor,
-              ),
-            ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: MyColors.containerColor,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          action();
+        },
+        child: Text(
+          customer.name,
+          textAlign: TextAlign.right,
+          style: myTextStyles.subTitle.copyWith(
+            fontWeight: FontWeight.bold,
+            color: MyColors.blackColor,
           ),
-          Divider(),
-        ],
+        ),
       ),
     );
   }

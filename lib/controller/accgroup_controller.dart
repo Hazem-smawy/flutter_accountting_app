@@ -1,9 +1,11 @@
+import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/service/accgroup_data.dart';
 import 'package:get/get.dart';
 
 class AccGroupController extends GetxController {
   AccGroupData accGroupData = AccGroupData();
+  AccGroupCurencyController accGroupCurencyController = Get.find();
   final allAccGroups = <AccGroup>[].obs;
   final newAccGroup = {}.obs;
 
@@ -33,7 +35,7 @@ class AccGroupController extends GetxController {
 
   Future<void> readAllAccGroup() async {
     allAccGroups.value = await accGroupData.readAllAccGroups();
-    
+    accGroupCurencyController.getAllAccGroupAndCurency();
   }
 
   Future<void> createAccGroup(AccGroup accGroup) async {

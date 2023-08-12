@@ -26,19 +26,22 @@ class CustomerAccountController extends GetxController {
   }
 
   Future<void> acFike() async {
-    // deleteCustomerAccount(1);
+    allCustomerAccounts.forEach((e) {
+      deleteCustomerAccount(e.id ?? 0);
+    });
   }
 
   Future<void> readAllCustomerAccounts() async {
     allCustomerAccounts.value =
         await customerAccountData.readAllCustomerAccounts();
     searchedList.value = allCustomerAccounts;
+    // acFike();
   }
 
   Future<CustomerAccount> createNewCusomerAccount(
       CustomerAccount customerAccount) async {
-    var newCustomerAccount = customerAccountData.create(customerAccount);
-    // readAllCustomerAccounts();
+    var newCustomerAccount = await customerAccountData.create(customerAccount);
+
     readAllCustomerAccounts();
     return newCustomerAccount;
   }

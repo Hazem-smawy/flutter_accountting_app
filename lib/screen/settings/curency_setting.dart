@@ -304,9 +304,7 @@ class NewCurencySheet extends StatelessWidget {
                             ? await curencyController.updateCurency(curency)
                             : await curencyController.createCurency(curency);
                       }
-                    } catch (e) {
-                      print("some error : $e");
-                    }
+                    } catch (e) {}
                   },
                 ))
               ],

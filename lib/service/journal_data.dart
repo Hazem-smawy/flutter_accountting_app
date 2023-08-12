@@ -15,7 +15,6 @@ class JournalData {
       Get.back();
       return journal.copyWith(id: id);
     } catch (e) {
-      print("create journal eror");
       return null;
     }
   }
@@ -64,9 +63,7 @@ class JournalData {
           where: '${CustomerField.id} = ?', whereArgs: [journal.id]);
       Get.back();
       return updatedObject;
-    } catch (e) {
-      print('update journal error');
-    }
+    } catch (e) {}
   }
 
   Future<int> delete(int id) async {

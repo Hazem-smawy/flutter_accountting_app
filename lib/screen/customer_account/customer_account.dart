@@ -4,6 +4,7 @@ import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:flutter/material.dart';
@@ -209,17 +210,18 @@ class _CustomerAccountDetailsSheetState
   bool status = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       status = widget.customerAccount.status;
     });
   }
 
+  HomeController homeController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: MyColors.containerColor,
@@ -237,7 +239,7 @@ class _CustomerAccountDetailsSheetState
                       status = value;
                     });
                   }),
-              Spacer(),
+              const Spacer(),
               Text(
                 "الحالة",
                 style: myTextStyles.subTitle
@@ -245,12 +247,12 @@ class _CustomerAccountDetailsSheetState
               )
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.red.withOpacity(0.09)),
@@ -350,14 +352,29 @@ class _CustomerAccountDetailsSheetState
                 .format(widget.customerAccount.createdAt),
             icon: FontAwesomeIcons.clock,
           ),
-          SizedBox(height: 20),
-          CustomBtnWidget(
-              color: Colors.green,
-              action: () {
-                customerAccountController.updateCustomerAccount(
-                    widget.customerAccount.copyWith(status: status));
-              },
-              label: "تحد يث"),
+          SizedBox(height: 40),
+          GestureDetector(
+            onTap: () async {
+              customerAccountController.updateCustomerAccount(
+                  widget.customerAccount.copyWith(status: status));
+              homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
+              Get.back();
+            },
+            child: Container(
+              height: 45,
+              width: double.infinity,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: MyColors.primaryColor.withOpacity(0.4)),
+              child: Text(
+                "تحد يث",
+                style: myTextStyles.title1.copyWith(
+                  color: MyColors.blackColor,
+                ),
+              ),
+            ),
+          ),
           SizedBox(height: 30),
         ],
       ),

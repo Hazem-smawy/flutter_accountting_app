@@ -65,7 +65,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                 children: [
                   SizedBox(
                       width: Get.width / 3,
-                      child: CustomTextFieldWidget(
+                      child: CustomNumberFieldWidget(
                         textHint: "المبلغ",
                         action: (p0) {
                           newAccountController.newAccount.update(

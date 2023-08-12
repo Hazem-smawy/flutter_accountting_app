@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/models/home_model.dart';
-import 'package:account_app/service/database/database_service.dart';
 import 'package:account_app/service/home_data.dart';
 import 'package:get/get.dart';
 

@@ -18,20 +18,20 @@ class PlaceHolderWidget extends StatelessWidget {
         children: [
           if (curencyController.allCurency.isEmpty)
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               width: double.infinity,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: MyColors.bg,
               ),
               child: Column(
                 children: [
-                  FaIcon(
+                  const FaIcon(
                     FontAwesomeIcons.dollarSign,
                     color: Colors.red,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -40,7 +40,7 @@ class PlaceHolderWidget extends StatelessWidget {
                       color: Colors.red,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -71,11 +71,11 @@ class PlaceHolderWidget extends StatelessWidget {
             ),
           Container(
             margin: EdgeInsets.only(
-                top: 20, right: 20, left: 20, bottom: Get.height / 3),
+                top: 50, right: 20, left: 20, bottom: Get.height / 3),
             width: double.infinity,
             constraints: BoxConstraints(maxHeight: Get.height / 4),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(25),
               color: MyColors.bg,
               //boxShadow: [myShadow.blackShadow]
             ),
@@ -87,9 +87,9 @@ class PlaceHolderWidget extends StatelessWidget {
                   FaIcon(
                     FontAwesomeIcons.userPlus,
                     size: 50,
-                    color: MyColors.blackColor.withOpacity(0.8),
+                    color: MyColors.lessBlackColor.withOpacity(0.8),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     "قم بإضافة بعض الحسابات",
                     style: myTextStyles.body,
