@@ -8,6 +8,7 @@ import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
+import 'package:account_app/widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -28,13 +29,9 @@ class AccGroupSettingScreen extends StatelessWidget {
                 const CustomBackBtnWidget(title: "التصنيفات"),
                 const SizedBox(height: 15),
                 if (accGroupController.allAccGroups.isEmpty)
-                  Container(
-                    height: 200,
-                    width: Get.width - 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: MyColors.bg,
-                    ),
+                  EmptyWidget(
+                    icon: FontAwesomeIcons.folderPlus,
+                    label: "قم بإضافة بعض الحسابات",
                   ),
                 if (accGroupController.allAccGroups.isNotEmpty)
                   Row(

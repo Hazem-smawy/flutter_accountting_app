@@ -10,6 +10,7 @@ import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
+import 'package:account_app/widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -31,13 +32,9 @@ class CustomerSettingScreen extends StatelessWidget {
                 const CustomBackBtnWidget(title: "العملاء"),
                 const SizedBox(height: 20),
                 if (customerController.allCustomers.isEmpty)
-                  Container(
-                    width: Get.width - 50,
-                    height: Get.height / 3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: MyColors.bg,
-                    ),
+                  EmptyWidget(
+                    icon: FontAwesomeIcons.userPlus,
+                    label: "قم بإضافة بعض العملاء",
                   ),
                 Column(
                   children: customerController.allCustomers.map((element) {
@@ -315,25 +312,6 @@ class NewCustomerSheet extends StatelessWidget {
                   color: MyColors.primaryColor,
                   label: "اضافة",
                   action: () async {
-                    // Customer? curentCustomer =
-                    //     customerController.allCustomers.firstWhere(
-                    //   (element) =>
-                    //       element.name ==
-                    //       (customerController.newCustomer[CustomerField.name] ??
-                    //           ""),
-                    //   orElse: () => Customer(
-                    //     id: 1,
-                    //     name: 'no',
-                    //     phone: 'no',
-                    //     address: 'no',
-                    //     status: false,
-                    //     createdAt: DateTime.now(),
-                    //     modifiedAt: DateTime.now(),
-                    //   ),
-                    // );
-                    // if (curentCustomer.name != 'no') {
-                    //   CustomDialog.customSnackBar('هذا الاسم موجود من قبل');
-                    // } else {
                     try {
                       if (customerController.newCustomer[CustomerField.name] !=
                           null) {

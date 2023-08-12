@@ -9,6 +9,7 @@ import 'package:account_app/widget/custom_btns_widges.dart';
 
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
+import 'package:account_app/widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -29,13 +30,9 @@ class CurencySettingScreen extends StatelessWidget {
                 const CustomBackBtnWidget(title: "العملات"),
                 const SizedBox(height: 15),
                 if (curencyController.allCurency.isEmpty)
-                  Container(
-                    height: Get.height / 3,
-                    width: Get.width - 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: MyColors.bg,
-                    ),
+                  EmptyWidget(
+                    icon: FontAwesomeIcons.dollarSign,
+                    label: "قم بإضافة بعض العملات",
                   ),
                 if (curencyController.allCurency.isNotEmpty)
                   Row(
