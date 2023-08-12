@@ -145,23 +145,26 @@ class MyMainScreen extends StatelessWidget {
                       ).then((value) async {
                         homeController
                             .getCustomerAccountsFromCurencyAndAccGroupIds();
-
-                        var index = accGroupCurencyController
-                            .allAccgroupsAndCurency
-                            .indexWhere((element) =>
-                                element.accGroupId ==
-                                    accGroupCurencyController
-                                        .allAccgroupsAndCurency[
-                                            accGroupCurencyController
-                                                .pageViewCount.value]
-                                        .accGroupId &&
-                                element.curencyId ==
-                                    curencyController.selectedCurency['id']);
-                        if (index > -1) {
-                          controller.animateToPage(index,
-                              duration: Duration(milliseconds: 200),
-                              curve: Curves.linear);
-                        }
+                        accGroupCurencyController
+                            .getAllAccGroupAndCurency()
+                            .then((value) {
+                          var index = accGroupCurencyController
+                              .allAccgroupsAndCurency
+                              .indexWhere((element) =>
+                                  element.accGroupId ==
+                                      accGroupCurencyController
+                                          .allAccgroupsAndCurency[
+                                              accGroupCurencyController
+                                                  .pageViewCount.value]
+                                          .accGroupId &&
+                                  element.curencyId ==
+                                      curencyController.selectedCurency['id']);
+                          if (index > -1) {
+                            controller.animateToPage(index,
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.linear);
+                          }
+                        });
                       });
                     }
                   } else {

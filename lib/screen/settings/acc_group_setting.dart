@@ -278,6 +278,7 @@ class NewAccGroupSheet extends StatelessWidget {
                                         .updateAccGroup(accgroup)
                                     : await accGroupController
                                         .createAccGroup(accgroup);
+                                accGroupController.readAllAccGroup();
                               }
                             } catch (e) {
                               // print("some error : $e");

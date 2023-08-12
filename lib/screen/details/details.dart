@@ -76,7 +76,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return journals.isEmpty
-        ? Text("data")
+        ? SizedBox()
         : Scaffold(
             body: SafeArea(
               child: Padding(
@@ -273,9 +273,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ],
                             ),
                           ),
-                          Text(
-                            "\$$resultMoney",
-                            style: myTextStyles.title1,
+                          Row(
+                            children: [
+                              Text(
+                                curencyController.selectedCurency['symbol'],
+                                style: myTextStyles.body,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "$resultMoney",
+                                style: myTextStyles.title1,
+                              ),
+                            ],
                           ),
                           const SizedBox(width: 10),
                           Container(
@@ -324,7 +335,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   });
                 } else {
                   CustomDialog.customSnackBar(
-                      "تم ايقاف هذه العمله من الاعدادات", SnackPosition.BOTTOM);
+                      "تم ايقاف هذا الحساب من الاعدادات", SnackPosition.BOTTOM);
                   return;
                 }
               },
@@ -349,13 +360,14 @@ class DetailsSammaryWidget extends StatelessWidget {
   final String title;
   final String subTitle;
   final Color color;
-  const DetailsSammaryWidget(
+  DetailsSammaryWidget(
       {Key? key,
       required this.icon,
       required this.title,
       required this.subTitle,
       required this.color})
       : super(key: key);
+  CurencyController curencyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +392,14 @@ class DetailsSammaryWidget extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  "\$$title :",
+                  curencyController.selectedCurency['symbol'],
+                  style: myTextStyles.body,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "$title :",
                   style: myTextStyles.title1,
                 ),
                 const SizedBox(width: 5),
@@ -487,7 +506,7 @@ class DetialInfoSheet extends StatelessWidget {
                 children: [
                   Text(
                     DateFormater.DateFormat.yMMMd()
-                        .format(detailsRows.createdAt),
+                        .format(detailsRows.registeredAt),
                     style: myTextStyles.subTitle
                         .copyWith(color: MyColors.blackColor),
                   ),
@@ -502,12 +521,46 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.Hms().format(detailsRows.createdAt),
+                    DateFormater.DateFormat.Hms()
+                        .format(detailsRows.registeredAt),
                     style: myTextStyles.subTitle
                         .copyWith(color: MyColors.blackColor),
                   ),
                   const InfoTitleWidget(
                     title: "الوقت",
+                    icon: FontAwesomeIcons.clock,
+                  ),
+                ],
+              ),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    DateFormater.DateFormat.yMMMd()
+                        .format(detailsRows.createdAt),
+                    style: myTextStyles.subTitle
+                        .copyWith(color: MyColors.blackColor),
+                  ),
+                  const InfoTitleWidget(
+                    title: "تأريخ الإنشاء",
+                    icon: FontAwesomeIcons.calendarCheck,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    DateFormater.DateFormat.Hms().format(detailsRows.createdAt),
+                    style: myTextStyles.subTitle
+                        .copyWith(color: MyColors.blackColor),
+                  ),
+                  const InfoTitleWidget(
+                    title: "وقت الإنشاء",
                     icon: FontAwesomeIcons.clock,
                   ),
                 ],
@@ -569,21 +622,21 @@ class DetialInfoSheet extends StatelessWidget {
               const Spacer(),
 
               //  CustomBtnWidget(color: Colors.green, label: "تعديل"),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: MyColors.lessBlackColor,
-                    elevation: 0,
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15))),
-                child: Text(
-                  "تعد يل",
-                  style: myTextStyles.title1.copyWith(
-                    color: MyColors.background,
-                  ),
-                ),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   style: ElevatedButton.styleFrom(
+              //       backgroundColor: MyColors.lessBlackColor,
+              //       elevation: 0,
+              //       minimumSize: const Size.fromHeight(50),
+              //       shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(15))),
+              //   child: Text(
+              //     "تعد يل",
+              //     style: myTextStyles.title1.copyWith(
+              //       color: MyColors.background,
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () => Get.back(),

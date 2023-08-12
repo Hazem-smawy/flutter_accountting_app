@@ -14,14 +14,10 @@ class CustomBackBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           12,
         ),
-        // border: Border.all(
-        //   color: MyColors.bg.withOpacity(0.6),
-        // ),
         color: MyColors.bg,
       ),
       child: Row(

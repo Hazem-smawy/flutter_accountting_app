@@ -303,6 +303,7 @@ class NewCurencySheet extends StatelessWidget {
                         isEdding
                             ? await curencyController.updateCurency(curency)
                             : await curencyController.createCurency(curency);
+                        curencyController.readAllCurency();
                       }
                     } catch (e) {}
                   },

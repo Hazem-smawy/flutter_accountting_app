@@ -318,29 +318,35 @@ Column(
     //   (value) => widget.curencyId,
     //   ifAbsent: () => widget.curencyId,
     // );
-
-    if (credit) {
-      newAccountController.newAccount.update(
-        'credit',
-        (value) => double.parse(newAccountController.newAccount['money']),
-        ifAbsent: () => double.parse(newAccountController.newAccount['money']),
-      );
-      newAccountController.newAccount.update(
-        'debit',
-        (value) => 0.0,
-        ifAbsent: () => 0.0,
-      );
-    } else {
-      newAccountController.newAccount.update(
-        'debit',
-        (value) => double.parse(newAccountController.newAccount['money']),
-        ifAbsent: () => double.parse(newAccountController.newAccount['money']),
-      );
-      newAccountController.newAccount.update(
-        'credit',
-        (value) => 0.0,
-        ifAbsent: () => 0.0,
-      );
+    try {
+      if (credit) {
+        newAccountController.newAccount.update(
+          'credit',
+          (value) => double.parse(newAccountController.newAccount['money']),
+          ifAbsent: () =>
+              double.parse(newAccountController.newAccount['money']),
+        );
+        newAccountController.newAccount.update(
+          'debit',
+          (value) => 0.0,
+          ifAbsent: () => 0.0,
+        );
+      } else {
+        newAccountController.newAccount.update(
+          'debit',
+          (value) => double.parse(newAccountController.newAccount['money']),
+          ifAbsent: () =>
+              double.parse(newAccountController.newAccount['money']),
+        );
+        newAccountController.newAccount.update(
+          'credit',
+          (value) => 0.0,
+          ifAbsent: () => 0.0,
+        );
+      }
+    } catch (e) {
+      CEC.errorMessage.value = "قم بإدخال الحقول بشكل صحيح";
+      return;
     }
 
     var findCustomer = customerController.allCustomers.firstWhereOrNull(
@@ -373,7 +379,7 @@ class ExitCustomerItemWidget extends StatelessWidget {
     return Container(
       height: 40,
       alignment: Alignment.centerRight,
-      margin: EdgeInsets.only(left: 5, bottom: 5, right: 5),
+      margin: const EdgeInsets.only(left: 5, bottom: 5, right: 5),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

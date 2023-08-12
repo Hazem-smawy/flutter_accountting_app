@@ -5,6 +5,7 @@ import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
+import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
@@ -202,6 +203,7 @@ class NewCustomerSheet extends StatelessWidget {
   final bool isEditing;
   NewCustomerSheet({super.key, this.isEditing = false});
   CustomerController customerController = Get.find();
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -361,6 +363,9 @@ class NewCustomerSheet extends StatelessWidget {
                         isEditing
                             ? await customerController.updateCustomer(customer)
                             : await customerController.createCusomer(customer);
+
+                        homeController
+                            .getCustomerAccountsFromCurencyAndAccGroupIds();
                       }
                     } catch (e) {
                       //print(e);
