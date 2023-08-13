@@ -34,7 +34,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.title1,
+        style: myTextStyles.subTitle,
         onChanged: (value) {
           if (widget.action != null) {
             widget.action!(value);
@@ -44,7 +44,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.textHint,
-            hintStyle: myTextStyles.subTitle,
+            hintStyle: myTextStyles.body,
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );

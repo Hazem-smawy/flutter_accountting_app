@@ -223,7 +223,7 @@ class NewCustomerSheet extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              "اضافة عميل",
+              isEditing ? "تعديل" : "اضافة عميل",
               style: myTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
@@ -310,11 +310,19 @@ class NewCustomerSheet extends StatelessWidget {
                 Flexible(
                     child: CustomBtnWidget(
                   color: MyColors.primaryColor,
-                  label: "اضافة",
+                  label: isEditing ? "تعديل" : "اضافة",
                   action: () async {
                     try {
                       if (customerController.newCustomer[CustomerField.name] !=
                           null) {
+                        if (customerController
+                                .newCustomer[CustomerField.name].length <
+                            2) {
+                          CustomDialog.customSnackBar(
+                              "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+
+                          return;
+                        }
                         var customer = Customer(
                             id: isEditing
                                 ? customerController

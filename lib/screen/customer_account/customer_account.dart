@@ -147,34 +147,45 @@ class CustomerAccountsView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 color: MyColors.bg,
                               ),
-                              child: Row(
+                              child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 5,
-                                    backgroundColor: customerAccountController
-                                            .searchedList[index].status
-                                        ? Colors.green
-                                        : Colors.red,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 5,
+                                        backgroundColor:
+                                            customerAccountController
+                                                    .searchedList[index].status
+                                                ? Colors.green
+                                                : Colors.red,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      CustomerAccountItem(
+                                          title: customer ?? "",
+                                          icon: FontAwesomeIcons.user),
+                                    ],
                                   ),
-                                  SizedBox(width: 10),
-                                  SizedBox(
-                                    width: Get.width / 4,
-                                    child: CustomerAccountItem(
-                                        title: curency,
-                                        icon: FontAwesomeIcons.dollarSign),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width / 4,
-                                    child: CustomerAccountItem(
-                                        title: accGroup,
-                                        icon: FontAwesomeIcons.folderClosed),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width / 3.5,
-                                    child: CustomerAccountItem(
-                                        title: customer ?? "",
-                                        icon: FontAwesomeIcons.user),
-                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      SizedBox(
+                                        width: Get.width / 4,
+                                        child: CustomerAccountItem(
+                                            title: curency,
+                                            icon: FontAwesomeIcons.dollarSign),
+                                      ),
+                                      CustomerAccountItem(
+                                          title: accGroup,
+                                          icon: FontAwesomeIcons.folderClosed),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -432,10 +443,12 @@ class CustomerAccountItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           title,
           textAlign: TextAlign.right,
           textDirection: TextDirection.rtl,
-          style: myTextStyles.body.copyWith(overflow: TextOverflow.ellipsis),
+          style: myTextStyles.body.copyWith(overflow: TextOverflow.clip),
         ),
         const SizedBox(
           width: 10,

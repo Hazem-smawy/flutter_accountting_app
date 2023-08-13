@@ -16,13 +16,10 @@ import 'package:intl/intl.dart' as DateFormater;
 
 class DetailsScreen extends StatefulWidget {
   HomeModel homeModel;
-  VoidCallback action;
+
   bool accGoupStatus;
   DetailsScreen(
-      {super.key,
-      required this.homeModel,
-      required this.action,
-      required this.accGoupStatus});
+      {super.key, required this.homeModel, required this.accGoupStatus});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -109,7 +106,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 }),
                                 columnSpacing: 10,
                                 headingRowHeight: 45,
-                                dataRowHeight: 40,
+                                // dataRowHeight: 40,
                                 headingTextStyle: myTextStyles.title2.copyWith(
                                   color: MyColors.bg,
                                   fontWeight: FontWeight.bold,
@@ -161,18 +158,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             ));
                                           },
                                           cells: [
-                                            DataCell(Text(
+                                            DataCell(
+                                              Text(
                                                 DateFormater.DateFormat.yMd()
-                                                    .format(e.registeredAt))),
+                                                    .format(e.registeredAt),
+                                                style: myTextStyles.body,
+                                              ),
+                                            ),
                                             DataCell(Text(
                                               " ${(e.credit - e.debit).abs()}",
-                                              style: myTextStyles.title2,
+                                              style: myTextStyles.subTitle
+                                                  .copyWith(
+                                                      color: Colors.black),
                                             )),
                                             DataCell(Text(
                                               e.details,
                                               textAlign: TextAlign.right,
                                               overflow: TextOverflow.clip,
                                               textDirection: TextDirection.rtl,
+                                              style: myTextStyles.body,
                                             )),
                                             DataCell(Container(
                                               width: 20,
@@ -190,7 +194,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                   .abs()
                                                   .toString(),
                                               textAlign: TextAlign.left,
-                                              style: myTextStyles.title2,
+                                              style: myTextStyles.subTitle
+                                                  .copyWith(
+                                                      color:
+                                                          MyColors.blackColor),
                                             )),
                                           ]),
                                     )
@@ -246,7 +253,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   curencyController.selectedCurency['symbol'],
                                   style: myTextStyles.body.copyWith(
                                     fontSize: 10,
-                                    fontWeight: FontWeight.bold,
                                     color: MyColors.lessBlackColor,
                                   ),
                                 ),
@@ -265,7 +271,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   curencyController.selectedCurency['name'],
                                   style: myTextStyles.body.copyWith(
                                     fontSize: 10,
-                                    fontWeight: FontWeight.bold,
                                     color: MyColors.lessBlackColor,
                                   ),
                                 ),
@@ -284,8 +289,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               Text(
                                 "$resultMoney",
-                                style: myTextStyles.title1,
+                                style: myTextStyles.title2,
                               ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                resultMoney > 0 ? "عليك" : "لك",
+                                style: myTextStyles.subTitle,
+                              )
                             ],
                           ),
                           const SizedBox(width: 10),
@@ -331,7 +343,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     isScrollControlled: true,
                   ).then((value) {
                     getAllJournals();
-                    widget.action();
                   });
                 } else {
                   CustomDialog.customSnackBar(

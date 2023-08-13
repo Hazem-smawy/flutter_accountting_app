@@ -78,8 +78,8 @@ class NewAccountController extends GetxController {
         registeredAt: newAccount['date'],
         credit: newAccount['credit'],
         debit: newAccount['debit'],
-        createdAt: newAccount['date'],
-        modifiedAt: newAccount['date']);
+        createdAt: DateTime.now(),
+        modifiedAt: DateTime.now());
 
     journalController.createJournal(newJournal);
   }

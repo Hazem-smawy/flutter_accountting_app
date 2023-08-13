@@ -278,6 +278,17 @@ class NewCurencySheet extends StatelessWidget {
                               null &&
                           curencyController.newCurency[CurencyField.symbol] !=
                               null) {
+                        if (curencyController
+                                    .newCurency[CurencyField.name].length <
+                                2 ||
+                            curencyController
+                                    .newCurency[CurencyField.symbol].length <
+                                1) {
+                          CustomDialog.customSnackBar(
+                              "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+
+                          return;
+                        }
                         var curency = Curency(
                           id: isEdding
                               ? curencyController.newCurency[CurencyField.id]

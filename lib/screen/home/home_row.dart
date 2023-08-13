@@ -12,12 +12,8 @@ import 'package:get/get.dart';
 
 class HomeRowView extends StatelessWidget {
   final HomeModel homeModel;
-  VoidCallback action;
-  HomeRowView(
-      {super.key,
-      required this.homeModel,
-      required this.action,
-      required this.status});
+
+  HomeRowView({super.key, required this.homeModel, required this.status});
   NewAccountController newAccountController = Get.put(NewAccountController());
   CurencyController curencyController = Get.find();
   bool status;
@@ -34,7 +30,6 @@ class HomeRowView extends StatelessWidget {
       child: GestureDetector(
         onTap: () => Get.to(() => DetailsScreen(
               homeModel: homeModel,
-              action: action,
               accGoupStatus: status,
             )),
         child: Row(
@@ -53,7 +48,8 @@ class HomeRowView extends StatelessWidget {
             SizedBox(
               width: Get.width * 0.2,
               child: Text(
-                "${((homeModel.totalCredit - homeModel.totalDebit) * -1).obs}",
+                (((homeModel.totalCredit - homeModel.totalDebit) * -1).obs())
+                    .toString(),
                 textAlign: TextAlign.left,
                 style: myTextStyles.title2.copyWith(
                   //   fontWeight: FontWeight.bold,
@@ -96,15 +92,12 @@ class HomeRowView extends StatelessWidget {
                           element.id == curencyController.selectedCurency['id'])
                       .status) {
                     Get.bottomSheet(
-                            NewRecordScreen(
-                              homeModel: homeModel,
-                            ),
-                            isScrollControlled: true,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)))
-                        .then((value) {
-                      action();
-                    });
+                        NewRecordScreen(
+                          homeModel: homeModel,
+                        ),
+                        isScrollControlled: true,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)));
                   } else {
                     CustomDialog.customSnackBar(
                         "تم ايقاف هذه العمله من الاعدادات",

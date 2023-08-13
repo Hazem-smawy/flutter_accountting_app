@@ -1,5 +1,6 @@
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/models/curency_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -12,12 +13,14 @@ class HomeSammaryWidget extends StatelessWidget {
   final String title;
   final String subTitle;
   final Color color;
+  final Curency curency;
   HomeSammaryWidget(
       {Key? key,
       required this.icon,
       required this.title,
       required this.subTitle,
-      required this.color})
+      required this.color,
+      required this.curency})
       : super(key: key);
 
   @override
@@ -53,7 +56,7 @@ class HomeSammaryWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  curencyController.selectedCurency['symbol'],
+                  curency.symbol,
                   style: myTextStyles.subTitle
                       .copyWith(color: MyColors.secondaryTextColor),
                 ),

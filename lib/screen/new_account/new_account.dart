@@ -293,6 +293,11 @@ Column(
       CEC.errorMessage.value = "no data to puplished";
       return;
     }
+    if (newAccountController.newAccount['money'].length < 1 ||
+        newAccountController.newAccount['desc'].length < 2) {
+      CEC.errorMessage.value = "no data to puplished";
+      return;
+    }
 
     if (curencyController.allCurency
             .firstWhereOrNull((element) =>

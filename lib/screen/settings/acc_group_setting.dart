@@ -251,6 +251,16 @@ class NewAccGroupSheet extends StatelessWidget {
                               if (accGroupController
                                       .newAccGroup[AccGroupField.name] !=
                                   null) {
+                                if (accGroupController
+                                        .newAccGroup[AccGroupField.name]
+                                        .length <
+                                    2) {
+                                  CustomDialog.customSnackBar(
+                                      "ادخل كل القيم بطريقة صحيحة",
+                                      SnackPosition.TOP);
+
+                                  return;
+                                }
                                 var accgroup = AccGroup(
                                   id: isEditing
                                       ? accGroupController

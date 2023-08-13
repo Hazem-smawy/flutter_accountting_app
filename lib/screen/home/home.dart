@@ -59,6 +59,13 @@ class HomeScreen extends StatelessWidget {
                   ? HomePrivateSammaryWidget(
                       forYou: forYou,
                       onYou: onYou,
+                      curency: curency ??
+                          Curency(
+                              name: "",
+                              symbol: "",
+                              status: true,
+                              createdAt: DateTime.now(),
+                              modifiedAt: DateTime.now()),
                     )
                   : SizedBox(),
             ),
@@ -73,19 +80,6 @@ class HomeScreen extends StatelessWidget {
                         return HomeRowView(
                           homeModel: rows?[index],
                           status: stauts,
-                          action: () {
-                            homeController
-                                .getCustomerAccountsFromCurencyAndAccGroupIds()
-                                .then((value) {
-                              rows = value
-                                  .where((element) =>
-                                      element.accGId == accGroup.id &&
-                                      element.curId ==
-                                          curencyController
-                                              .selectedCurency['crId'])
-                                  .toList();
-                            });
-                          },
                         );
                       },
                     )
@@ -100,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                     width: 20,
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 20, left: 10),
+                    margin: const EdgeInsets.only(bottom: 20, left: 5, top: 5),
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -153,10 +147,12 @@ class HomeScreen extends StatelessWidget {
 class HomePrivateSammaryWidget extends StatelessWidget {
   final double onYou;
   final double forYou;
+  final Curency curency;
   const HomePrivateSammaryWidget({
     super.key,
     required this.onYou,
     required this.forYou,
+    required this.curency,
   });
 
   @override
@@ -165,6 +161,7 @@ class HomePrivateSammaryWidget extends StatelessWidget {
       children: [
         if (forYou != null)
           HomeSammaryWidget(
+            curency: curency,
             icon: FontAwesomeIcons.angleDown,
             title: "$forYou ",
             subTitle: " لك",
@@ -175,6 +172,7 @@ class HomePrivateSammaryWidget extends StatelessWidget {
         ),
         if (onYou != null)
           HomeSammaryWidget(
+            curency: curency,
             icon: FontAwesomeIcons.angleUp,
             title: "$onYou ",
             subTitle: "عليك",

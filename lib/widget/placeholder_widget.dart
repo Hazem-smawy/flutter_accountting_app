@@ -17,11 +17,11 @@ class PlaceHolderWidget extends StatelessWidget {
       () => Column(
         children: [
           SizedBox(
-            height: 40,
+            height: 20,
           ),
           if (curencyController.allCurency.isEmpty)
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -75,6 +75,7 @@ class PlaceHolderWidget extends StatelessWidget {
                 ],
               ),
             ),
+          SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.only(
               right: 20,
