@@ -102,7 +102,7 @@ class CustomerAccountsView extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              "there is no any account here create one ",
+                              "لاتوجد اي حسابات ",
                               style: myTextStyles.body,
                             )
                           ],
@@ -456,7 +456,7 @@ class CustomerAccountItem extends StatelessWidget {
         FaIcon(
           icon,
           size: 15,
-          color: MyColors.primaryColor,
+          color: MyColors.lessBlackColor,
         ),
       ],
     );
