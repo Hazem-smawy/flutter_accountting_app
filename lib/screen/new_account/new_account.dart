@@ -7,6 +7,7 @@ import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/error_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
+import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/widget/curency_show_widget.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
@@ -122,7 +123,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             controller: nameController,
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
-                            style: myTextStyles.title1,
+                            style: myTextStyles.subTitle
+                                .copyWith(color: MyColors.blackColor),
                             onChanged: (p0) {
                               selectionCustomer = null;
                               CEC.errorMessage.value = "";
@@ -147,7 +149,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "الاسم",
-                                hintStyle: myTextStyles.subTitle,
+                                hintStyle: myTextStyles.body,
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 10)),
                           ),
@@ -269,7 +271,7 @@ Column(
                     ),
   */
 
-  void createCustomerAccount(bool credit) {
+  void createCustomerAccount(bool credit) async {
     if (nameController.text.length < 1) {
       CEC.errorMessage.value = "قم يملئ حقل الاسم بطريقة صحيحة";
       return;
@@ -365,10 +367,23 @@ Column(
         (value) => findCustomer.id,
         ifAbsent: () => findCustomer.id,
       );
+
       newAccountController.createNewCustomerAccount();
     } else {
+      if (findCustomer?.status == false) {
+        CustomDialog.customSnackBar("هذا الحساب موقف", SnackPosition.BOTTOM);
+        return;
+      }
       _showBottomSheet();
     }
+  }
+
+  Future<CustomerAccount?> getCustomerAccountStatus(int customerId) async {
+    var cac = customerAccountController.findCustomerAccountIfExist(
+        cid: customerId,
+        accg: newAccountController.newAccount['accGroupId'],
+        curid: curencyController.selectedCurency['id']);
+    return cac;
   }
 }
 

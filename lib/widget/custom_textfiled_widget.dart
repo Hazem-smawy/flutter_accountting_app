@@ -34,7 +34,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.subTitle,
+        style: myTextStyles.subTitle.copyWith(color: MyColors.blackColor),
         onChanged: (value) {
           if (widget.action != null) {
             widget.action!(value);
@@ -84,7 +84,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.title1,
+        style: myTextStyles.subTitle.copyWith(color: MyColors.blackColor),
         onChanged: (value) {
           if (widget.action != null) {
             widget.action!(value);
@@ -94,7 +94,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.textHint,
-            hintStyle: myTextStyles.subTitle,
+            hintStyle: myTextStyles.body,
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );

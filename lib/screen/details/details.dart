@@ -73,7 +73,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return journals.isEmpty
-        ? SizedBox()
+        ? const SizedBox()
         : Scaffold(
             body: SafeArea(
               child: Padding(
@@ -420,12 +420,6 @@ class DetailsSammaryWidget extends StatelessWidget {
                 )
               ],
             ),
-            // Text(
-            //   subTitle,
-            //   style: myTextStyles.body.copyWith(
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -21,8 +21,6 @@ class NewAccountController extends GetxController {
   HomeController homeController = Get.find();
   AccGroupCurencyController accGroupCurencyController = Get.find();
   Future<void> createNewCustomerAccount() async {
-    print(newAccount);
-    print(curencyController.selectedCurency);
     if (curencyController.selectedCurency['status'] == false) {
       CustomDialog.customSnackBar("قم بإختيار العملة", SnackPosition.BOTTOM);
       return;
@@ -56,6 +54,10 @@ class NewAccountController extends GetxController {
             await addNewCustomerAccount(newAccount['customerId']);
         addJournal(newCac.id ?? 0);
       } else {
+        if (old.status == false) {
+          CustomDialog.customSnackBar("هذا الحساب موقف", SnackPosition.BOTTOM);
+          return;
+        }
         var currentCustomerAcccounter = old.copyWith(
             operation: old.operation + 1,
             totalCredit: old.totalCredit + newAccount['credit'],
