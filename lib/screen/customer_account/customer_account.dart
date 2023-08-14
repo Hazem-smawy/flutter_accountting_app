@@ -38,7 +38,7 @@ class CustomerAccountsView extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: MyColors.bg,
+                        // color: MyColors.bg,
                       ),
                       child: TextField(
                         onChanged: (value) {
@@ -58,9 +58,15 @@ class CustomerAccountsView extends StatelessWidget {
                         textAlign: TextAlign.right,
                         textDirection: TextDirection.rtl,
                         decoration: InputDecoration(
-                          border: InputBorder.none,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(25)),
+                          fillColor: MyColors.bg,
+                          focusColor: Colors.transparent,
+                          filled: true,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 20,
+                            vertical: 0,
                           ),
                           hintText: "بحث في حسابات العملاء",
                           hintStyle: myTextStyles.body,
