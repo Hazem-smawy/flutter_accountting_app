@@ -21,11 +21,11 @@ class PlaceHolderWidget extends StatelessWidget {
           ),
           if (curencyController.allCurency.isEmpty)
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
                 color: MyColors.bg,
               ),
               child: Column(
@@ -41,7 +41,7 @@ class PlaceHolderWidget extends StatelessWidget {
                   Text(
                     "قم بإضافة بعض العملات ",
                     style: myTextStyles.subTitle.copyWith(
-                      color: Colors.red,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(
@@ -57,9 +57,9 @@ class PlaceHolderWidget extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: BorderRadius.circular(30),
                               border: Border.all(
-                                color: Colors.grey,
+                                color: Colors.red,
                                 width: 1,
                               )),
                           child: Text(
@@ -67,7 +67,7 @@ class PlaceHolderWidget extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: myTextStyles.title1.copyWith(
                               color: Colors.red,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -75,7 +75,7 @@ class PlaceHolderWidget extends StatelessWidget {
                 ],
               ),
             ),
-          SizedBox(height: 20),
+          // if (curencyController.allCurency.isEmpty) SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.only(
               right: 20,
@@ -85,7 +85,7 @@ class PlaceHolderWidget extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: Get.height / 4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: MyColors.bg,
+              color: MyColors.bg.withOpacity(0.5),
               //boxShadow: [myShadow.blackShadow]
             ),
             child: Center(
@@ -100,8 +100,14 @@ class PlaceHolderWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "قم بإضافة بعض الحسابات",
+                    "ليس هناك أي حسابات في هذا التصنيف ",
                     style: myTextStyles.body,
+                  ),
+                  Text(
+                    "للإضافه إضغط زر الإضافة",
+                    style: myTextStyles.subTitle.copyWith(
+                        fontWeight: FontWeight.normal,
+                        color: MyColors.lessBlackColor),
                   )
                 ],
               ),

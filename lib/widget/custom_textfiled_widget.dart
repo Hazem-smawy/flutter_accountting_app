@@ -34,7 +34,10 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.subTitle.copyWith(color: MyColors.blackColor),
+        style: myTextStyles.subTitle.copyWith(
+          color: MyColors.blackColor,
+          fontWeight: FontWeight.bold,
+        ),
         onChanged: (value) {
           if (widget.action != null) {
             widget.action!(value);
@@ -44,7 +47,8 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.textHint,
-            hintStyle: myTextStyles.body,
+            hintStyle:
+                myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );
@@ -84,7 +88,8 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
         initialValue: widget.placeHolder ?? "",
         textAlign: TextAlign.right,
         textDirection: TextDirection.rtl,
-        style: myTextStyles.subTitle.copyWith(color: MyColors.blackColor),
+        style: myTextStyles.subTitle
+            .copyWith(color: MyColors.blackColor, fontWeight: FontWeight.bold),
         onChanged: (value) {
           if (widget.action != null) {
             widget.action!(value);
@@ -94,7 +99,8 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.textHint,
-            hintStyle: myTextStyles.body,
+            hintStyle:
+                myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
             contentPadding: const EdgeInsets.symmetric(horizontal: 10)),
       ),
     );

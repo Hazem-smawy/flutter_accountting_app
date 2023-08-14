@@ -15,6 +15,8 @@ class CurencyShowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
+        width: double.infinity,
+        alignment: Alignment.center,
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(top: 15),
         decoration: BoxDecoration(

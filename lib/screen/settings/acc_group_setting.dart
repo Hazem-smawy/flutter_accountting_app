@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
@@ -163,7 +164,7 @@ class NewAccGroupSheet extends StatelessWidget {
   NewAccGroupSheet({super.key, this.isEditing = false});
   AccGroupController accGroupController = Get.find();
   CustomerAccountController customerAccountController = Get.find();
-
+  AccGroupCurencyController accGroupCurencyController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -285,6 +286,8 @@ class NewAccGroupSheet extends StatelessWidget {
                                         .updateAccGroup(accgroup)
                                     : await accGroupController
                                         .createAccGroup(accgroup);
+                                accGroupCurencyController
+                                    .getAllAccGroupAndCurency();
                                 accGroupController.readAllAccGroup();
                               }
                             } catch (e) {

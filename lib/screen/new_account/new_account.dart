@@ -123,8 +123,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             controller: nameController,
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
-                            style: myTextStyles.subTitle
-                                .copyWith(color: MyColors.blackColor),
+                            style: myTextStyles.subTitle.copyWith(
+                                color: MyColors.blackColor,
+                                fontWeight: FontWeight.bold),
                             onChanged: (p0) {
                               selectionCustomer = null;
                               CEC.errorMessage.value = "";
@@ -149,7 +150,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "الاسم",
-                                hintStyle: myTextStyles.body,
+                                hintStyle: myTextStyles.body
+                                    .copyWith(fontWeight: FontWeight.normal),
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 10)),
                           ),
@@ -460,21 +462,22 @@ class NewCustomerSheet extends StatelessWidget {
                     // ),
                     const SizedBox(height: 20),
                     CustomTextFieldWidget(
-                      textHint: "العنوان",
+                      textHint: "الهاتف",
                       action: (p0) {
                         newAccountController.newAccount.update(
-                          'address',
+                          'phone',
                           (value) => p0,
                           ifAbsent: () => p0,
                         );
                       },
                     ),
                     const SizedBox(height: 10),
+
                     CustomTextFieldWidget(
-                      textHint: "الهاتف",
+                      textHint: "العنوان",
                       action: (p0) {
                         newAccountController.newAccount.update(
-                          'phone',
+                          'address',
                           (value) => p0,
                           ifAbsent: () => p0,
                         );

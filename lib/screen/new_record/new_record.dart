@@ -45,6 +45,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    newAccountController.newAccount.clear();
+    CEC.errorMessage.value = "";
     return Container(
       constraints: const BoxConstraints(
         minHeight: 300,
@@ -87,12 +89,12 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                         borderRadius: BorderRadius.circular(10),
                         color: MyColors.lessBlackColor,
                       ),
-                      child: Center(
+                      child: Container(
                         child: Text(
                           widget.homeModel.name,
                           textAlign: TextAlign.right,
-                          style:
-                              myTextStyles.title2.copyWith(color: Colors.white),
+                          style: myTextStyles.subTitle
+                              .copyWith(color: Colors.white),
                         ),
                       ),
                     )),

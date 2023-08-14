@@ -14,21 +14,17 @@ class myTextStyles {
     fontSize: Responsive.isMobile ? 12 : 16,
     color: MyColors.lessBlackColor,
     fontWeight: FontWeight.bold,
-    letterSpacing: 1.1,
   );
   static final subTitle = TextStyle(
     fontFamily: 'Cairo',
     fontSize: Responsive.isMobile ? 10 : 14,
     color: MyColors.secondaryTextColor,
     fontWeight: FontWeight.bold,
-    letterSpacing: 1.2,
   );
 
   static final body = TextStyle(
     fontFamily: 'Cairo',
     fontSize: Responsive.isMobile ? 10 : 12,
     color: MyColors.secondaryTextColor,
-    //fontWeight: FontWeight.bold,
-    letterSpacing: 1.2,
   );
 }

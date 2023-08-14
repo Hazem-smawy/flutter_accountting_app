@@ -278,7 +278,7 @@ class _CustomerAccountDetailsSheetState
                     children: [
                       Text(
                         widget.customerAccount.totalDebit.toString(),
-                        style: myTextStyles.title1,
+                        style: myTextStyles.title2,
                       ),
                       SizedBox(width: 10),
                       FaIcon(
@@ -288,7 +288,7 @@ class _CustomerAccountDetailsSheetState
                       ),
                       SizedBox(width: 5),
                       Text(
-                        ":لك",
+                        ": لك",
                         style: myTextStyles.body
                             .copyWith(color: MyColors.blackColor),
                       )
@@ -308,7 +308,7 @@ class _CustomerAccountDetailsSheetState
                     children: [
                       Text(
                         widget.customerAccount.totalCredit.toString(),
-                        style: myTextStyles.title1,
+                        style: myTextStyles.title2,
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
@@ -318,7 +318,7 @@ class _CustomerAccountDetailsSheetState
                       ),
                       SizedBox(width: 5),
                       Text(
-                        ":عليك",
+                        ": عليك",
                         style: myTextStyles.body
                             .copyWith(color: MyColors.blackColor),
                       )
@@ -386,7 +386,7 @@ class _CustomerAccountDetailsSheetState
                   color: MyColors.primaryColor.withOpacity(0.4)),
               child: Text(
                 "تحد يث",
-                style: myTextStyles.title1.copyWith(
+                style: myTextStyles.title2.copyWith(
                   color: MyColors.blackColor,
                 ),
               ),
@@ -417,12 +417,12 @@ class SheetItem extends StatelessWidget {
       children: [
         Text(
           value,
-          style: myTextStyles.title2,
+          style: myTextStyles.subTitle.copyWith(color: MyColors.blackColor),
         ),
         const Spacer(),
         Text(
           label,
-          style: myTextStyles.subTitle,
+          style: myTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
         ),
         const SizedBox(width: 10),
         FaIcon(

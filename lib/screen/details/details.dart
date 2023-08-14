@@ -50,12 +50,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   void getAllCalculationForMoney() {
+    resultMoney = 0.0;
+    var onHemPrivate = 0.0;
+    var onYouPrivate = 0.0;
     journals.forEach((element) {
-      onHem += element.debit;
-      onYou += element.credit;
+      onHemPrivate += element.debit;
+      onYouPrivate += element.credit;
     });
-
-    resultMoney = onYou - onHem;
+    setState(() {
+      onHem = onHemPrivate;
+      onYou = onYouPrivate;
+      resultMoney = onYou - onHem;
+    });
   }
 
   double getAccountMoney(Journal e) {
@@ -106,14 +112,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 }),
                                 columnSpacing: 10,
                                 headingRowHeight: 45,
-                                // dataRowHeight: 40,
-                                headingTextStyle: myTextStyles.title2.copyWith(
+                                headingTextStyle:
+                                    myTextStyles.subTitle.copyWith(
                                   color: MyColors.bg,
-                                  fontWeight: FontWeight.bold,
                                   fontSize: 12,
                                 ),
                                 dataTextStyle: myTextStyles.subTitle.copyWith(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.normal,
                                 ),
                                 decoration: BoxDecoration(
@@ -125,7 +130,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   const DataColumn(
                                       label: Center(
                                     child: Text(
-                                      '     تفاصيل',
+                                      ' تفاصيل',
                                     ),
                                   )),
                                   DataColumn(
@@ -227,16 +232,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Row(
                       children: [
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowDown,
+                            icon: FontAwesomeIcons.arrowUp,
                             title: "$onYou",
                             subTitle: "له",
-                            color: Colors.red),
+                            color: Colors.green),
                         const SizedBox(width: 5),
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowUp,
+                            icon: FontAwesomeIcons.arrowDown,
                             title: ' $onHem',
                             subTitle: "عليه",
-                            color: Colors.green),
+                            color: Colors.red),
                       ],
                     ),
                     const SizedBox(
@@ -473,26 +478,28 @@ class DetialInfoSheet extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: myTextStyles.title1,
+                style: myTextStyles.title2,
               ),
               //Divider(),
               const SizedBox(height: 25),
               Row(
                 children: [
-                  const SizedBox(width: 5),
-                  FaIcon(
-                    detailsRows.credit > detailsRows.debit
-                        ? FontAwesomeIcons.chevronUp
-                        : FontAwesomeIcons.chevronDown,
-                    size: 17,
-                    color: detailsRows.credit > detailsRows.debit
-                        ? Colors.green
-                        : Colors.red,
+                  // const SizedBox(width: 5),
+                  Container(
+                    width: 20,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: detailsRows.credit > detailsRows.debit
+                          ? Colors.green
+                          : Colors.red,
+                    ),
                   ),
                   const Spacer(),
                   Text(
                     "${detailsRows.credit - detailsRows.debit}",
-                    style: myTextStyles.title2,
+                    style: myTextStyles.subTitle
+                        .copyWith(color: MyColors.blackColor),
                   ),
                   const Spacer(),
                   const InfoTitleWidget(
@@ -507,12 +514,16 @@ class DetialInfoSheet extends StatelessWidget {
                 children: [
                   Text(
                     curency.symbol,
-                    style: myTextStyles.subTitle
-                        .copyWith(color: MyColors.blackColor),
+                    style: myTextStyles.subTitle.copyWith(
+                        color: MyColors.blackColor,
+                        fontWeight: FontWeight.normal),
                   ),
                   Text(
                     curency.name,
-                    style: myTextStyles.subTitle,
+                    style: myTextStyles.subTitle.copyWith(
+                      fontWeight: FontWeight.normal,
+                      color: MyColors.blackColor,
+                    ),
                   ),
                   const InfoTitleWidget(
                     title: "العمله",
@@ -525,10 +536,11 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.yMMMd()
+                    DateFormater.DateFormat.yMEd()
                         .format(detailsRows.registeredAt),
-                    style: myTextStyles.subTitle
-                        .copyWith(color: MyColors.blackColor),
+                    style: myTextStyles.subTitle.copyWith(
+                        color: MyColors.blackColor,
+                        fontWeight: FontWeight.normal),
                   ),
                   const InfoTitleWidget(
                     title: "التاريخ",
@@ -541,10 +553,11 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.Hms()
+                    DateFormater.DateFormat.Hm()
                         .format(detailsRows.registeredAt),
-                    style: myTextStyles.subTitle
-                        .copyWith(color: MyColors.blackColor),
+                    style: myTextStyles.subTitle.copyWith(
+                        color: MyColors.blackColor,
+                        fontWeight: FontWeight.normal),
                   ),
                   const InfoTitleWidget(
                     title: "الوقت",
@@ -557,10 +570,11 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.yMMMd()
+                    DateFormater.DateFormat.yMEd()
                         .format(detailsRows.createdAt),
-                    style: myTextStyles.subTitle
-                        .copyWith(color: MyColors.blackColor),
+                    style: myTextStyles.subTitle.copyWith(
+                        color: MyColors.blackColor,
+                        fontWeight: FontWeight.normal),
                   ),
                   const InfoTitleWidget(
                     title: "تأريخ الإنشاء",
@@ -575,9 +589,10 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.Hms().format(detailsRows.createdAt),
-                    style: myTextStyles.subTitle
-                        .copyWith(color: MyColors.blackColor),
+                    DateFormater.DateFormat.Hm().format(detailsRows.createdAt),
+                    style: myTextStyles.subTitle.copyWith(
+                        color: MyColors.blackColor,
+                        fontWeight: FontWeight.normal),
                   ),
                   const InfoTitleWidget(
                     title: "وقت الإنشاء",
@@ -586,38 +601,7 @@ class DetialInfoSheet extends StatelessWidget {
                 ],
               ),
               const Divider(),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       "2022-06-22",
-              //       style: myTextStyles.subTitle
-              //           .copyWith(color: MyColors.blackColor),
-              //     ),
-              //     const InfoTitleWidget(
-              //       title: "التاريخ",
-              //       icon: FontAwesomeIcons.calendarCheck,
-              //     ),
-              //   ],
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       "11:00 pm",
-              //       style: myTextStyles.subTitle
-              //           .copyWith(color: MyColors.blackColor),
-              //     ),
-              //     const InfoTitleWidget(
-              //       title: "الوقت",
-              //       icon: FontAwesomeIcons.clock,
-              //     ),
-              //   ],
-              // ),
-              // const Divider(),
+
               const SizedBox(height: 10),
               Column(
                 children: [
@@ -628,12 +612,22 @@ class DetialInfoSheet extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    detailsRows.details,
-                    textAlign: TextAlign.center,
-                    maxLines: 4,
-                    style: myTextStyles.body,
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: MyColors.bg.withOpacity(0.7),
+                    ),
+                    child: Text(
+                      detailsRows.details,
+                      textAlign: TextAlign.center,
+                      maxLines: 4,
+                      style: myTextStyles.subTitle.copyWith(
+                          fontWeight: FontWeight.normal,
+                          color: MyColors.lessBlackColor),
+                    ),
                   )
                 ],
               ),
@@ -641,32 +635,24 @@ class DetialInfoSheet extends StatelessWidget {
               const SizedBox(height: 20),
               const Spacer(),
 
-              //  CustomBtnWidget(color: Colors.green, label: "تعديل"),
-              // ElevatedButton(
-              //   onPressed: () {},
-              //   style: ElevatedButton.styleFrom(
-              //       backgroundColor: MyColors.lessBlackColor,
-              //       elevation: 0,
-              //       minimumSize: const Size.fromHeight(50),
-              //       shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(15))),
-              //   child: Text(
-              //     "تعد يل",
-              //     style: myTextStyles.title1.copyWith(
-              //       color: MyColors.background,
-              //     ),
-              //   ),
-              // ),
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () => Get.back(),
-                child: Text(
-                  "إلغاء",
-                  textAlign: TextAlign.center,
-                  style: myTextStyles.subTitle,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: MyColors.secondaryTextColor,
+                  ),
+                  child: Text(
+                    "إلغاء",
+                    textAlign: TextAlign.center,
+                    style: myTextStyles.subTitle.copyWith(color: MyColors.bg),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
             ],
           ),
         ),
@@ -690,7 +676,7 @@ class InfoTitleWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: myTextStyles.subTitle,
+          style: myTextStyles.subTitle.copyWith(fontWeight: FontWeight.normal),
         ),
         const SizedBox(width: 7),
         Container(
