@@ -159,24 +159,33 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                           },
                                           cells: [
                                             DataCell(
-                                              Text(
-                                                DateFormater.DateFormat.yMd()
-                                                    .format(e.registeredAt),
-                                                style: myTextStyles.body,
+                                              FittedBox(
+                                                child: Text(
+                                                  DateFormater.DateFormat.yMd()
+                                                      .format(e.registeredAt),
+                                                  style: myTextStyles.body,
+                                                ),
                                               ),
                                             ),
-                                            DataCell(Text(
-                                              " ${(e.credit - e.debit).abs()}",
-                                              style: myTextStyles.subTitle
-                                                  .copyWith(
-                                                      color: Colors.black),
+                                            DataCell(FittedBox(
+                                              child: Text(
+                                                " ${(e.credit - e.debit).abs()}",
+                                                style: myTextStyles.subTitle
+                                                    .copyWith(
+                                                        color: Colors.black),
+                                              ),
                                             )),
-                                            DataCell(Text(
-                                              e.details,
-                                              textAlign: TextAlign.right,
-                                              overflow: TextOverflow.clip,
-                                              textDirection: TextDirection.rtl,
-                                              style: myTextStyles.body,
+                                            DataCell(FittedBox(
+                                              fit: BoxFit.fill,
+                                              clipBehavior: Clip.hardEdge,
+                                              child: Text(
+                                                e.details,
+                                                textAlign: TextAlign.right,
+                                                overflow: TextOverflow.clip,
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                style: myTextStyles.body,
+                                              ),
                                             )),
                                             DataCell(Container(
                                               width: 20,
