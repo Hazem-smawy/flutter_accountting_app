@@ -119,22 +119,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 decoration: BoxDecoration(
                                     color: MyColors.bg,
                                     borderRadius: BorderRadius.circular(12)),
-                                columns: const [
-                                  DataColumn(label: Text('التأريخ')),
-                                  DataColumn(label: Text('المبلغ')),
-                                  DataColumn(
+                                columns: [
+                                  const DataColumn(label: Text('التأريخ')),
+                                  const DataColumn(label: Text('المبلغ')),
+                                  const DataColumn(
                                       label: Center(
                                     child: Text(
                                       '     تفاصيل',
                                     ),
                                   )),
                                   DataColumn(
-                                      label: FaIcon(
-                                    FontAwesomeIcons.chevronDown,
-                                    color: MyColors.bg,
-                                    size: 18,
+                                      label: Container(
+                                    width: 20,
+                                    height: 5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: widget.homeModel.totalCredit >
+                                              widget.homeModel.totalDebit
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
                                   )),
-                                  DataColumn(
+                                  const DataColumn(
                                     label: Text('الحساب'),
                                   ),
                                 ],
@@ -225,7 +231,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             title: "$onYou",
                             subTitle: "له",
                             color: Colors.red),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         DetailsSammaryWidget(
                             icon: FontAwesomeIcons.arrowUp,
                             title: ' $onHem',
@@ -248,7 +254,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: MyColors.containerColor,
@@ -293,14 +299,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 curencyController.selectedCurency['symbol'],
                                 style: myTextStyles.body,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 "$resultMoney",
                                 style: myTextStyles.title2,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Text(
@@ -415,7 +421,7 @@ class DetailsSammaryWidget extends StatelessWidget {
                   curencyController.selectedCurency['symbol'],
                   style: myTextStyles.body,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
@@ -546,7 +552,7 @@ class DetialInfoSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -562,7 +568,7 @@ class DetialInfoSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 14,
               ),
               Row(
@@ -622,7 +628,7 @@ class DetialInfoSheet extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     detailsRows.details,
                     textAlign: TextAlign.center,
