@@ -103,78 +103,84 @@ class MyMainScreen extends StatelessWidget {
                   )),
       ),
       floatingActionButton: Obx(
-        () => accGroupController.allAccGroups.isNotEmpty
-            ? FloatingActionButton(
-                elevation: 0,
-                backgroundColor: accGroupController.allAccGroups
-                        .firstWhere((element) =>
-                            element.id ==
-                            accGroupCurencyController
-                                .allAccgroupsAndCurency[
-                                    accGroupCurencyController
-                                        .pageViewCount.value]
-                                .accGroupId)
-                        .status
-                    ? MyColors.primaryColor
-                    : MyColors.blackColor,
-                onPressed: () {
-                  if (accGroupController.allAccGroups
-                          .firstWhere((element) =>
-                              element.id ==
-                              accGroupCurencyController
+        () => accGroupController.allAccGroups.isNotEmpty &&
+                accGroupCurencyController.allAccgroupsAndCurency.isNotEmpty
+            ? curencyController.allCurency.isEmpty
+                ? SizedBox()
+                : FloatingActionButton(
+                    elevation: 0,
+                    backgroundColor: accGroupController.allAccGroups
+                            .firstWhere((element) =>
+                                element.id ==
+                                accGroupCurencyController
+                                    .allAccgroupsAndCurency[
+                                        accGroupCurencyController
+                                            .pageViewCount.value]
+                                    .accGroupId)
+                            .status
+                        ? MyColors.primaryColor
+                        : MyColors.blackColor,
+                    onPressed: () {
+                      if (accGroupController.allAccGroups
+                              .firstWhere((element) =>
+                                  element.id ==
+                                  accGroupCurencyController
+                                      .allAccgroupsAndCurency[
+                                          accGroupCurencyController
+                                              .pageViewCount.value]
+                                      .accGroupId)
+                              .status ==
+                          true) {
+                        if (accGroupController.allAccGroups.isNotEmpty &&
+                            curencyController.allCurency.isNotEmpty) {
+                          Get.bottomSheet(
+                            NewAccountScreen(
+                              accGroupId: accGroupCurencyController
                                   .allAccgroupsAndCurency[
                                       accGroupCurencyController
                                           .pageViewCount.value]
-                                  .accGroupId)
-                          .status ==
-                      true) {
-                    if (accGroupController.allAccGroups.isNotEmpty &&
-                        curencyController.allCurency.isNotEmpty) {
-                      Get.bottomSheet(
-                        NewAccountScreen(
-                          accGroupId: accGroupCurencyController
-                              .allAccgroupsAndCurency[
-                                  accGroupCurencyController.pageViewCount.value]
-                              .accGroupId,
-                          curencyId: accGroupCurencyController
-                              .allAccgroupsAndCurency[
-                                  accGroupCurencyController.pageViewCount.value]
-                              .curencyId,
-                        ),
-                        isScrollControlled: true,
-                      ).then((value) async {
-                        homeController
-                            .getCustomerAccountsFromCurencyAndAccGroupIds();
-                        accGroupCurencyController
-                            .getAllAccGroupAndCurency()
-                            .then((value) {
-                          var index = accGroupCurencyController
-                              .allAccgroupsAndCurency
-                              .indexWhere((element) =>
-                                  element.accGroupId ==
+                                  .accGroupId,
+                              curencyId: accGroupCurencyController
+                                  .allAccgroupsAndCurency[
                                       accGroupCurencyController
-                                          .allAccgroupsAndCurency[
-                                              accGroupCurencyController
-                                                  .pageViewCount.value]
-                                          .accGroupId &&
-                                  element.curencyId ==
-                                      curencyController.selectedCurency['id']);
-                          if (index > -1) {
-                            controller.animateToPage(index,
-                                duration: Duration(milliseconds: 200),
-                                curve: Curves.linear);
-                          }
-                        });
-                      });
-                    }
-                  } else {
-                    CustomDialog.customSnackBar(
-                        "هذا التصنيف موقف", SnackPosition.BOTTOM);
-                    return;
-                  }
-                },
-                child: const FaIcon(FontAwesomeIcons.plus),
-              )
+                                          .pageViewCount.value]
+                                  .curencyId,
+                            ),
+                            isScrollControlled: true,
+                          ).then((value) async {
+                            homeController
+                                .getCustomerAccountsFromCurencyAndAccGroupIds();
+                            accGroupCurencyController
+                                .getAllAccGroupAndCurency()
+                                .then((value) {
+                              var index = accGroupCurencyController
+                                  .allAccgroupsAndCurency
+                                  .indexWhere((element) =>
+                                      element.accGroupId ==
+                                          accGroupCurencyController
+                                              .allAccgroupsAndCurency[
+                                                  accGroupCurencyController
+                                                      .pageViewCount.value]
+                                              .accGroupId &&
+                                      element.curencyId ==
+                                          curencyController
+                                              .selectedCurency['id']);
+                              if (index > -1) {
+                                controller.animateToPage(index,
+                                    duration: Duration(milliseconds: 200),
+                                    curve: Curves.linear);
+                              }
+                            });
+                          });
+                        }
+                      } else {
+                        CustomDialog.customSnackBar(
+                            "هذا التصنيف موقف", SnackPosition.BOTTOM);
+                        return;
+                      }
+                    },
+                    child: const FaIcon(FontAwesomeIcons.plus),
+                  )
             : SizedBox(),
       ),
     );

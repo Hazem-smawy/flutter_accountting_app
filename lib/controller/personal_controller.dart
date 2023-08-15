@@ -8,10 +8,11 @@ class PersonalController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getPersonal();
   }
 
-  Future<PersonalModel?> getPersonal(int id) async {
-    var newPer = await personalData.readPersonal(id);
+  Future<PersonalModel?> getPersonal() async {
+    PersonalModel? newPer = await personalData.readPersonal();
     newPersonal.addAll(newPer?.toMap() ?? {});
     return newPer;
   }

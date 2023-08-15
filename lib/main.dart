@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
@@ -5,8 +7,11 @@ import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
 import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
+import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/controller/journal_controller.dart';
 import 'package:account_app/controller/new_account_controller.dart';
+import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/screen/intro_screen/intro_screen.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
 import 'package:account_app/widget/empty_accGroup_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +19,7 @@ import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   AccGroupCurencyController accGroupCurencyController =
       Get.put(AccGroupCurencyController());
   CustomerController customerController = Get.put(CustomerController());
@@ -25,13 +31,14 @@ void main() {
 
   HomeController homeController = Get.put(HomeController());
   NewAccountController newAccountController = Get.put(NewAccountController());
-
+  IntroController introController = Get.put(IntroController());
+  PersonalController personalController = Get.put(PersonalController());
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  AccGroupController accGroupController = Get.find();
   MyApp({super.key});
+  IntroController introController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -42,49 +49,20 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: MyColors.containerColor,
         ),
         // theme: AppThemes.darkTheme,
-        home: Obx(() => accGroupController.allAccGroups.isEmpty
-            ? Scaffold(body: EmptyAccGroupsWidget())
-            : MyMainScreen()));
+        home: Obx(() => introController.introShow.value
+            ? ShowMyMainScreen()
+            : MyEntroScreen()));
   }
 }
 
-// class MyBoxess extends StatelessWidget {
-//   const MyBoxess({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//           child: PageView.builder(
-//               itemCount: 2,
-//               itemBuilder: (context, i) {
-//                 return GestureDetector(
-//                   on
-//                   child: PageView.builder(
-//                       itemCount: 2,
-//                       onPageChanged: (value) {
-//                         print(value);
-//                       },
-//                       pageSnapping: false,
-//                       itemBuilder: (context, ii) {
-//                         return Text(("$i --- $ii"));
-//                       }),
-//                 );
-//               })),
-//     );
-//   }
-// }
-
-// /*
-//  Center(
-//           child: DropdownButton<String>(
-//             borderRadius: BorderRadius.circular(10),
-//               value: "one",
-//               onChanged: (value) {
-//                 print(value);
-//               },
-//               items: l
-//                   .map((e) => DropdownMenuItem(value: e, child: Text("Value")))
-//                   .toList())),
-
-// */
+class ShowMyMainScreen extends StatelessWidget {
+  ShowMyMainScreen({super.key});
+  AccGroupController accGroupController = Get.find();
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => accGroupController.allAccGroups.isEmpty
+        ? const Scaffold(
+            backgroundColor: MyColors.bg, body: EmptyAccGroupsWidget())
+        : MyMainScreen());
+  }
+}

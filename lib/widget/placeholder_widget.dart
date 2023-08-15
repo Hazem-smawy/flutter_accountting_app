@@ -26,93 +26,85 @@ class PlaceHolderWidget extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: MyColors.bg,
+                //color: MyColors.bg.withOpacity(0.5),
               ),
               child: Column(
                 children: [
-                  const FaIcon(
-                    FontAwesomeIcons.circleDollarToSlot,
-                    size: 50,
-                    color: MyColors.lessBlackColor,
+                  Image.asset("assets/images/curency1.png"),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "قم بإضافة بعض العملات ",
+                    style: myTextStyles.title1.copyWith(
+                      color: Colors.red,
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "قم بإضافة بعض العملات ",
-                    style: myTextStyles.subTitle.copyWith(
-                      color: Colors.black,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => CurencySettingScreen());
+                    },
+                    child: Container(
+                      width: Get.width / 3,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: MyColors.secondaryTextColor,
+                            width: 1,
+                          )),
+                      child: Text(
+                        "إضافة",
+                        textAlign: TextAlign.center,
+                        style: myTextStyles.title1.copyWith(
+                          color: MyColors.lessBlackColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 60),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(() => CurencySettingScreen());
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                color: Colors.red,
-                                width: 1,
-                              )),
-                          child: Text(
-                            "إضافة",
-                            textAlign: TextAlign.center,
-                            style: myTextStyles.title1.copyWith(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      )),
                 ],
               ),
             ),
-          // if (curencyController.allCurency.isEmpty) SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.only(
-              right: 20,
-              left: 20,
-            ),
-            width: double.infinity,
-            constraints: BoxConstraints(maxHeight: Get.height / 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: MyColors.bg.withOpacity(0.5),
-              //boxShadow: [myShadow.blackShadow]
-            ),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.userPlus,
-                    size: 50,
-                    color: MyColors.lessBlackColor.withOpacity(0.8),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "ليس هناك أي حسابات في هذا التصنيف ",
-                    style: myTextStyles.body,
-                  ),
-                  Text(
-                    "للإضافه إضغط زر الإضافة",
-                    style: myTextStyles.subTitle.copyWith(
+          if (curencyController.allCurency.isNotEmpty)
+            Container(
+              margin: const EdgeInsets.only(
+                right: 20,
+                left: 20,
+              ),
+              width: double.infinity,
+              //constraints: BoxConstraints(maxHeight: Get.height / 4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/customerAccount.png"),
+                    const SizedBox(height: 30),
+                    Text(
+                      "ليس هناك أي حسابات في هذا التصنيف ",
+                      style: myTextStyles.title2,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "للإضافه إضغط زر الإضافة",
+                      style: myTextStyles.subTitle.copyWith(
                         fontWeight: FontWeight.normal,
-                        color: MyColors.lessBlackColor),
-                  )
-                ],
+                        color: MyColors.lessBlackColor,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

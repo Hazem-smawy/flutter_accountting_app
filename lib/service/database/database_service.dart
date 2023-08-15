@@ -6,6 +6,7 @@ import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/models/home_model.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/models/personal_model.dart';
 import 'package:account_app/service/database/database_helper.dart';
 import 'package:account_app/service/database/tables_helpers.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,7 +37,7 @@ class DatabaseService {
   // }
 
   Future<String> get fullPath async {
-    const name = "account_databse7.db";
+    const name = "account_databse14.db";
     final path = await getDatabasesPath();
     return join(path, name);
   }
@@ -50,6 +51,12 @@ class DatabaseService {
   }
 
   Future<void> _create(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE intro (
+         ${CurencyField.id} ${FieldType.idType},
+        isShow ${FieldType.boolType})
+
+    ''');
     await db.execute('''
         CREATE TABLE ${TableName.curencyTbl} (
           ${CurencyField.id} ${FieldType.idType},
@@ -119,6 +126,17 @@ class DatabaseService {
           ${JournalField.debit} ${FieldType.doubleType},
           ${JournalField.createdAt} ${FieldType.timeType},
           ${JournalField.modifiedAt} ${FieldType.timeType}
+         
+        )
+    ''');
+    await db.execute('''
+        CREATE TABLE ${TableName.personalTbl} (
+          ${PersonalField.id} ${FieldType.idType},
+          ${PersonalField.name} ${FieldType.textType},
+          ${PersonalField.phone} ${FieldType.textType},
+          ${PersonalField.email} ${FieldType.textType},
+          ${PersonalField.address} ${FieldType.textType}
+         
          
         )
     ''');

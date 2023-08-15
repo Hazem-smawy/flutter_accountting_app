@@ -110,7 +110,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   return MyColors.lessBlackColor;
                                   // Use the default value.
                                 }),
-                                columnSpacing: 10,
+                                columnSpacing: 5,
                                 headingRowHeight: 45,
                                 headingTextStyle:
                                     myTextStyles.subTitle.copyWith(

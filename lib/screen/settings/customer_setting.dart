@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/shadows.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
@@ -33,7 +34,7 @@ class CustomerSettingScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 if (customerController.allCustomers.isEmpty)
                   EmptyWidget(
-                    icon: FontAwesomeIcons.userPlus,
+                    imageName: 'assets/images/customer.png',
                     label: "قم بإضافة بعض العملاء",
                   ),
                 Column(
@@ -243,6 +244,12 @@ class NewCustomerSheet extends StatelessWidget {
                         (value) => newValue,
                         ifAbsent: () => newValue,
                       );
+                      if (newValue == false) {
+                        CustomDialog.customSnackBar(
+                          changeStatusMessage,
+                          SnackPosition.TOP,
+                        );
+                      }
                     }),
                 Text(
                   "حالة العميل",
@@ -303,7 +310,9 @@ class NewCustomerSheet extends StatelessWidget {
                   child: CustomBtnWidget(
                     color: MyColors.secondaryTextColor,
                     label: "الغاء",
-                    action: () {},
+                    action: () {
+                      Get.back();
+                    },
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -352,6 +361,11 @@ class NewCustomerSheet extends StatelessWidget {
 
                         homeController
                             .getCustomerAccountsFromCurencyAndAccGroupIds();
+                      } else {
+                        CustomDialog.customSnackBar(
+                            "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+
+                        return;
                       }
                     } catch (e) {
                       //print(e);

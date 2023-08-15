@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/personal_controller.dart';
 import 'package:account_app/screen/customer_account/customer_account.dart';
+import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,6 +20,8 @@ class MyDrawerView extends StatelessWidget {
     //SystemNavigator.pop();
   }
 
+  PersonalController personalController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -33,29 +37,40 @@ class MyDrawerView extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 60),
-            const CircleAvatar(
-              radius: 30,
-              backgroundColor: MyColors.containerColor,
-              child: FaIcon(
-                FontAwesomeIcons.user,
-                size: 20,
-                color: MyColors.lessBlackColor,
-              ),
+            Obx(
+              () => personalController.newPersonal['name'] == null
+                  ? Container(
+                      child: NoPersonalInfoWidget(
+                      isDrawer: true,
+                    ))
+                  : Column(
+                      children: [
+                        const CircleAvatar(
+                          radius: 30,
+                          backgroundColor: MyColors.containerColor,
+                          child: FaIcon(
+                            FontAwesomeIcons.user,
+                            size: 20,
+                            color: MyColors.lessBlackColor,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          personalController.newPersonal['name'],
+                          style: myTextStyles.title2.copyWith(
+                            color: MyColors.containerColor,
+                          ),
+                        ),
+                        Text(
+                          personalController.newPersonal['email'],
+                          style: myTextStyles.subTitle.copyWith(
+                            color: MyColors.secondaryTextColor,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              "حازم السماوي",
-              style: myTextStyles.title2.copyWith(
-                color: MyColors.containerColor,
-              ),
-            ),
-            Text(
-              "hazemsmawy@gmail.com",
-              style: myTextStyles.subTitle.copyWith(
-                color: MyColors.secondaryTextColor,
-              ),
-            ),
-            const SizedBox(height: 10),
             Divider(
               color: MyColors.containerColor.withOpacity(0.5),
             ),
@@ -71,12 +86,12 @@ class MyDrawerView extends StatelessWidget {
                     title: "حسابات العملاء",
                   ),
                   DrawerItemWidget(
-                    onPress: () => Get.to(() => const SettingScreen()),
+                    onPress: () => Get.to(() => SettingScreen()),
                     icon: FontAwesomeIcons.gear,
                     title: "الاعدادات",
                   ),
                   DrawerItemWidget(
-                    onPress: () => Get.to(() => const SettingScreen()),
+                    onPress: () => Get.to(() => SettingScreen()),
                     icon: FontAwesomeIcons.circleExclamation,
                     title: " عنا",
                   ),

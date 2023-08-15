@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
@@ -31,8 +32,8 @@ class AccGroupSettingScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 if (accGroupController.allAccGroups.isEmpty)
                   EmptyWidget(
-                    icon: FontAwesomeIcons.folderPlus,
-                    label: "قم بإضافة بعض الحسابات",
+                    imageName: 'assets/images/accGroup.png',
+                    label: "قم بإضافة بعض التصنيفات",
                   ),
                 if (accGroupController.allAccGroups.isNotEmpty)
                   Row(
@@ -180,7 +181,7 @@ class NewAccGroupSheet extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomSheetBackBtnWidget(),
+              const CustomSheetBackBtnWidget(),
               const SizedBox(height: 30),
               const FaIcon(
                 FontAwesomeIcons.folderPlus,
@@ -209,6 +210,10 @@ class NewAccGroupSheet extends StatelessWidget {
                           (value) => newValue,
                           ifAbsent: () => newValue,
                         );
+                        if (newValue == false) {
+                          CustomDialog.customSnackBar(
+                              changeStatusMessage, SnackPosition.TOP);
+                        }
                       }),
                   Text(
                     "الحالة ",
@@ -252,16 +257,6 @@ class NewAccGroupSheet extends StatelessWidget {
                               if (accGroupController
                                       .newAccGroup[AccGroupField.name] !=
                                   null) {
-                                if (accGroupController
-                                        .newAccGroup[AccGroupField.name]
-                                        .length <
-                                    2) {
-                                  CustomDialog.customSnackBar(
-                                      "ادخل كل القيم بطريقة صحيحة",
-                                      SnackPosition.TOP);
-
-                                  return;
-                                }
                                 var accgroup = AccGroup(
                                   id: isEditing
                                       ? accGroupController
@@ -281,14 +276,27 @@ class NewAccGroupSheet extends StatelessWidget {
                                   modifiedAt: DateTime.now(),
                                 );
 
+                                if (accgroup.name.isEmpty) {
+                                  CustomDialog.customSnackBar(
+                                      "ادخل كل القيم بطريقة صحيحة",
+                                      SnackPosition.TOP);
+
+                                  return;
+                                }
                                 isEditing
                                     ? await accGroupController
                                         .updateAccGroup(accgroup)
                                     : await accGroupController
                                         .createAccGroup(accgroup);
-                                accGroupCurencyController
+                                await accGroupCurencyController
                                     .getAllAccGroupAndCurency();
-                                accGroupController.readAllAccGroup();
+                                await accGroupController.readAllAccGroup();
+                              } else {
+                                CustomDialog.customSnackBar(
+                                    "ادخل كل القيم بطريقة صحيحة",
+                                    SnackPosition.TOP);
+
+                                return;
                               }
                             } catch (e) {
                               // print("some error : $e");

@@ -1,4 +1,5 @@
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
@@ -7,6 +8,7 @@ import 'package:account_app/controller/customers_controller.dart';
 import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -92,25 +94,25 @@ class CustomerAccountsView extends StatelessWidget {
                     ? Container(
                         width: double.infinity,
                         height: Get.height / 2,
-                        margin: EdgeInsets.only(
-                            left: 20, right: 20, top: 20, bottom: 200),
+                        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: MyColors.bg,
+                          //color: MyColors.bg,
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FaIcon(
-                              FontAwesomeIcons.filePen,
-                              size: 50,
-                              color: MyColors.blackColor,
+                            Image.asset(
+                              "assets/images/customerAccount1.png",
+                              fit: BoxFit.cover,
+                              height: Get.height / 3,
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 20),
                             Text(
                               "لاتوجد اي حسابات ",
-                              style: myTextStyles.body,
-                            )
+                              style: myTextStyles.title2,
+                            ),
+                            Spacer(),
                           ],
                         ),
                       )
@@ -255,6 +257,12 @@ class _CustomerAccountDetailsSheetState
                     setState(() {
                       status = value;
                     });
+                    if (value == false) {
+                      CustomDialog.customSnackBar(
+                        changeStatusMessage,
+                        SnackPosition.TOP,
+                      );
+                    }
                   }),
               const Spacer(),
               Text(

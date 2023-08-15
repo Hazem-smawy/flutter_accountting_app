@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/notification.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/customer_account_controller.dart';
@@ -31,7 +32,7 @@ class CurencySettingScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 if (curencyController.allCurency.isEmpty)
                   EmptyWidget(
-                    icon: FontAwesomeIcons.dollarSign,
+                    imageName: 'assets/images/curency1.png',
                     label: "قم بإضافة بعض العملات",
                   ),
                 if (curencyController.allCurency.isNotEmpty)
@@ -215,6 +216,12 @@ class NewCurencySheet extends StatelessWidget {
                         (value) => newValue,
                         ifAbsent: () => newValue,
                       );
+                      if (newValue == false) {
+                        CustomDialog.customSnackBar(
+                          changeStatusMessage,
+                          SnackPosition.TOP,
+                        );
+                      }
                     }),
                 Text(
                   "الحالة ",
@@ -312,6 +319,11 @@ class NewCurencySheet extends StatelessWidget {
                             ? await curencyController.updateCurency(curency)
                             : await curencyController.createCurency(curency);
                         curencyController.readAllCurency();
+                      } else {
+                        CustomDialog.customSnackBar(
+                            "ادخل كل القيم بطريقة صحيحة", SnackPosition.TOP);
+
+                        return;
                       }
                     } catch (e) {}
                   },

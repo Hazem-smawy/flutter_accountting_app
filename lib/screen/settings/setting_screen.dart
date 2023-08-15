@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:account_app/controller/personal_controller.dart';
 import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:account_app/screen/settings/curency_setting.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/widget/custom_btns_widges.dart';
+import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -11,7 +14,8 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/screen/settings/customer_setting.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  SettingScreen({super.key});
+  PersonalController personalController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +29,6 @@ class SettingScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(15),
-                // decoration: BoxDecoration(
-                //   color: MyColors.lessBlackColor,
-                // ),
                 child: Column(
                   children: [
                     Container(
@@ -65,7 +66,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(
-                      onTap: () => Get.to(() => const PersonalInfoScreen()),
+                      onTap: () => Get.to(() => PersonalInfoScreen()),
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 8.0,
@@ -77,73 +78,88 @@ class SettingScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           color: MyColors.bg,
                         ),
-                        child: Row(
-                          children: [
-                            const FaIcon(
-                              FontAwesomeIcons.chevronLeft,
-                              size: 15,
-                              color: Colors.white24,
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "حازم السماوي",
-                                  style: myTextStyles.title1.copyWith(
-                                    // color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Text(
-                                  "hazemsmawy@gmail.com",
-                                  style: myTextStyles.title1.copyWith(
-                                    //  color: Colors.white54,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 15),
-                            Stack(
-                              clipBehavior: Clip.none,
-                              alignment: AlignmentDirectional.bottomCenter,
-                              children: [
-                                const CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: MyColors.secondaryTextColor,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.user,
-                                    color: MyColors.containerColor,
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: -10,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.green,
-                                    ),
-                                    margin: const EdgeInsets.only(top: 20),
-                                    child: const Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.plus,
-                                        size: 13,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                        child: Obx(
+                          () => personalController.newPersonal['name'] == null
+                              ? NoPersonalInfoWidget(
+                                  isDrawer: false,
                                 )
-                              ],
-                            )
-                          ],
+                              : Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    const FaIcon(
+                                      FontAwesomeIcons.chevronLeft,
+                                      size: 15,
+                                      color: MyColors.secondaryTextColor,
+                                    ),
+                                    const Spacer(),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          personalController
+                                              .newPersonal['name'],
+                                          style: myTextStyles.title1.copyWith(
+                                            // color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                        Text(
+                                          personalController
+                                              .newPersonal['email'],
+                                          style: myTextStyles.title1.copyWith(
+                                            //  color: Colors.white54,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 15),
+                                    Stack(
+                                      clipBehavior: Clip.none,
+                                      alignment:
+                                          AlignmentDirectional.bottomCenter,
+                                      children: [
+                                        const CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor:
+                                              MyColors.secondaryTextColor,
+                                          child: FaIcon(
+                                            FontAwesomeIcons.user,
+                                            color: MyColors.containerColor,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: -10,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.green,
+                                            ),
+                                            margin:
+                                                const EdgeInsets.only(top: 20),
+                                            child: const Center(
+                                              child: FaIcon(
+                                                FontAwesomeIcons.plus,
+                                                size: 13,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    //const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -152,29 +168,28 @@ class SettingScreen extends StatelessWidget {
                   width: double.infinity,
                   height: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: const BoxDecoration(
-                      // color: MyColors.bg,
-                      ),
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: MyColors.bg,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
                         const SizedBox(height: 15),
                         SettingItemWidget(
-                          onPress: () =>
-                              Get.to(() =>  CustomerSettingScreen()),
+                          onPress: () => Get.to(() => CustomerSettingScreen()),
                           icon: FontAwesomeIcons.a,
                           title: "كل العملاء",
                         ),
                         SettingItemWidget(
-                          onPress: () =>
-                              Get.to(() =>  CurencySettingScreen()),
+                          onPress: () => Get.to(() => CurencySettingScreen()),
                           icon: FontAwesomeIcons.dollarSign,
                           title: "العملات",
                         ),
                         SettingItemWidget(
-                          onPress: () =>
-                              Get.to(() =>  AccGroupSettingScreen()),
+                          onPress: () => Get.to(() => AccGroupSettingScreen()),
                           icon: FontAwesomeIcons.fileCirclePlus,
                           title: " التصنيفات",
                         ),
@@ -182,35 +197,19 @@ class SettingScreen extends StatelessWidget {
                         //theme
                         const SizedBox(height: 30),
                         const Spacer(),
-                        ListTile(
-                          leading: Switch.adaptive(
-                              value: false, onChanged: (newValue) {}),
-                          trailing: Container(
-                            width: 30,
-                            height: 30,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: MyColors.lessBlackColor,
-                            ),
-                            child: const Center(
-                              child: FaIcon(
-                                FontAwesomeIcons.moon,
-                                size: 15,
-                                color: Colors.white,
-                              ),
-                            ),
+                        Container(
+                          width: Get.width - 100,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: MyColors.containerColor,
                           ),
-                          title: Text(
-                            "الليلي",
-                            textAlign: TextAlign.right,
-                            style: myTextStyles.title2.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          child: Text(
+                            "خروج ",
+                            style: myTextStyles.subTitle,
                           ),
                         ),
-
                         const SizedBox(height: 50),
                       ],
                     ),
@@ -249,7 +248,7 @@ class SettingItemWidget extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: MyColors.bg,
+            color: MyColors.containerColor.withOpacity(0.3),
           ),
           child: Row(children: [
             const SizedBox(width: 5),
@@ -276,7 +275,8 @@ class SettingItemWidget extends StatelessWidget {
               height: 30,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                shape: BoxShape.circle,
+                //borderRadius: BorderRadius.circular(10),
                 color: MyColors.lessBlackColor.withOpacity(0.8),
               ),
               child: Center(
