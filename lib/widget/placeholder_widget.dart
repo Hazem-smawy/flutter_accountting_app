@@ -30,14 +30,18 @@ class PlaceHolderWidget extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Image.asset("assets/images/curency1.png"),
+                  Image.asset(
+                    "assets/images/curency1.png",
+                    width: Get.width - 100,
+                  ),
                   const SizedBox(
-                    height: 30,
+                    height: 50,
                   ),
                   Text(
                     "قم بإضافة بعض العملات ",
                     style: myTextStyles.title1.copyWith(
-                      color: Colors.red,
+                      color: MyColors.lessBlackColor,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                   const SizedBox(
@@ -85,13 +89,19 @@ class PlaceHolderWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset("assets/images/customerAccount.png"),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Image.asset(
+                      "assets/images/customerAccount.png",
+                      width: Get.width - 100,
+                    ),
                     const SizedBox(height: 30),
                     Text(
                       "ليس هناك أي حسابات في هذا التصنيف ",
                       style: myTextStyles.title2,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(

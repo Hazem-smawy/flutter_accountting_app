@@ -33,7 +33,7 @@ class CurencySettingScreen extends StatelessWidget {
                 if (curencyController.allCurency.isEmpty)
                   EmptyWidget(
                     imageName: 'assets/images/curency1.png',
-                    label: "قم بإضافة بعض العملات",
+                    label: "لاتوجد اي عملات , قم بإضافة بعض العملات",
                   ),
                 if (curencyController.allCurency.isNotEmpty)
                   Row(
@@ -80,7 +80,7 @@ class CurencySettingScreen extends StatelessWidget {
                                 DataColumn(
                                   label: CircleAvatar(
                                     radius: 5,
-                                    backgroundColor: Colors.red,
+                                    backgroundColor: Colors.green,
                                   ),
                                 ),
                               ],
@@ -113,7 +113,7 @@ class CurencySettingScreen extends StatelessWidget {
                                     child: const FaIcon(
                                       FontAwesomeIcons.penToSquare,
                                       size: 17,
-                                      color: MyColors.secondaryTextColor,
+                                      color: MyColors.primaryColor,
                                     ),
                                   )),
                                   DataCell(
@@ -197,7 +197,7 @@ class NewCurencySheet extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              isEdding ? " تعد يل عملة" : "اضافه عملة",
+              isEdding ? " تعد يل" : "إضافة ",
               style: myTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
@@ -218,7 +218,7 @@ class NewCurencySheet extends StatelessWidget {
                       );
                       if (newValue == false) {
                         CustomDialog.customSnackBar(
-                          changeStatusMessage,
+                          changeStatusMessageCurency,
                           SnackPosition.TOP,
                         );
                       }
@@ -278,7 +278,7 @@ class NewCurencySheet extends StatelessWidget {
                 Flexible(
                     child: CustomBtnWidget(
                   color: MyColors.primaryColor,
-                  label: "اضافة",
+                  label: isEdding ? "تعد يل" : "اضافة",
                   action: () async {
                     try {
                       if (curencyController.newCurency[CurencyField.name] !=

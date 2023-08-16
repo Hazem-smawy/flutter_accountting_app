@@ -4,7 +4,6 @@ import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:account_app/screen/settings/curency_setting.dart';
 import 'package:account_app/constant/text_styles.dart';
-import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -50,15 +49,18 @@ class SettingScreen extends StatelessWidget {
                             style: myTextStyles.title1.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.normal,
-                              fontSize: 18,
+                              // fontSize: 18,
                             ),
                           )),
                           GestureDetector(
                             onTap: () => Get.back(),
-                            child: const FaIcon(
-                              FontAwesomeIcons.arrowRightLong,
-                              color: Colors.white54,
-                              size: 20,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: FaIcon(
+                                FontAwesomeIcons.arrowRightLong,
+                                color: Colors.white54,
+                                size: 20,
+                              ),
                             ),
                           )
                         ],
@@ -75,17 +77,17 @@ class SettingScreen extends StatelessWidget {
                           top: 8,
                         ),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(15),
                           color: MyColors.bg,
                         ),
                         child: Obx(
                           () => personalController.newPersonal['name'] == null
-                              ? NoPersonalInfoWidget(
+                              ? const NoPersonalInfoWidget(
                                   isDrawer: false,
                                 )
                               : Row(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     const FaIcon(
@@ -168,7 +170,8 @@ class SettingScreen extends StatelessWidget {
                   width: double.infinity,
                   height: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   decoration: BoxDecoration(
                     color: MyColors.bg,
                     borderRadius: BorderRadius.circular(30),
@@ -180,7 +183,7 @@ class SettingScreen extends StatelessWidget {
                         const SizedBox(height: 15),
                         SettingItemWidget(
                           onPress: () => Get.to(() => CustomerSettingScreen()),
-                          icon: FontAwesomeIcons.a,
+                          icon: FontAwesomeIcons.users,
                           title: "كل العملاء",
                         ),
                         SettingItemWidget(
@@ -271,8 +274,8 @@ class SettingItemWidget extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Container(
-              width: 30,
-              height: 30,
+              width: 35,
+              height: 35,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,

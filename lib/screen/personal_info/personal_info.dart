@@ -112,7 +112,10 @@ class PersonalInfoScreen extends StatelessWidget {
                             children: [
                               const Spacer(),
                               Text(
-                                personalController.newPersonal['phone'],
+                                personalController.newPersonal['phone'].length <
+                                        2
+                                    ? "لايوجد"
+                                    : personalController.newPersonal['phone'],
                                 style: myTextStyles.title2.copyWith(
                                   color: MyColors.secondaryTextColor,
                                   fontWeight: FontWeight.normal,
@@ -152,7 +155,11 @@ class PersonalInfoScreen extends StatelessWidget {
                               ),
                               const Spacer(),
                               Text(
-                                personalController.newPersonal['address'],
+                                personalController
+                                            .newPersonal['address'].length <
+                                        2
+                                    ? "لايوجد"
+                                    : personalController.newPersonal['address'],
                                 style: myTextStyles.title2.copyWith(
                                   color: MyColors.secondaryTextColor,
                                   fontWeight: FontWeight.normal,
@@ -185,12 +192,13 @@ class EditPersonalInfoSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: isFirstTime ? false : true,
       bottom: false,
       child: Container(
         // margin: EdgeInsets.only(top: Get.width / 4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
           color: personalController.newPersonal['name'] == null
               ? Colors.transparent
               : MyColors.bg,
@@ -201,7 +209,9 @@ class EditPersonalInfoSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (personalController.newPersonal['name'] == null)
-                const CustomBackBtnWidget(title: "الإعدادات الشخصية"),
+                SafeArea(
+                  child: CustomBackBtnWidget(title: "الإعدادات الشخصية"),
+                ),
               if (personalController.newPersonal['name'] != null)
                 const CustomSheetBackBtnWidget(),
               const SizedBox(height: 30),
@@ -282,7 +292,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
               Row(
                 children: [
                   Flexible(
@@ -298,7 +308,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                   Flexible(
                       child: CustomBtnWidget(
                     color: MyColors.primaryColor,
-                    label: 'اضافه',
+                    label: 'إضافة',
                     action: () {
                       if (personalController.newPersonal['newName'] == null ||
                           personalController.newPersonal['email'] == null) {
@@ -318,9 +328,8 @@ class EditPersonalInfoSheet extends StatelessWidget {
                           name: personalController.newPersonal['newName'] ?? "",
                           email: personalController.newPersonal['email'] ?? "",
                           address:
-                              personalController.newPersonal['address'] ?? " ",
-                          phone:
-                              personalController.newPersonal['phone'] ?? " ");
+                              personalController.newPersonal['address'] ?? "",
+                          phone: personalController.newPersonal['phone'] ?? "");
 
                       isFirstTime
                           ? personalController.createPersona(newPersonalInfo)
@@ -330,7 +339,7 @@ class EditPersonalInfoSheet extends StatelessWidget {
                   ))
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 60),
             ],
           ),
         ),
@@ -362,13 +371,15 @@ class PersonalTextFieldWidget extends StatelessWidget {
         color: MyColors.containerSecondColor,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: TextFormField(
               initialValue: placeHolder ?? "",
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
-              style: myTextStyles.title1,
+              style: myTextStyles.subTitle.copyWith(
+                  color: MyColors.blackColor, fontWeight: FontWeight.bold),
               onChanged: (value) {
                 action!(value);
                 CEC.errorMessage.value = "";
@@ -376,7 +387,8 @@ class PersonalTextFieldWidget extends StatelessWidget {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: textHint,
-                hintStyle: myTextStyles.subTitle,
+                hintStyle:
+                    myTextStyles.body.copyWith(fontWeight: FontWeight.normal),
               ),
             ),
           ),

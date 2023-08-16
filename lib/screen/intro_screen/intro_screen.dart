@@ -24,7 +24,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
     },
     {
       "id": 1,
-      "image": "assets/images/customer.png",
+      "image": "assets/images/customerAccount1.png",
       "title": "العنوان",
       "desc":
           "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
@@ -65,21 +65,36 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                         if (index == pages.length - 1)
                           Row(
                             children: [
-                              Spacer(),
+                              const Spacer(),
                               GestureDetector(
                                 onTap: () {
                                   controller.previousPage(
-                                      duration: Duration(milliseconds: 200),
+                                      duration:
+                                          const Duration(milliseconds: 200),
                                       curve: Curves.bounceInOut);
                                 },
                                 child: Padding(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                       right: 20,
+                                      top: 10,
                                     ),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.arrowRightLong,
-                                      color: MyColors.secondaryTextColor,
-                                      size: 20,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "رجوع",
+                                          style: myTextStyles.subTitle,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const FaIcon(
+                                          FontAwesomeIcons.arrowRightLong,
+                                          color: MyColors.secondaryTextColor,
+                                          size: 15,
+                                        ),
+                                      ],
                                     )),
                               ),
                             ],
@@ -87,7 +102,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                         FirstPage(
                           page: pages[index],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         if (index == pages.length - 1)
                           GestureDetector(
                             onTap: () {
@@ -106,16 +121,29 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                 color: const Color.fromARGB(255, 64, 203, 143)
                                     .withOpacity(0.7),
                               ),
-                              child: Text(
-                                "الصفحة الرئيسية",
-                                style: myTextStyles.title2.copyWith(
-                                  color: MyColors.bg,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const FaIcon(
+                                    FontAwesomeIcons.arrowLeftLong,
+                                    size: 18,
+                                    color: MyColors.containerColor,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "الصفحة الرئيسية",
+                                    style: myTextStyles.title2.copyWith(
+                                      color: MyColors.bg,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
                       ],
@@ -124,6 +152,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
             ),
             if (i != pages.length - 1)
               Container(
+                margin: const EdgeInsets.only(bottom: 30),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 child: Row(
@@ -133,12 +162,12 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                     GestureDetector(
                       onTap: () {
                         controller.previousPage(
-                          duration: Duration(milliseconds: 200),
+                          duration: const Duration(milliseconds: 200),
                           curve: Curves.decelerate,
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                             border:
                                 Border.all(color: MyColors.secondaryTextColor),
@@ -151,35 +180,35 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                       ),
                     ),
                     Expanded(
-                        child: Container(
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: pages
                               .map(
                                 (e) => AnimatedContainer(
-                                  duration: Duration(microseconds: 200),
-                                  margin: EdgeInsets.only(left: 5),
+                                  duration: const Duration(microseconds: 200),
+                                  margin: const EdgeInsets.only(left: 5),
                                   width: e['id'] == i ? 15 : 5,
                                   height: 5,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: e['id'] == i
-                                        ? Color.fromARGB(255, 88, 223, 162)
+                                        ? const Color.fromARGB(
+                                            255, 88, 223, 162)
                                         : Colors.white,
                                   ),
                                 ),
                               )
                               .toList()),
-                    )),
+                    ),
                     GestureDetector(
                       onTap: () {
                         controller.nextPage(
-                          duration: Duration(milliseconds: 200),
+                          duration: const Duration(milliseconds: 200),
                           curve: Curves.decelerate,
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                             border:
                                 Border.all(color: MyColors.secondaryTextColor),
@@ -207,15 +236,16 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
       child: Column(
         children: [
           SizedBox(
-            height: 50,
+            height: Get.height / 8,
           ),
           Image.asset(
             page['image'],
-            width: Get.width - 100,
+            width: Get.width - 150,
           ),
           const SizedBox(
             height: 40,
@@ -225,10 +255,10 @@ class FirstPage extends StatelessWidget {
             style: myTextStyles.title2.copyWith(
               color: MyColors.containerColor,
               fontWeight: FontWeight.normal,
-              fontSize: 30,
+              fontSize: 23,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(
@@ -237,7 +267,7 @@ class FirstPage extends StatelessWidget {
               page['desc'],
               textAlign: TextAlign.center,
               style: myTextStyles.body.copyWith(
-                color: MyColors.secondaryTextColor,
+                color: MyColors.containerSecondColor,
                 fontWeight: FontWeight.normal,
               ),
             ),

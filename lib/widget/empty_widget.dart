@@ -22,13 +22,16 @@ class EmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(
+            height: 30,
+          ),
           Image.asset(
             imageName,
             fit: BoxFit.cover,
-            width: double.infinity,
+            width: Get.width - 100,
           ),
-          SizedBox(
-            height: 30,
+          const SizedBox(
+            height: 60,
           ),
           Text(
             label,

@@ -259,7 +259,7 @@ class _CustomerAccountDetailsSheetState
                     });
                     if (value == false) {
                       CustomDialog.customSnackBar(
-                        changeStatusMessage,
+                        changeStatusMessageCustomer,
                         SnackPosition.TOP,
                       );
                     }

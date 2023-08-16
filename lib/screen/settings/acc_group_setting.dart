@@ -33,7 +33,7 @@ class AccGroupSettingScreen extends StatelessWidget {
                 if (accGroupController.allAccGroups.isEmpty)
                   EmptyWidget(
                     imageName: 'assets/images/accGroup.png',
-                    label: "قم بإضافة بعض التصنيفات",
+                    label: "لايوجد أي تصنيف , قم بالإضافة",
                   ),
                 if (accGroupController.allAccGroups.isNotEmpty)
                   Row(
@@ -88,9 +88,9 @@ class AccGroupSettingScreen extends StatelessWidget {
                                     return DataRow(cells: [
                                       DataCell(GestureDetector(
                                         onTap: () => CustomDialog.showDialog(
-                                            title: "تعديل",
+                                            title: "تعد يل",
                                             description:
-                                                "هل انت متاكد من تعديل هذا التصنيف",
+                                                "هل انت متاكد من تعد يل هذا التصنيف",
                                             color: Colors.green,
                                             icon: FontAwesomeIcons.penToSquare,
                                             action: () {
@@ -112,7 +112,7 @@ class AccGroupSettingScreen extends StatelessWidget {
                                         child: const FaIcon(
                                           FontAwesomeIcons.penToSquare,
                                           size: 17,
-                                          color: MyColors.secondaryTextColor,
+                                          color: MyColors.primaryColor,
                                         ),
                                       )),
                                       DataCell(Text(
@@ -183,14 +183,16 @@ class NewAccGroupSheet extends StatelessWidget {
             children: [
               const CustomSheetBackBtnWidget(),
               const SizedBox(height: 30),
-              const FaIcon(
-                FontAwesomeIcons.folderPlus,
+              FaIcon(
+                isEditing
+                    ? FontAwesomeIcons.folderOpen
+                    : FontAwesomeIcons.folderPlus,
                 size: 40,
                 color: MyColors.secondaryTextColor,
               ),
               const SizedBox(height: 7),
               Text(
-                isEditing ? "تعديل تصنيف" : "اضافه تصنيف",
+                isEditing ? "تعد يل " : "اضافه ",
                 style: myTextStyles.title1
                     .copyWith(color: MyColors.secondaryTextColor),
               ),
@@ -212,7 +214,7 @@ class NewAccGroupSheet extends StatelessWidget {
                         );
                         if (newValue == false) {
                           CustomDialog.customSnackBar(
-                              changeStatusMessage, SnackPosition.TOP);
+                              changeStatusMessageAcc, SnackPosition.TOP);
                         }
                       }),
                   Text(
@@ -251,7 +253,7 @@ class NewAccGroupSheet extends StatelessWidget {
                   Flexible(
                       child: CustomBtnWidget(
                           color: MyColors.primaryColor,
-                          label: "اضافة",
+                          label: isEditing ? "تعد يل" : "اضافة",
                           action: () async {
                             try {
                               if (accGroupController

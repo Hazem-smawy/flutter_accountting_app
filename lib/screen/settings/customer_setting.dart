@@ -126,28 +126,10 @@ class CustomerSettingItemWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              if (isHasAAccountsOnIt())
-                GestureDetector(
-                  onTap: () => CustomDialog.showDialog(
-                      title: "حذف",
-                      description: "هل انت متاكد من حذف هذا الحساب",
-                      color: Colors.red,
-                      icon: FontAwesomeIcons.trashCan,
-                      action: () {
-                        customerController.deleteCustomer(customer.id ?? 0);
-                        Get.back();
-                      }),
-                  child: const FaIcon(
-                    FontAwesomeIcons.trashCan,
-                    size: 15,
-                    color: Colors.red,
-                  ),
-                ),
-              const SizedBox(width: 10),
               GestureDetector(
                 onTap: () => CustomDialog.showDialog(
-                    title: "تعديل",
-                    description: "هل انت متاكد من تعديل هذا الحساب",
+                    title: "تعد يل",
+                    description: "هل انت متاكد من تعد يل هذا الحساب",
                     color: Colors.green,
                     icon: FontAwesomeIcons.penToSquare,
                     action: () {
@@ -169,6 +151,24 @@ class CustomerSettingItemWidget extends StatelessWidget {
                   color: Colors.green,
                 ),
               ),
+              const SizedBox(width: 10),
+              if (isHasAAccountsOnIt())
+                GestureDetector(
+                  onTap: () => CustomDialog.showDialog(
+                      title: "حذف",
+                      description: "هل انت متاكد من حذف هذا الحساب",
+                      color: Colors.red,
+                      icon: FontAwesomeIcons.trashCan,
+                      action: () {
+                        customerController.deleteCustomer(customer.id ?? 0);
+                        Get.back();
+                      }),
+                  child: const FaIcon(
+                    FontAwesomeIcons.trashCan,
+                    size: 15,
+                    color: Colors.red,
+                  ),
+                ),
               const Spacer(),
               Text(
                 customer.address,
@@ -224,7 +224,7 @@ class NewCustomerSheet extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              isEditing ? "تعديل" : "اضافة عميل",
+              isEditing ? "تعد يل" : "اضافة عميل",
               style: myTextStyles.title1
                   .copyWith(color: MyColors.secondaryTextColor),
             ),
@@ -246,7 +246,7 @@ class NewCustomerSheet extends StatelessWidget {
                       );
                       if (newValue == false) {
                         CustomDialog.customSnackBar(
-                          changeStatusMessage,
+                          changeStatusMessageCustomer,
                           SnackPosition.TOP,
                         );
                       }
@@ -319,7 +319,7 @@ class NewCustomerSheet extends StatelessWidget {
                 Flexible(
                     child: CustomBtnWidget(
                   color: MyColors.primaryColor,
-                  label: isEditing ? "تعديل" : "اضافة",
+                  label: isEditing ? "تعد يل" : "اضافة",
                   action: () async {
                     try {
                       if (customerController.newCustomer[CustomerField.name] !=
@@ -376,7 +376,7 @@ class NewCustomerSheet extends StatelessWidget {
                 ))
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
           ],
         ),
       ),

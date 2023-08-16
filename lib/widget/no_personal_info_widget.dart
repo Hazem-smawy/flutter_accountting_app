@@ -30,8 +30,10 @@ class NoPersonalInfoWidget extends StatelessWidget {
             " للحصول علي جميع خدماتنا \nقم بإدخال معلوماتك الشخصية من هنا ",
             textAlign: TextAlign.center,
             style: myTextStyles.subTitle.copyWith(
-              color:
-                  isDrawer ? MyColors.containerColor : MyColors.lessBlackColor,
+              color: isDrawer
+                  ? MyColors.secondaryTextColor
+                  : MyColors.lessBlackColor,
+              fontWeight: FontWeight.normal,
             ),
           ),
           const SizedBox(height: 10),
@@ -48,7 +50,7 @@ class NoPersonalInfoWidget extends StatelessWidget {
                 border: Border.all(color: MyColors.secondaryTextColor),
               ),
               child: Text(
-                "إضافة البيانات",
+                "إضافة ",
                 style: myTextStyles.title2.copyWith(
                   fontWeight: FontWeight.normal,
                   color: isDrawer

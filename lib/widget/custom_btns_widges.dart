@@ -33,7 +33,7 @@ class CustomBackBtnWidget extends StatelessWidget {
           GestureDetector(
             onTap: () => Get.back(),
             child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: FaIcon(
                 FontAwesomeIcons.arrowRightLong,
                 color: MyColors.secondaryTextColor,

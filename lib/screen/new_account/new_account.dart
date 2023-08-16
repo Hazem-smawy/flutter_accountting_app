@@ -57,9 +57,13 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   }
 
   _showBottomSheet() {
-    Get.bottomSheet(mySheet,
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
+    Get.bottomSheet(
+      mySheet,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
   }
 
   bool isFindedIt = false;
@@ -322,11 +326,7 @@ Column(
       (value) => widget.accGroupId,
       ifAbsent: () => widget.accGroupId,
     );
-    // newAccountController.newAccount.update(
-    //   "curencyId",
-    //   (value) => widget.curencyId,
-    //   ifAbsent: () => widget.curencyId,
-    // );
+
     try {
       if (credit) {
         newAccountController.newAccount.update(
@@ -430,9 +430,10 @@ class NewCustomerSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+      padding: const EdgeInsets.only(top: 5),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25), topRight: Radius.circular(25)),
         color: MyColors.bg,
       ),
       child: SafeArea(
@@ -445,7 +446,7 @@ class NewCustomerSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               //   const CustomBackBtnWidget(),
-              const SizedBox(height: 30),
+              //const SizedBox(height: 30),
               Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -511,7 +512,10 @@ class NewCustomerSheet extends StatelessWidget {
                           ),
                         )
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
