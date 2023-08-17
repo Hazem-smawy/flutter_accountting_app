@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
@@ -19,7 +17,6 @@ import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   AccGroupCurencyController accGroupCurencyController =
       Get.put(AccGroupCurencyController());
   CustomerController customerController = Get.put(CustomerController());
@@ -43,15 +40,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-          scaffoldBackgroundColor: MyColors.containerColor,
-        ),
-        // theme: AppThemes.darkTheme,
-        home: Obx(() => introController.introShow.value
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        scaffoldBackgroundColor: MyColors.containerColor,
+      ),
+      // theme: AppThemes.darkTheme,
+      home: Obx(
+        () => introController.introShow.value
             ? ShowMyMainScreen()
-            : MyEntroScreen()));
+            : const MyEntroScreen(),
+      ),
+    );
   }
 }
 
@@ -60,9 +60,13 @@ class ShowMyMainScreen extends StatelessWidget {
   AccGroupController accGroupController = Get.find();
   @override
   Widget build(BuildContext context) {
-    return Obx(() => accGroupController.allAccGroups.isEmpty
-        ? const Scaffold(
-            backgroundColor: MyColors.bg, body: EmptyAccGroupsWidget())
-        : MyMainScreen());
+    return Obx(
+      () => accGroupController.allAccGroups.isEmpty
+          ? const Scaffold(
+              backgroundColor: MyColors.bg,
+              body: EmptyAccGroupsWidget(),
+            )
+          : MyMainScreen(),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
@@ -9,6 +10,7 @@ import 'package:account_app/models/journal_model.dart';
 import 'package:account_app/models/personal_model.dart';
 import 'package:account_app/service/database/database_helper.dart';
 import 'package:account_app/service/database/tables_helpers.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -37,15 +39,16 @@ class DatabaseService {
   // }
 
   Future<String> get fullPath async {
-    const name = "account_databse16.db";
-    final path = await getDatabasesPath();
-    return join(path, name);
+    Directory path = await getApplicationDocumentsDirectory();
+    String databasePath = join(path.path, "account_databse.db");
+
+    return databasePath;
   }
 
   Future<Database> _initialize() async {
     final path = await fullPath;
     var database = await openDatabase(path,
-        version: 1, onCreate: _create, singleInstance: true);
+        version: 1, onCreate: _create, onOpen: (db) {});
 
     return database;
   }

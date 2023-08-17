@@ -16,6 +16,8 @@ dependencies:
   font_awesome_flutter:
   sqflite:
   intl:
+  path_provider:
+  file_picker:
 
 dev_dependencies:
   flutter_test:

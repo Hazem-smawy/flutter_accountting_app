@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/personal_controller.dart';
 import 'package:account_app/screen/customer_account/customer_account.dart';
+import 'package:account_app/screen/local_copy/local_copy.dart';
 import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -91,6 +92,11 @@ class MyDrawerView extends StatelessWidget {
                     title: "الاعدادات",
                   ),
                   DrawerItemWidget(
+                    onPress: () => Get.to(() => LocalCopyScreen()),
+                    icon: FontAwesomeIcons.download,
+                    title: " النسخ الإ حتياطي",
+                  ),
+                  DrawerItemWidget(
                     onPress: () => Get.to(() => SettingScreen()),
                     icon: FontAwesomeIcons.circleExclamation,
                     title: " عنا",
@@ -107,7 +113,7 @@ class MyDrawerView extends StatelessWidget {
                   //Spacer(),
                   Container(
                     constraints: const BoxConstraints(
-                      maxHeight: 200,
+                      maxHeight: 100,
                     ),
                   ),
                   ListTile(
