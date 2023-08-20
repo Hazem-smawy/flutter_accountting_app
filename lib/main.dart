@@ -12,24 +12,27 @@ import 'package:account_app/controller/personal_controller.dart';
 import 'package:account_app/screen/intro_screen/intro_screen.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
 import 'package:account_app/widget/empty_accGroup_widget.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  AccGroupCurencyController accGroupCurencyController =
-      Get.put(AccGroupCurencyController());
-  CustomerController customerController = Get.put(CustomerController());
-  AccGroupController accGroupController = Get.put(AccGroupController());
-  CurencyController curencyController = Get.put(CurencyController());
-  JournalController journalController = Get.put(JournalController());
-  CustomerAccountController customerAccountController =
-      Get.put(CustomerAccountController());
+import 'firebase_options.dart';
 
-  HomeController homeController = Get.put(HomeController());
-  NewAccountController newAccountController = Get.put(NewAccountController());
-  IntroController introController = Get.put(IntroController());
-  PersonalController personalController = Get.put(PersonalController());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Get.put(AccGroupCurencyController());
+  Get.put(CustomerController());
+  Get.put(AccGroupController());
+  Get.put(CurencyController());
+  Get.put(JournalController());
+  Get.put(CustomerAccountController());
+  Get.put(HomeController());
+  Get.put(NewAccountController());
+  Get.put(IntroController());
+  Get.put(PersonalController());
   runApp(MyApp());
 }
 

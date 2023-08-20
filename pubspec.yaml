@@ -12,13 +12,15 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  get:
-  font_awesome_flutter:
-  sqflite:
-  intl:
-  path_provider:
-  file_picker:
-
+  
+  get: any
+  font_awesome_flutter: any
+  sqflite: any
+  intl: any
+  path_provider: any
+  file_picker: any
+  google_sign_in: ^6.1.4
+  firebase_core: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

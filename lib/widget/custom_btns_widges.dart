@@ -124,3 +124,82 @@ class CustomBtnWidget extends StatelessWidget {
         ));
   }
 }
+
+class CustomCopyBtnWidget extends StatelessWidget {
+  final Color color;
+  final IconData icon;
+  final String label;
+  final description;
+  VoidCallback action;
+  CustomCopyBtnWidget(
+      {super.key,
+      required this.color,
+      required this.icon,
+      required this.label,
+      required this.description,
+      required this.action});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: MyColors.containerColor,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 10,
+            ),
+            child: Text(
+              description,
+              textAlign: TextAlign.center,
+              style: myTextStyles.subTitle,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+            onTap: () {
+              action();
+            },
+            child: Container(
+              height: 40,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: color,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    label,
+                    style: myTextStyles.title2.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  FaIcon(
+                    icon,
+                    size: 17,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

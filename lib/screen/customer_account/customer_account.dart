@@ -76,12 +76,12 @@ class CustomerAccountsView extends StatelessWidget {
                         // style: myTextStyles.subTitle,
                       ),
                     )),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: FaIcon(
+                      child: const FaIcon(
                         FontAwesomeIcons.arrowRightLong,
                         color: MyColors.secondaryTextColor,
                       ),
@@ -94,7 +94,8 @@ class CustomerAccountsView extends StatelessWidget {
                     ? Container(
                         width: double.infinity,
                         height: Get.height / 2,
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                        margin:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           //color: MyColors.bg,
@@ -107,12 +108,12 @@ class CustomerAccountsView extends StatelessWidget {
                               fit: BoxFit.cover,
                               height: Get.height / 3,
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Text(
                               "لاتوجد اي حسابات ",
                               style: myTextStyles.title2,
                             ),
-                            Spacer(),
+                            const Spacer(),
                           ],
                         ),
                       )
@@ -171,25 +172,28 @@ class CustomerAccountsView extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 10),
                                       CustomerAccountItem(
+                                          isCustomerName: true,
                                           title: customer ?? "",
                                           icon: FontAwesomeIcons.user),
                                     ],
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       SizedBox(
                                         width: Get.width / 4,
                                         child: CustomerAccountItem(
+                                            isCustomerName: false,
                                             title: curency,
                                             icon: FontAwesomeIcons.dollarSign),
                                       ),
                                       CustomerAccountItem(
+                                          isCustomerName: false,
                                           title: accGroup,
                                           icon: FontAwesomeIcons.folderClosed),
                                     ],
@@ -288,13 +292,13 @@ class _CustomerAccountDetailsSheetState
                         widget.customerAccount.totalDebit.toString(),
                         style: myTextStyles.title2,
                       ),
-                      SizedBox(width: 10),
-                      FaIcon(
+                      const SizedBox(width: 10),
+                      const FaIcon(
                         FontAwesomeIcons.arrowUp,
                         size: 10,
                         color: Colors.red,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
                         ": لك",
                         style: myTextStyles.body
@@ -307,7 +311,7 @@ class _CustomerAccountDetailsSheetState
               const SizedBox(width: 10),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.green.withOpacity(0.09)),
@@ -324,7 +328,7 @@ class _CustomerAccountDetailsSheetState
                         size: 10,
                         color: Colors.green,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
                         ": عليك",
                         style: myTextStyles.body
@@ -336,7 +340,7 @@ class _CustomerAccountDetailsSheetState
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SheetItem(
             label: "الاسم",
             value: customerController.allCustomers
@@ -345,7 +349,7 @@ class _CustomerAccountDetailsSheetState
                 .name,
             icon: FontAwesomeIcons.user,
           ),
-          Divider(),
+          const Divider(),
           SheetItem(
             label: "التصنيف",
             value: accGroupController.allAccGroups
@@ -354,7 +358,7 @@ class _CustomerAccountDetailsSheetState
                 .name,
             icon: FontAwesomeIcons.folderClosed,
           ),
-          Divider(),
+          const Divider(),
           SheetItem(
             label: "العملة",
             value: curencyController.allCurency
@@ -363,21 +367,21 @@ class _CustomerAccountDetailsSheetState
                 .name,
             icon: FontAwesomeIcons.dollarSign,
           ),
-          Divider(),
+          const Divider(),
           SheetItem(
             label: "التأريخ",
             value: DateFormater.DateFormat.yMMMMd()
                 .format(widget.customerAccount.createdAt),
             icon: FontAwesomeIcons.calendar,
           ),
-          Divider(),
+          const Divider(),
           SheetItem(
             label: "الوقت",
             value: DateFormater.DateFormat.Hms()
                 .format(widget.customerAccount.createdAt),
             icon: FontAwesomeIcons.clock,
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           GestureDetector(
             onTap: () async {
               customerAccountController.updateCustomerAccount(
@@ -400,7 +404,7 @@ class _CustomerAccountDetailsSheetState
               ),
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
         ],
       ),
     );
@@ -445,11 +449,12 @@ class SheetItem extends StatelessWidget {
 class CustomerAccountItem extends StatelessWidget {
   String title;
   IconData icon;
-  CustomerAccountItem({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
+  final bool isCustomerName;
+  CustomerAccountItem(
+      {super.key,
+      required this.title,
+      required this.icon,
+      required this.isCustomerName});
 
   @override
   Widget build(BuildContext context) {
@@ -462,7 +467,11 @@ class CustomerAccountItem extends StatelessWidget {
           title,
           textAlign: TextAlign.right,
           textDirection: TextDirection.rtl,
-          style: myTextStyles.body.copyWith(overflow: TextOverflow.clip),
+          style: myTextStyles.body.copyWith(
+            overflow: TextOverflow.clip,
+            color: isCustomerName ? MyColors.lessBlackColor : null,
+            fontWeight: isCustomerName ? FontWeight.bold : null,
+          ),
         ),
         const SizedBox(
           width: 10,
@@ -470,7 +479,9 @@ class CustomerAccountItem extends StatelessWidget {
         FaIcon(
           icon,
           size: 15,
-          color: MyColors.lessBlackColor,
+          color: isCustomerName
+              ? MyColors.lessBlackColor
+              : MyColors.secondaryTextColor,
         ),
       ],
     );

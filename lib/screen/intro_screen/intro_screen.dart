@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/main.dart';
+import 'package:account_app/widget/custom_dialog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class MyEntroScreen extends StatefulWidget {
   const MyEntroScreen({super.key});
@@ -38,8 +45,50 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
     },
   ];
   int i = 0;
+  String _selectedFolderPath = '';
   final controller = PageController();
   IntroController introController = Get.find();
+
+  Future<void> copyDatabaseFromFolder(String selectedFolderPath) async {
+    Directory path = await getApplicationDocumentsDirectory();
+    String databasePath = join(path.path, "account_database1.db");
+
+    // await File(databasePath).delete();
+
+    await deleteDatabase(databasePath);
+    //await DatabaseService.instance.database.obs;
+
+    await File(databasePath).openWrite();
+    File(selectedFolderPath).copy(databasePath);
+
+    CustomDialog.showDialog(
+        title: "تنبة",
+        description: "سيتم إغلاق التطبيق قم بإعادة فتحة",
+        icon: FontAwesomeIcons.circleInfo,
+        color: Colors.red,
+        action: () {});
+    await Future.delayed(const Duration(seconds: 2));
+
+    exit(0);
+  }
+
+  Future<void> _openDatabaseFile() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        if (file.path != null) {
+          _selectedFolderPath = file.path!;
+          copyDatabaseFromFolder(_selectedFolderPath);
+        }
+      } else {
+        // User canceled the picker
+      }
+    } catch (e) {
+      print("Error open db :$e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,44 +153,91 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                         ),
                         const Spacer(),
                         if (index == pages.length - 1)
-                          GestureDetector(
-                            onTap: () {
-                              introController.updateIntro();
-                              Get.to(() => ShowMyMainScreen());
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 50),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 7),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: const Color.fromARGB(255, 64, 203, 143)
-                                    .withOpacity(0.7),
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  introController.updateIntro();
+                                  Get.to(() => ShowMyMainScreen());
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 50),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 7),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color:
+                                        const Color.fromARGB(255, 64, 203, 143)
+                                            .withOpacity(0.7),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const FaIcon(
+                                        FontAwesomeIcons.arrowLeftLong,
+                                        size: 18,
+                                        color: MyColors.containerColor,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "الصفحة الرئيسية",
+                                        style: myTextStyles.title2.copyWith(
+                                          color: MyColors.bg,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const FaIcon(
-                                    FontAwesomeIcons.arrowLeftLong,
-                                    size: 18,
-                                    color: MyColors.containerColor,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "الصفحة الرئيسية",
-                                    style: myTextStyles.title2.copyWith(
-                                      color: MyColors.bg,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
+                              const SizedBox(
+                                height: 10,
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  // introController.updateIntro();
+                                  _openDatabaseFile();
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.center,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 50),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 7),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: MyColors.bg,
+                                      )),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const FaIcon(
+                                        FontAwesomeIcons.arrowLeftLong,
+                                        size: 18,
+                                        color: MyColors.containerColor,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "استعادة نسخة ",
+                                        style: myTextStyles.title2.copyWith(
+                                          color: MyColors.bg,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         const SizedBox(
                           height: 50,
@@ -247,8 +343,8 @@ class FirstPage extends StatelessWidget {
             page['image'],
             width: Get.width - 150,
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: Get.height / 7,
           ),
           Text(
             page['title'],

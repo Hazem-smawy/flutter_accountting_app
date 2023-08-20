@@ -44,6 +44,8 @@ class HomeScreen extends StatelessWidget {
         forYou += res;
       }
     });
+    onYou = onYou;
+    forYou = forYou < 0 ? forYou * -1 : forYou * 1;
   }
 
   @override
@@ -61,11 +63,12 @@ class HomeScreen extends StatelessWidget {
                       onYou: onYou,
                       curency: curency ??
                           Curency(
-                              name: "",
-                              symbol: "",
-                              status: true,
-                              createdAt: DateTime.now(),
-                              modifiedAt: DateTime.now()),
+                            name: "",
+                            symbol: "",
+                            status: true,
+                            createdAt: DateTime.now(),
+                            modifiedAt: DateTime.now(),
+                          ),
                     )
                   : SizedBox(),
             ),

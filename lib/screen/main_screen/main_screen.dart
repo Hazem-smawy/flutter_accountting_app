@@ -39,6 +39,12 @@ class MyMainScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       MyAppBarWidget(
+                        action: () {
+                          controller.animateToPage(
+                              accGroupCurencyController.pageViewCount.value,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.linear);
+                        },
                         globalKey: _globalKey,
                         accGroup: accGroupController.allAccGroups
                                 .firstWhereOrNull((element) =>

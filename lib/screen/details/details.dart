@@ -553,8 +553,7 @@ class DetialInfoSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormater.DateFormat.Hm()
-                        .format(detailsRows.registeredAt),
+                    DateFormater.DateFormat.Hm().format(detailsRows.createdAt),
                     style: myTextStyles.subTitle.copyWith(
                         color: MyColors.blackColor,
                         fontWeight: FontWeight.normal),
@@ -652,7 +651,7 @@ class DetialInfoSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              // const SizedBox(height: 10),
             ],
           ),
         ),
