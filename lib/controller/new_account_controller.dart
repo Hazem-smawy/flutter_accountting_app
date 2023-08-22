@@ -35,7 +35,6 @@ class NewAccountController extends GetxController {
         createdAt: DateTime.now(),
         modifiedAt: DateTime.now(),
       );
-      print("new costomer ${newAccount}");
       customerId = await customerController.createCusomer(newCustomer);
       CustomerAccount newCac = await addNewCustomerAccount(customerId);
 
@@ -100,13 +99,11 @@ class NewAccountController extends GetxController {
     var currentCustomerAccount = await customerAccountController
         .createNewCusomerAccount(newCustomerAccount);
     homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
-    print("new customerAccount : ${currentCustomerAccount}");
 
     return currentCustomerAccount;
   }
 
   Future<void> addNewJournalToCustomerAccount(CustomerAccount cac) async {
-    print("it is exist and have custoemr account");
     var currentCustomerAcccounter = cac.copyWith(
         operation: cac.operation + 1,
         totalCredit: cac.totalCredit + newAccount['credit'],

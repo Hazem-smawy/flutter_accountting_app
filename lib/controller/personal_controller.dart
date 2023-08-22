@@ -1,5 +1,5 @@
 import 'package:account_app/models/personal_model.dart';
-import 'package:account_app/service/personal_data.dart';
+import 'package:account_app/service/database/personal_data.dart';
 import 'package:get/get.dart';
 
 class PersonalController extends GetxController {

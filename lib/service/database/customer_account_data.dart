@@ -1,7 +1,7 @@
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
-import 'package:account_app/service/database/database_service.dart';
-import 'package:account_app/service/database/tables_helpers.dart';
+import 'package:account_app/service/database/helper/database_service.dart';
+import 'package:account_app/service/database/helper/tables_helpers.dart';
 
 class CustomerAccountData {
   final ins = DatabaseService.instance;

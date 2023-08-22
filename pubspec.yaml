@@ -19,8 +19,14 @@ dependencies:
   intl: any
   path_provider: any
   file_picker: any
-  google_sign_in: ^6.1.4
+  
   firebase_core: any
+
+  google_sign_in: any
+  googleapis: 
+  syncfusion_flutter_pdf: ^22.2.10
+  open_file:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,5 +1,5 @@
 import 'package:account_app/models/customer_model.dart';
-import 'package:account_app/service/customer_data.dart';
+import 'package:account_app/service/database/customer_data.dart';
 import 'package:get/get.dart';
 
 class CustomerController extends GetxController {

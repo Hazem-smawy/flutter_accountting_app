@@ -140,7 +140,7 @@ class CustomDialog {
     Get.defaultDialog(
       title: "",
       middleText: "",
-      barrierDismissible: true,
+      barrierDismissible: false,
       radius: 12,
       titlePadding: const EdgeInsets.all(0),
       // custom: Center(child: CircularProgressIndicator()),

@@ -1,5 +1,5 @@
 import 'package:account_app/models/curency_model.dart';
-import 'package:account_app/service/curency_data.dart';
+import 'package:account_app/service/database/curency_data.dart';
 import 'package:get/get.dart';
 
 class CurencyController extends GetxController {
@@ -19,8 +19,6 @@ class CurencyController extends GetxController {
   @override
   void onInit() {
     readAllCurency();
-
-    
 
     super.onInit();
   }

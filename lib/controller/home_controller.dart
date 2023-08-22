@@ -1,6 +1,6 @@
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/models/home_model.dart';
-import 'package:account_app/service/home_data.dart';
+import 'package:account_app/service/database/home_data.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {

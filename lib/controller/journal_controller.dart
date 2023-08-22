@@ -1,5 +1,5 @@
 import 'package:account_app/models/journal_model.dart';
-import 'package:account_app/service/journal_data.dart';
+import 'package:account_app/service/database/journal_data.dart';
 import 'package:get/get.dart';
 
 class JournalController extends GetxController {

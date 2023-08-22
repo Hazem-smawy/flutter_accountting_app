@@ -73,20 +73,16 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
   }
 
   Future<void> _openDatabaseFile() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-      if (result != null) {
-        PlatformFile file = result.files.first;
-        if (file.path != null) {
-          _selectedFolderPath = file.path!;
-          copyDatabaseFromFolder(_selectedFolderPath);
-        }
-      } else {
-        // User canceled the picker
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      if (file.path != null) {
+        _selectedFolderPath = file.path!;
+        copyDatabaseFromFolder(_selectedFolderPath);
       }
-    } catch (e) {
-      print("Error open db :$e");
+    } else {
+      // User canceled the picker
     }
   }
 

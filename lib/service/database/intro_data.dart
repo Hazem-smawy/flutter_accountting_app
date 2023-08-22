@@ -1,4 +1,4 @@
-import 'package:account_app/service/database/database_service.dart';
+import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:flutter/material.dart';
 
 class IntroData {

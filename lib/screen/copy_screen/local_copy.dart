@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
-import 'package:account_app/screen/local_copy/folder_copy.dart';
-import 'package:account_app/screen/local_copy/google_drive_copy.dart';
+import 'package:account_app/screen/copy_screen/folder_copy.dart';
+import 'package:account_app/screen/copy_screen/google_drive_copy.dart';
+
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:file_picker/file_picker.dart';
@@ -23,17 +24,20 @@ class LocalCopyScreen extends StatelessWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            children: const [
-              CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
-              SizedBox(
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              const CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
+              const SizedBox(
                 height: 20,
               ),
-              FolderCopyWidget(),
-              SizedBox(
+              const FolderCopyWidget(),
+              const SizedBox(
                 height: 20,
               ),
               GoogleDriveCopyWidget(),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
             ],

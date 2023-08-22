@@ -1,4 +1,4 @@
-import 'package:account_app/service/intro_data.dart';
+import 'package:account_app/service/database/intro_data.dart';
 import 'package:get/get.dart';
 
 class IntroController extends GetxController {

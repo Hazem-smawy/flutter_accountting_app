@@ -3,12 +3,16 @@ import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
+import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
+import 'package:account_app/models/home_model.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:open_file/open_file.dart';
 
 class MyAppBarWidget extends StatelessWidget {
   final AccGroup accGroup;
@@ -23,7 +27,7 @@ class MyAppBarWidget extends StatelessWidget {
   final GlobalKey<ScaffoldState> _globalKey;
   AccGroupController accGroupController = Get.find();
   AccGroupCurencyController accGroupCurencyController = Get.find();
-
+  PdfApi pdfApi = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -43,6 +47,29 @@ class MyAppBarWidget extends StatelessWidget {
               },
               child: const FaIcon(
                 FontAwesomeIcons.solidFolderClosed,
+                size: 20,
+                color: MyColors.containerColor,
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            GestureDetector(
+              onTap: () async {
+                CustomDialog.loadingProgress();
+                final file = await PdfApi.generatePdf(
+                    homeModel: HomeModel(
+                        operation: 20,
+                        name: "hazem",
+                        caStatus: false,
+                        cacStatus: true,
+                        totalDebit: 200,
+                        totalCredit: 200));
+                Get.back();
+                await OpenFile.open(file.path);
+              },
+              child: const FaIcon(
+                FontAwesomeIcons.solidFilePdf,
                 size: 20,
                 color: MyColors.containerColor,
               ),

@@ -1,7 +1,7 @@
 import 'package:account_app/models/acc_and_cur_model.dart';
 import 'package:account_app/models/home_model.dart';
-import 'package:account_app/service/database/database_service.dart';
-import 'package:account_app/service/database/tables_helpers.dart';
+import 'package:account_app/service/database/helper/database_service.dart';
+import 'package:account_app/service/database/helper/tables_helpers.dart';
 
 class HomeData {
   final ins = DatabaseService.instance;
