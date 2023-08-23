@@ -24,11 +24,12 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
   AccGroupCurencyController accGroupCurencyController = Get.find();
   Future<void> copyDatabaseToFolder(String selectedFolderPath) async {
     Directory path = await getApplicationDocumentsDirectory();
-    String databasePath = p.join(path.path, "account_app_database.db");
+    String databasePath = p.join(path.path, "private_account_app_database.db");
 
     if (await File(databasePath).exists()) {
       final bytes = await File(databasePath).readAsBytes();
-      String targetPath = p.join(selectedFolderPath, 'account_app_copy.db');
+      String targetPath = p.join(selectedFolderPath,
+          'account_app_copy_${DateTime.now().toIso8601String()}.db');
       File targetDatabase = File(targetPath);
 
       try {
@@ -67,7 +68,7 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
 
   Future<void> copyDatabaseFromFolder(String selectedFolderPath) async {
     Directory path = await getApplicationDocumentsDirectory();
-    String databasePath = p.join(path.path, "account_database1.db");
+    String databasePath = p.join(path.path, "private_account_app_database.db");
 
     // await File(databasePath).delete();
 

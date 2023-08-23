@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/intro_controller.dart';
@@ -9,9 +7,16 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'package:account_app/service/http_service/google_drive_service.dart';
+
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/drive/v3.dart';
+import 'dart:io' as io;
+import 'package:path/path.dart' as p;
 
 class MyEntroScreen extends StatefulWidget {
   const MyEntroScreen({super.key});
@@ -40,8 +45,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
       "id": 0,
       "image": "assets/images/customerAccount.png",
       "title": "العنوان",
-      "desc":
-          "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
+      "desc": ". أكثر من أن تعد إغلاق التطبيق"
     },
   ];
   int i = 0;
@@ -49,17 +53,24 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
   final controller = PageController();
   IntroController introController = Get.find();
 
+  //drive
+  final GoogleDriveAppData _googleDriveAppData = GoogleDriveAppData();
+
+  GoogleSignInAccount? _googleUser;
+
+  DriveApi? _driveApi;
+
   Future<void> copyDatabaseFromFolder(String selectedFolderPath) async {
-    Directory path = await getApplicationDocumentsDirectory();
-    String databasePath = join(path.path, "account_database1.db");
+    io.Directory path = await getApplicationDocumentsDirectory();
+    String databasePath = p.join(path.path, "account_database1.db");
 
     // await File(databasePath).delete();
 
     await deleteDatabase(databasePath);
     //await DatabaseService.instance.database.obs;
 
-    await File(databasePath).openWrite();
-    File(selectedFolderPath).copy(databasePath);
+    await io.File(databasePath).openWrite();
+    io.File(selectedFolderPath).copy(databasePath);
 
     CustomDialog.showDialog(
         title: "تنبة",
@@ -69,7 +80,7 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
         action: () {});
     await Future.delayed(const Duration(seconds: 2));
 
-    exit(0);
+    io.exit(0);
   }
 
   Future<void> _openDatabaseFile() async {
@@ -145,9 +156,12 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                             ],
                           ),
                         FirstPage(
+                          lastPage: pages.length - 1 == index,
                           page: pages[index],
                         ),
                         const Spacer(),
+
+                        //TODO: download copy btns
                         if (index == pages.length - 1)
                           Column(
                             children: [
@@ -192,51 +206,145 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  // introController.updateIntro();
-                                  _openDatabaseFile();
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 50),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 7),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: MyColors.bg,
-                                      )),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const FaIcon(
-                                        FontAwesomeIcons.arrowLeftLong,
-                                        size: 18,
-                                        color: MyColors.containerColor,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      try {
+                                        _googleUser = await _googleDriveAppData
+                                            .signInGoogle();
+
+                                        if (_googleUser == null) {
+                                          return;
+                                        }
+
+                                        print("${_googleUser?.authHeaders} ");
+                                        if (_googleUser != null) {
+                                          _driveApi = await _googleDriveAppData
+                                              .getDriveApi(_googleUser!);
+                                        }
+
+                                        setState(() {});
+                                        CustomDialog.loadingProgress();
+
+                                        File? file = await _googleDriveAppData
+                                            .getDriveFile(_driveApi!,
+                                                "account_app_copy.db");
+
+                                        if (file != null) {
+                                          Get.log("file is :$file");
+                                          io.Directory path =
+                                              await getApplicationDocumentsDirectory();
+                                          String databasePath = p.join(
+                                              path.path,
+                                              "private_account_app_database.db");
+
+                                          await _googleDriveAppData
+                                              .restoreDriveFile(
+                                                  driveApi: _driveApi!,
+                                                  driveFile: file,
+                                                  targetLocalPath: databasePath)
+                                              .then((value) {});
+                                          print(file);
+                                        } else {
+                                          Get.log("file is :$file");
+                                        }
+                                      } catch (e) {
+                                        Get.back();
+                                        CustomDialog.customSnackBar(
+                                            "حدث خطأ ", SnackPosition.TOP);
+                                        return;
+                                      }
+                                      Get.back();
+                                      CustomDialog.customSnackBar(
+                                          "تم إسترجاع النسخة بنجاح",
+                                          SnackPosition.TOP);
+
+                                      CustomDialog.showDialog(
+                                          title: "تنبة",
+                                          description:
+                                              "سيتم إغلاق التطبيق قم بإعادة فتحة",
+                                          icon: FontAwesomeIcons.circleInfo,
+                                          color: Colors.red,
+                                          action: () {});
+                                      await Future.delayed(
+                                          const Duration(seconds: 2));
+
+                                      io.exit(0);
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color: MyColors.secondaryTextColor,
+                                          )),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: const [
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          FaIcon(
+                                            FontAwesomeIcons.googleDrive,
+                                            size: 15,
+                                            color: MyColors.containerColor,
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "استعادة نسخة ",
-                                        style: myTextStyles.title2.copyWith(
-                                          color: MyColors.bg,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // introController.updateIntro();
+                                      _openDatabaseFile();
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color: MyColors.secondaryTextColor,
+                                          )),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: const [
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          FaIcon(
+                                            FontAwesomeIcons.solidFolderClosed,
+                                            size: 15,
+                                            color: MyColors.containerColor,
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         const SizedBox(
-                          height: 50,
+                          height: 40,
                         ),
                       ],
                     );
@@ -324,7 +432,8 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
 
 class FirstPage extends StatelessWidget {
   final page;
-  const FirstPage({super.key, required this.page});
+  FirstPage({super.key, required this.page, required this.lastPage});
+  bool lastPage;
 
   @override
   Widget build(BuildContext context) {
@@ -335,13 +444,17 @@ class FirstPage extends StatelessWidget {
           SizedBox(
             height: Get.height / 8,
           ),
+          //if (lastPage)
           Image.asset(
             page['image'],
-            width: Get.width - 150,
+            width: lastPage ? Get.width / 2 - 50 : Get.width - 150,
+            //  height: lastPage ? Get.width / 5 : null,
+            fit: BoxFit.cover,
           ),
           SizedBox(
-            height: Get.height / 7,
+            height: Get.height / 9,
           ),
+          // if (!lastPage)
           Text(
             page['title'],
             style: myTextStyles.title2.copyWith(
@@ -353,6 +466,7 @@ class FirstPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          //  if (!lastPage)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Text(

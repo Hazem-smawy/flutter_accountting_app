@@ -40,7 +40,7 @@ class DatabaseService {
 
   Future<String> get fullPath async {
     Directory path = await getApplicationDocumentsDirectory();
-    String databasePath = join(path.path, "account_app_database.db");
+    String databasePath = join(path.path, "private_account_app_database.db");
 
     return databasePath;
   }

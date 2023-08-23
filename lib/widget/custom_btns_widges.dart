@@ -1,13 +1,19 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/pdf_controller.dart';
+import 'package:account_app/models/home_model.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:open_file/open_file.dart';
 
 class CustomBackBtnWidget extends StatelessWidget {
   final String title;
-  const CustomBackBtnWidget({
+  IconData? icon;
+  CustomBackBtnWidget({
     required this.title,
+    this.icon,
     super.key,
   });
 
@@ -22,7 +28,32 @@ class CustomBackBtnWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SizedBox(width: 20),
+          if (icon != null)
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: GestureDetector(
+                onTap: () async {
+                  CustomDialog.loadingProgress();
+                  final file = await PdfApi.generatePdf(
+                    homeModel: HomeModel(
+                        operation: 20,
+                        name: "hazem",
+                        caStatus: false,
+                        cacStatus: true,
+                        totalDebit: 200,
+                        totalCredit: 200),
+                  );
+                  Get.back();
+                  await OpenFile.open(file.path);
+                },
+                child: const FaIcon(
+                  FontAwesomeIcons.filePdf,
+                  size: 20,
+                  color: MyColors.lessBlackColor,
+                ),
+              ),
+            ),
+          if (icon == null) const SizedBox(width: 20),
           Expanded(
               child: Center(
             child: Text(

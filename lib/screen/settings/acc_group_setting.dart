@@ -28,7 +28,7 @@ class AccGroupSettingScreen extends StatelessWidget {
           child: Obx(
             () => Column(
               children: [
-                const CustomBackBtnWidget(title: "التصنيفات"),
+                CustomBackBtnWidget(title: "التصنيفات"),
                 const SizedBox(height: 15),
                 if (accGroupController.allAccGroups.isEmpty)
                   EmptyWidget(

@@ -76,15 +76,18 @@ class MyAppBarWidget extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              accGroupController.allAccGroups
-                      .firstWhereOrNull((element) =>
-                          element.id ==
-                          accGroupCurencyController
-                              .allAccgroupsAndCurency[
-                                  accGroupCurencyController.pageViewCount.value]
-                              .accGroupId)
-                      ?.name ??
-                  "",
+              accGroupCurencyController.homeReportShow.value
+                  ? "إضافي"
+                  : accGroupController.allAccGroups
+                          .firstWhereOrNull((element) =>
+                              element.id ==
+                              accGroupCurencyController
+                                  .allAccgroupsAndCurency[
+                                      accGroupCurencyController
+                                          .pageViewCount.value]
+                                  .accGroupId)
+                          ?.name ??
+                      "",
               style:
                   myTextStyles.title2.copyWith(color: MyColors.containerColor),
             ),

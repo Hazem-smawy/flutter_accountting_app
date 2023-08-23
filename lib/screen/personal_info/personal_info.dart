@@ -29,7 +29,7 @@ class PersonalInfoScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
-                    const CustomBackBtnWidget(title: "المعلومات الشخصيه"),
+                    CustomBackBtnWidget(title: "المعلومات الشخصيه"),
                     const SizedBox(height: 20),
                     Container(
                       padding: const EdgeInsets.all(14),

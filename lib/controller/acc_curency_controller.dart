@@ -6,6 +6,7 @@ class AccGroupCurencyController extends GetxController {
   var allAccgroupsAndCurency = <AccCurencyModel>[].obs;
   HomeData homeData = HomeData();
   var pageViewCount = 0.obs;
+  var homeReportShow = false.obs;
 
   @override
   void onInit() {

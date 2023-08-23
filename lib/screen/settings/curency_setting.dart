@@ -28,7 +28,7 @@ class CurencySettingScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
-                const CustomBackBtnWidget(title: "العملات"),
+                CustomBackBtnWidget(title: "العملات"),
                 const SizedBox(height: 15),
                 if (curencyController.allCurency.isEmpty)
                   EmptyWidget(

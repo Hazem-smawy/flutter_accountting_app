@@ -90,6 +90,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Column(
                   children: [
                     CustomBackBtnWidget(
+                      icon: FontAwesomeIcons.solidFilePdf,
                       title: customerController.allCustomers
                           .firstWhere(
                               (element) => element.id == widget.homeModel.caId)

@@ -14,6 +14,7 @@ import 'package:account_app/widget/my_appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:account_app/screen/reports/reports_screen.dart';
 
 class MyMainScreen extends StatelessWidget {
   MyMainScreen({super.key});
@@ -63,53 +64,71 @@ class MyMainScreen extends StatelessWidget {
                         child: PageView.builder(
                             controller: controller,
                             onPageChanged: (value) {
-                              accGroupCurencyController.pageViewCount.value =
-                                  value;
+                              if (value <
+                                  accGroupCurencyController
+                                      .allAccgroupsAndCurency.length) {
+                                accGroupCurencyController.homeReportShow.value =
+                                    false;
+                                accGroupCurencyController.pageViewCount.value =
+                                    value;
 
-                              Curency? selectedCurency = curencyController
-                                  .allCurency
-                                  .firstWhereOrNull((element) =>
-                                      element.id ==
-                                      accGroupCurencyController
-                                          .allAccgroupsAndCurency[value]
-                                          .curencyId);
-                              curencyController.selectedCurency
-                                  .addAll(selectedCurency?.toEditMap() ?? {});
+                                Curency? selectedCurency = curencyController
+                                    .allCurency
+                                    .firstWhereOrNull((element) =>
+                                        element.id ==
+                                        accGroupCurencyController
+                                            .allAccgroupsAndCurency[value]
+                                            .curencyId);
+                                curencyController.selectedCurency
+                                    .addAll(selectedCurency?.toEditMap() ?? {});
+                              } else {
+                                accGroupCurencyController.homeReportShow.value =
+                                    true;
+                              }
                             },
                             reverse: true,
                             itemCount: accGroupCurencyController
-                                .allAccgroupsAndCurency.length,
+                                    .allAccgroupsAndCurency.length +
+                                1,
                             itemBuilder: (context, index) {
-                              final accCurIds = accGroupCurencyController
-                                  .allAccgroupsAndCurency[index];
-                              return Obx(
-                                () => HomeScreen(
-                                    rows: homeController.loadData
-                                        .where((p0) =>
-                                            p0.curId == accCurIds.curencyId &&
-                                            p0.accGId == accCurIds.accGroupId)
-                                        .toList(),
-                                    accGroup: accGroupController.allAccGroups
-                                        .firstWhere((element) =>
-                                            element.id == accCurIds.accGroupId),
-                                    stauts: accGroupController.allAccGroups
-                                            .firstWhere((element) =>
-                                                element.id ==
-                                                accGroupCurencyController
-                                                    .allAccgroupsAndCurency[accGroupCurencyController
-                                                        .pageViewCount.value]
-                                                    .accGroupId)
-                                            .status &&
-                                        (curencyController.allCurency.firstWhereOrNull((element) => element.id == accCurIds.curencyId)?.status ?? true),
-                                    curency: curencyController.allCurency.firstWhereOrNull((element) => element.id == accCurIds.curencyId)),
-                              );
+                              if (index <
+                                  accGroupCurencyController
+                                      .allAccgroupsAndCurency.length) {
+                                final accCurIds = accGroupCurencyController
+                                    .allAccgroupsAndCurency[index];
+                                return Obx(
+                                  () => HomeScreen(
+                                      rows: homeController.loadData
+                                          .where((p0) =>
+                                              p0.curId == accCurIds.curencyId &&
+                                              p0.accGId == accCurIds.accGroupId)
+                                          .toList(),
+                                      accGroup: accGroupController.allAccGroups.firstWhere((element) =>
+                                          element.id == accCurIds.accGroupId),
+                                      stauts: accGroupController.allAccGroups
+                                              .firstWhere((element) =>
+                                                  element.id ==
+                                                  accGroupCurencyController
+                                                      .allAccgroupsAndCurency[
+                                                          accGroupCurencyController
+                                                              .pageViewCount
+                                                              .value]
+                                                      .accGroupId)
+                                              .status &&
+                                          (curencyController.allCurency.firstWhereOrNull((element) => element.id == accCurIds.curencyId)?.status ?? true),
+                                      curency: curencyController.allCurency.firstWhereOrNull((element) => element.id == accCurIds.curencyId)),
+                                );
+                              } else {
+                                return HomeReportsScreen();
+                              }
                             }),
                       ),
                     ],
                   )),
       ),
       floatingActionButton: Obx(
-        () => accGroupController.allAccGroups.isNotEmpty &&
+        () => !accGroupCurencyController.homeReportShow.value &&
+                accGroupController.allAccGroups.isNotEmpty &&
                 accGroupCurencyController.allAccgroupsAndCurency.isNotEmpty
             ? curencyController.allCurency.isEmpty
                 ? SizedBox()

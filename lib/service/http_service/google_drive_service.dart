@@ -8,6 +8,13 @@ import 'package:path/path.dart' as path;
 
 class GoogleDriveAppData {
   /// sign in with google
+
+  Future<GoogleSignInAccount?> getCurentUser() async {
+    final googleUser = GoogleSignIn();
+    final user = googleUser.currentUser;
+    return user;
+  }
+
   Future<GoogleSignInAccount?> signInGoogle() async {
     GoogleSignInAccount? googleUser;
     try {
@@ -52,7 +59,7 @@ class GoogleDriveAppData {
   }) async {
     try {
       drive.File fileMetadata = drive.File();
-      fileMetadata.name = path.basename(file.absolute.path);
+      fileMetadata.name = "account_app_${DateTime.now()}.db";
 
       late drive.File response;
       if (driveFileId != null) {
@@ -65,6 +72,7 @@ class GoogleDriveAppData {
       } else {
         /// [driveFileId] is null means we want to create new file
         fileMetadata.parents = ['appDataFolder'];
+        fileMetadata.createdTime = DateTime.now();
         response = await driveApi.files.create(
           fileMetadata,
           uploadMedia: drive.Media(file.openRead(), file.lengthSync()),
@@ -113,6 +121,21 @@ class GoogleDriveAppData {
       drive.File? driveFile =
           files?.firstWhere((element) => element.name == filename);
       return driveFile;
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+
+  /// get drive file info
+  Future<List<drive.File>?> getAllDriveFiles(drive.DriveApi driveApi) async {
+    try {
+      drive.FileList fileList = await driveApi.files.list(
+          spaces: 'appDataFolder', $fields: 'files(id, name, modifiedTime)');
+      List<drive.File>? files = fileList.files;
+      // drive.File? driveFile =
+      //     files?.firstWhere((element) => element.name == filename);
+      return files;
     } catch (e) {
       debugPrint(e.toString());
       return null;

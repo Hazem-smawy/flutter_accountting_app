@@ -30,7 +30,7 @@ class CustomerSettingScreen extends StatelessWidget {
                 const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 50),
             child: Column(
               children: [
-                const CustomBackBtnWidget(title: "العملاء"),
+                CustomBackBtnWidget(title: "العملاء"),
                 const SizedBox(height: 20),
                 if (customerController.allCustomers.isEmpty)
                   EmptyWidget(

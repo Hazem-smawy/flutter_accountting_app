@@ -28,7 +28,7 @@ class LocalCopyScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
+              CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
               const SizedBox(
                 height: 20,
               ),
