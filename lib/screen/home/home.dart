@@ -165,10 +165,10 @@ class HomePrivateSammaryWidget extends StatelessWidget {
         if (forYou != null)
           HomeSammaryWidget(
             curency: curency,
-            icon: FontAwesomeIcons.angleDown,
+            icon: FontAwesomeIcons.angleUp,
             title: "$forYou ",
             subTitle: " لك",
-            color: Colors.red,
+            color: MyColors.creditColor,
           ),
         SizedBox(
           width: 10,
@@ -176,10 +176,10 @@ class HomePrivateSammaryWidget extends StatelessWidget {
         if (onYou != null)
           HomeSammaryWidget(
             curency: curency,
-            icon: FontAwesomeIcons.angleUp,
+            icon: FontAwesomeIcons.angleDown,
             title: "$onYou ",
             subTitle: "عليك",
-            color: Colors.green,
+            color: MyColors.debetColor,
           )
       ],
     );

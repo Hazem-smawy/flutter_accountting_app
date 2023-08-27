@@ -21,27 +21,31 @@ class LocalCopyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 15,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 5,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  GoogleDriveCopyWidget(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const FolderCopyWidget(),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
-              CustomBackBtnWidget(title: " النسخ الإ حتياطي"),
-              const SizedBox(
-                height: 20,
-              ),
-              const FolderCopyWidget(),
-              const SizedBox(
-                height: 20,
-              ),
-              GoogleDriveCopyWidget(),
-              const SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

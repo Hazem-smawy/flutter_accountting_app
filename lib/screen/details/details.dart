@@ -142,8 +142,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                       color: widget.homeModel.totalCredit >
                                               widget.homeModel.totalDebit
-                                          ? Colors.green
-                                          : Colors.red,
+                                          ? MyColors.debetColor
+                                          : MyColors.creditColor,
                                     ),
                                   )),
                                   const DataColumn(
@@ -206,8 +206,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 color: e.credit > e.debit
-                                                    ? Colors.green
-                                                    : Colors.red,
+                                                    ? MyColors.debetColor
+                                                    : MyColors.creditColor,
                                               ),
                                             )),
                                             DataCell(Text(
@@ -233,16 +233,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Row(
                       children: [
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowUp,
+                            icon: FontAwesomeIcons.arrowDown,
                             title: "$onYou",
                             subTitle: "له",
-                            color: Colors.green),
+                            color: MyColors.debetColor),
                         const SizedBox(width: 5),
                         DetailsSammaryWidget(
-                            icon: FontAwesomeIcons.arrowDown,
+                            icon: FontAwesomeIcons.arrowUp,
                             title: ' $onHem',
                             subTitle: "عليه",
-                            color: Colors.red),
+                            color: MyColors.creditColor),
                       ],
                     ),
                     const SizedBox(
@@ -318,32 +318,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               Text(
                                 resultMoney > 0 ? "عليك" : "لك",
                                 style: myTextStyles.subTitle,
-                              )
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                width: 30,
+                                height: 30,
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: MyColors.shadowColor,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: FaIcon(
+                                    resultMoney > 0
+                                        ? FontAwesomeIcons.chevronDown
+                                        : FontAwesomeIcons.chevronUp,
+                                    color: resultMoney > 0
+                                        ? MyColors.debetColor
+                                        : MyColors.creditColor,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(width: 10),
-                          Container(
-                            width: 30,
-                            height: 30,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(7),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: MyColors.shadowColor,
-                              ),
-                            ),
-                            child: Center(
-                              child: FaIcon(
-                                resultMoney > 0
-                                    ? FontAwesomeIcons.chevronUp
-                                    : FontAwesomeIcons.chevronDown,
-                                color:
-                                    resultMoney > 0 ? Colors.green : Colors.red,
-                                size: 15,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -492,8 +496,8 @@ class DetialInfoSheet extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: detailsRows.credit > detailsRows.debit
-                          ? Colors.green
-                          : Colors.red,
+                          ? MyColors.debetColor
+                          : MyColors.creditColor,
                     ),
                   ),
                   const Spacer(),

@@ -41,8 +41,14 @@ class MyAppBarWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Get.dialog(AccGroupCurencyListWidget(
-                  goToPageAction: action,
+                Get.dialog(GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: AccGroupCurencyListWidget(
+                      goToPageAction: action,
+                    ),
+                  ),
                 ));
               },
               child: const FaIcon(
@@ -51,7 +57,7 @@ class MyAppBarWidget extends StatelessWidget {
                 color: MyColors.containerColor,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             GestureDetector(
@@ -119,7 +125,10 @@ class AccGroupCurencyListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          left: 15, top: 55, right: Get.width / 2.3, bottom: Get.height / 2.5),
+        left: 15,
+        top: 55,
+        right: Get.width / 2.3,
+      ),
       width: Get.width / 2,
       //height: 300,
       padding: const EdgeInsets.all(10),
@@ -127,83 +136,83 @@ class AccGroupCurencyListWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: MyColors.containerColor.withOpacity(0.7),
       ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "كل التصنيفات",
-                style: myTextStyles.title2,
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount:
-                      accGroupCurencyController.allAccgroupsAndCurency.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var accGroup = accGroupController.allAccGroups.firstWhere(
-                      (element) =>
-                          element.id ==
-                          accGroupCurencyController
-                              .allAccgroupsAndCurency[index].accGroupId,
-                    );
-                    var curency = curencyController.allCurency.firstWhereOrNull(
-                      (element) =>
-                          element.id ==
-                          accGroupCurencyController
-                              .allAccgroupsAndCurency[index].curencyId,
-                    );
-                    return GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        accGroupCurencyController.pageViewCount.value =
-                            accGroupCurencyController.allAccgroupsAndCurency
-                                .indexWhere(
-                          (element) =>
-                              element.accGroupId == accGroup.id &&
-                              element.curencyId == curency?.id,
-                        );
-                        goToPageAction();
-                      },
-                      child: AccGroupCurencyListItemWidget(
-                        accGroup: accGroup,
-                        curency: curency,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              // const Spacer(),
-              GestureDetector(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "كل التصنيفات",
+            style: myTextStyles.title2,
+          ),
+          const SizedBox(height: 10),
+          ListView.builder(
+            shrinkWrap: true,
+            primary: true,
+            itemCount: accGroupCurencyController.allAccgroupsAndCurency.length,
+            itemBuilder: (BuildContext context, int index) {
+              var accGroup = accGroupController.allAccGroups.firstWhere(
+                (element) =>
+                    element.id ==
+                    accGroupCurencyController
+                        .allAccgroupsAndCurency[index].accGroupId,
+              );
+              var curency = curencyController.allCurency.firstWhereOrNull(
+                (element) =>
+                    element.id ==
+                    accGroupCurencyController
+                        .allAccgroupsAndCurency[index].curencyId,
+              );
+              return GestureDetector(
                 onTap: () {
                   Get.back();
-                  Get.to(() => AccGroupSettingScreen());
+                  accGroupCurencyController.pageViewCount.value =
+                      accGroupCurencyController.allAccgroupsAndCurency
+                          .indexWhere(
+                    (element) =>
+                        element.accGroupId == accGroup.id &&
+                        element.curencyId == curency?.id,
+                  );
+                  goToPageAction();
                 },
-                child: Container(
-                  margin: const EdgeInsets.only(top: 5),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: MyColors.lessBlackColor.withOpacity(0.9),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "اضافه",
-                        textAlign: TextAlign.right,
-                        style: myTextStyles.subTitle.copyWith(
-                          color: MyColors.containerColor,
-                        ),
-                      ),
-                    ],
-                  ),
+                child: AccGroupCurencyListItemWidget(
+                  accGroup: accGroup,
+                  curency: curency,
                 ),
-              )
-            ],
-          )),
+              );
+            },
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          // const Spacer(),
+          GestureDetector(
+            onTap: () {
+              Get.back();
+              Get.to(() => AccGroupSettingScreen());
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: MyColors.lessBlackColor.withOpacity(0.9),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "اضافه",
+                    textAlign: TextAlign.right,
+                    style: myTextStyles.subTitle.copyWith(
+                      color: MyColors.containerColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

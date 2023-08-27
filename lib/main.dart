@@ -1,50 +1,26 @@
 import 'package:account_app/constant/colors.dart';
-import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
-import 'package:account_app/controller/curency_controller.dart';
-import 'package:account_app/controller/customer_account_controller.dart';
-import 'package:account_app/controller/customers_controller.dart';
-import 'package:account_app/controller/home_controller.dart';
+
 import 'package:account_app/controller/intro_controller.dart';
-import 'package:account_app/controller/journal_controller.dart';
-import 'package:account_app/controller/new_account_controller.dart';
-import 'package:account_app/controller/pdf_controller.dart';
-import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/controller/main_controller.dart';
 import 'package:account_app/screen/intro_screen/intro_screen.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
-import 'package:account_app/service/http_service/google_drive_service.dart';
 import 'package:account_app/widget/custom_dialog.dart';
+
 import 'package:account_app/widget/empty_accGroup_widget.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/drive/v3.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'firebase_options.dart';
-import 'dart:io' as io;
-import 'package:path/path.dart' as p;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Get.put(AccGroupCurencyController());
-  Get.put(CustomerController());
-  Get.put(AccGroupController());
-  Get.put(CurencyController());
-  Get.put(JournalController());
-  Get.put(CustomerAccountController());
-  Get.put(HomeController());
-  Get.put(NewAccountController());
-  Get.put(IntroController());
-  Get.put(PersonalController());
-  Get.put(PdfApi());
+  Get.put(MainController());
+
   runApp(MyApp());
 }
 
@@ -61,7 +37,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: MyColors.containerColor,
       ),
       // theme: AppThemes.darkTheme,
-      // home: MyHomePage(),
+
       home: Obx(
         () => introController.introShow.value
             ? ShowMyMainScreen()
@@ -87,6 +63,23 @@ class ShowMyMainScreen extends StatelessWidget {
   }
 }
 
+class ShowProgress extends StatelessWidget {
+  const ShowProgress({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            CustomDialog.loadingProgress();
+          },
+          child: Text("data"),
+        ),
+      ),
+    );
+  }
+}
 // class MyHomePage extends StatefulWidget {
 //   const MyHomePage({Key? key}) : super(key: key);
 

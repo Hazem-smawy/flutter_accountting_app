@@ -1,5 +1,6 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/main.dart';
 import 'package:account_app/widget/custom_dialog.dart';
@@ -49,53 +50,13 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
     },
   ];
   int i = 0;
-  String _selectedFolderPath = '';
+
   final controller = PageController();
   IntroController introController = Get.find();
 
   //drive
-  final GoogleDriveAppData _googleDriveAppData = GoogleDriveAppData();
 
-  GoogleSignInAccount? _googleUser;
-
-  DriveApi? _driveApi;
-
-  Future<void> copyDatabaseFromFolder(String selectedFolderPath) async {
-    io.Directory path = await getApplicationDocumentsDirectory();
-    String databasePath = p.join(path.path, "account_database1.db");
-
-    // await File(databasePath).delete();
-
-    await deleteDatabase(databasePath);
-    //await DatabaseService.instance.database.obs;
-
-    await io.File(databasePath).openWrite();
-    io.File(selectedFolderPath).copy(databasePath);
-
-    CustomDialog.showDialog(
-        title: "تنبة",
-        description: "سيتم إغلاق التطبيق قم بإعادة فتحة",
-        icon: FontAwesomeIcons.circleInfo,
-        color: Colors.red,
-        action: () {});
-    await Future.delayed(const Duration(seconds: 2));
-
-    io.exit(0);
-  }
-
-  Future<void> _openDatabaseFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      if (file.path != null) {
-        _selectedFolderPath = file.path!;
-        copyDatabaseFromFolder(_selectedFolderPath);
-      }
-    } else {
-      // User canceled the picker
-    }
-  }
+  CopyController copyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -211,105 +172,66 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      try {
-                                        _googleUser = await _googleDriveAppData
-                                            .signInGoogle();
+                                  GetBuilder<CopyController>(
+                                      builder: (controller) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        try {
+                                          controller.signIn;
 
-                                        if (_googleUser == null) {
-                                          return;
+                                          await controller.getTheLastFile();
+                                          // await introController.updateIntro();
+                                          // Get.to(() => ShowMyMainScreen());
+                                        } catch (e) {
+                                          CustomDialog.customSnackBar(
+                                              "حدث خطأ عند إستعادة النسخة",
+                                              SnackPosition.TOP);
                                         }
-
-                                        print("${_googleUser?.authHeaders} ");
-                                        if (_googleUser != null) {
-                                          _driveApi = await _googleDriveAppData
-                                              .getDriveApi(_googleUser!);
-                                        }
-
-                                        setState(() {});
-                                        CustomDialog.loadingProgress();
-
-                                        File? file = await _googleDriveAppData
-                                            .getDriveFile(_driveApi!,
-                                                "account_app_copy.db");
-
-                                        if (file != null) {
-                                          Get.log("file is :$file");
-                                          io.Directory path =
-                                              await getApplicationDocumentsDirectory();
-                                          String databasePath = p.join(
-                                              path.path,
-                                              "private_account_app_database.db");
-
-                                          await _googleDriveAppData
-                                              .restoreDriveFile(
-                                                  driveApi: _driveApi!,
-                                                  driveFile: file,
-                                                  targetLocalPath: databasePath)
-                                              .then((value) {});
-                                          print(file);
-                                        } else {
-                                          Get.log("file is :$file");
-                                        }
-                                      } catch (e) {
-                                        Get.back();
-                                        CustomDialog.customSnackBar(
-                                            "حدث خطأ ", SnackPosition.TOP);
-                                        return;
-                                      }
-                                      Get.back();
-                                      CustomDialog.customSnackBar(
-                                          "تم إسترجاع النسخة بنجاح",
-                                          SnackPosition.TOP);
-
-                                      CustomDialog.showDialog(
-                                          title: "تنبة",
-                                          description:
-                                              "سيتم إغلاق التطبيق قم بإعادة فتحة",
-                                          icon: FontAwesomeIcons.circleInfo,
-                                          color: Colors.red,
-                                          action: () {});
-                                      await Future.delayed(
-                                          const Duration(seconds: 2));
-
-                                      io.exit(0);
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          border: Border.all(
-                                            color: MyColors.secondaryTextColor,
-                                          )),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: const [
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                          FaIcon(
-                                            FontAwesomeIcons.googleDrive,
-                                            size: 15,
-                                            color: MyColors.containerColor,
-                                          ),
-                                          SizedBox(
-                                            width: 15,
-                                          ),
-                                        ],
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            border: Border.all(
+                                              color:
+                                                  MyColors.secondaryTextColor,
+                                            )),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            FaIcon(
+                                              FontAwesomeIcons.googleDrive,
+                                              size: 15,
+                                              color: MyColors.containerColor,
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  }),
                                   const SizedBox(
                                     width: 10,
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      // introController.updateIntro();
-                                      _openDatabaseFile();
+                                    onTap: () async {
+                                      try {
+                                        await copyController.openDatabaseFile();
+                                        // await introController.updateIntro();
+                                        //Get.to(() => ShowMyMainScreen());
+                                      } catch (e) {
+                                        CustomDialog.customSnackBar(
+                                            "حدث خطأ عند إستعادة النسخة",
+                                            SnackPosition.TOP);
+                                      }
                                     },
                                     child: Container(
                                       alignment: Alignment.center,

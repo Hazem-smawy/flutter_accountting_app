@@ -1,16 +1,33 @@
 import 'package:account_app/models/customer_model.dart';
 import 'package:account_app/models/journal_model.dart';
+import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/database/helper/tables_helpers.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 
 class JournalData {
-  final ins = DatabaseService.instance;
+  Future<void> createTable(Database db) async {
+    await db.execute('''
+        CREATE TABLE  IF NOT EXISTS ${TableName.journalTbl} (
+                  ${JournalField.id} ${FieldType.idType},
+          ${JournalField.customerAccountId} ${FieldType.integerType},
+          ${JournalField.details} ${FieldType.textType},
+          ${JournalField.registeredAt} ${FieldType.timeType},
+          ${JournalField.credit} ${FieldType.doubleType},
+          ${JournalField.debit} ${FieldType.doubleType},
+          ${JournalField.createdAt} ${FieldType.timeType},
+          ${JournalField.modifiedAt} ${FieldType.timeType}
+
+
+        );
+    ''');
+  }
 
   Future<Journal?> create(Journal journal) async {
     try {
-      final db = await ins.database;
+      final db = await DatabaseService().database;
       final id = await db.insert(TableName.journalTbl, journal.toMap());
       Get.back();
       return journal.copyWith(id: id);
@@ -20,7 +37,7 @@ class JournalData {
   }
 
   Future<List<Journal>> readAllJournalForCustomerAccount(cacId) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     final results = await db.query(
       TableName.journalTbl,
       columns: JournalField.values,
@@ -32,7 +49,7 @@ class JournalData {
   }
 
   Future<Journal?> readJournal(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     final maps = await db.query(
       TableName.journalTbl,
       columns: JournalField.values,
@@ -48,14 +65,14 @@ class JournalData {
   }
 
   Future<List<Journal>> readAllJournal() async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     final result = await db.query(TableName.journalTbl);
     return result.map((e) => Journal.fromMap(e)).toList();
   }
 
   Future<int?> updateJournal(Journal journal) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     try {
       final updatedObject = await db.update(
@@ -67,7 +84,7 @@ class JournalData {
   }
 
   Future<int> delete(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     return await db.delete(TableName.journalTbl,
         where: '${CustomerField.id} = ?', whereArgs: [id]);
   }

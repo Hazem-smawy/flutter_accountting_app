@@ -201,7 +201,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                       children: [
                         Flexible(
                             child: CustomBtnWidget(
-                          color: Colors.green,
+                          color: MyColors.debetColor,
                           label: "له",
                           action: () {
                             createCustomerAccount(true);
@@ -210,7 +210,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                         SizedBox(width: 10),
                         Flexible(
                             child: CustomBtnWidget(
-                          color: Colors.red,
+                          color: MyColors.creditColor,
                           label: "عليه",
                           action: () {
                             createCustomerAccount(false);
@@ -228,7 +228,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                   right: 0,
                   left: 0,
                   child: Container(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: EdgeInsets.only(top: 3),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: MyColors.secondaryTextColor.withOpacity(0.7),
@@ -401,7 +401,7 @@ class ExitCustomerItemWidget extends StatelessWidget {
     return Container(
       height: 40,
       alignment: Alignment.centerRight,
-      margin: const EdgeInsets.only(left: 5, bottom: 5, right: 5),
+      margin: const EdgeInsets.only(left: 3, bottom: 3, right: 3),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

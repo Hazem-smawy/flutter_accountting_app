@@ -18,9 +18,7 @@ class NoPersonalInfoWidget extends StatelessWidget {
         children: [
           FaIcon(
             FontAwesomeIcons.userPlus,
-            color: isDrawer
-                ? MyColors.secondaryTextColor
-                : MyColors.lessBlackColor,
+            color: isDrawer ? MyColors.containerColor : MyColors.lessBlackColor,
             size: 30,
           ),
           SizedBox(

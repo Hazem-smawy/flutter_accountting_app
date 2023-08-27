@@ -1,15 +1,32 @@
 import 'package:account_app/models/customer_model.dart';
+import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/database/helper/tables_helpers.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 
 class CustomerData {
-  final ins = DatabaseService.instance;
+  Future<void> createTable(Database db) async {
+    await db.execute('''
+        CREATE TABLE  IF NOT EXISTS ${TableName.customerTbl} (
+        ${CustomerField.id} ${FieldType.idType},
+          ${CustomerField.name} ${FieldType.textType} UNIQUE,
+          ${CustomerField.phone} ${FieldType.textType},
+          ${CustomerField.address} ${FieldType.textType},
+          ${CustomerField.status} ${FieldType.boolType},
+          ${CustomerField.createdAt} ${FieldType.timeType},
+          ${CustomerField.modifiedAt} ${FieldType.timeType}
+
+
+
+        );
+    ''');
+  }
 
   Future<Customer?> create(Customer customer) async {
     try {
-      final db = await ins.database;
+      final db = await DatabaseService().database;
       final id = await db.insert(TableName.customerTbl, customer.toMap());
       Get.back();
       return customer.copyWith(id: id);
@@ -19,7 +36,7 @@ class CustomerData {
   }
 
   Future<Customer?> readCustomer(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     final maps = await db.query(
       TableName.customerTbl,
       columns: CustomerField.values,
@@ -35,14 +52,14 @@ class CustomerData {
   }
 
   Future<List<Customer>> readAllCustomers() async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     final result = await db.query(TableName.customerTbl);
     return result.map((e) => Customer.fromMap(e)).toList();
   }
 
   Future<int?> updateCustomer(Customer customer) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     try {
       final updatedObject = await db.update(
@@ -56,7 +73,7 @@ class CustomerData {
   }
 
   Future<int> delete(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     return await db.delete(TableName.customerTbl,
         where: '${CustomerField.id} = ?', whereArgs: [id]);
   }

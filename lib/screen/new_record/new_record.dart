@@ -165,7 +165,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                   children: [
                     Flexible(
                         child: CustomBtnWidget(
-                      color: Colors.green,
+                      color: MyColors.debetColor,
                       label: "له",
                       action: () {
                         addNewRecordFunction(true);
@@ -174,7 +174,7 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
                     SizedBox(width: 10),
                     Flexible(
                         child: CustomBtnWidget(
-                      color: Colors.red,
+                      color: MyColors.creditColor,
                       label: "عليه",
                       action: () {
                         addNewRecordFunction(false);

@@ -59,7 +59,8 @@ class GoogleDriveAppData {
   }) async {
     try {
       drive.File fileMetadata = drive.File();
-      fileMetadata.name = "account_app_${DateTime.now()}.db";
+      fileMetadata.name =
+          "account_app_${DateTime.now().millisecondsSinceEpoch}.db";
 
       late drive.File response;
       if (driveFileId != null) {
@@ -82,6 +83,17 @@ class GoogleDriveAppData {
     } catch (e) {
       debugPrint(e.toString());
       return null;
+    }
+  }
+
+  Future<void> deleteDriveFile({
+    required drive.DriveApi driveApi,
+    required drive.File driveFile,
+  }) async {
+    try {
+      await driveApi.files.delete(driveFile.id!);
+    } catch (e) {
+      print("error for delet : $e");
     }
   }
 
@@ -133,6 +145,9 @@ class GoogleDriveAppData {
       drive.FileList fileList = await driveApi.files.list(
           spaces: 'appDataFolder', $fields: 'files(id, name, modifiedTime)');
       List<drive.File>? files = fileList.files;
+      files = files
+          ?.where((element) => element.name?.contains("account_app") ?? false)
+          .toList();
       // drive.File? driveFile =
       //     files?.firstWhere((element) => element.name == filename);
       return files;

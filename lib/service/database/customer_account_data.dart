@@ -1,13 +1,32 @@
 import 'package:account_app/models/customer_account.dart';
 import 'package:account_app/models/customer_model.dart';
+import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/database/helper/tables_helpers.dart';
+import 'package:sqflite/sqflite.dart';
 
 class CustomerAccountData {
-  final ins = DatabaseService.instance;
+  Future<void> createTable(Database db) async {
+    await db.execute('''
+        CREATE TABLE  IF NOT EXISTS ${TableName.customerAccountTbl} (
+        
+          ${CustomerAccountField.id} ${FieldType.idType},
+          ${CustomerAccountField.customerId} ${FieldType.integerType},
+          ${CustomerAccountField.curencyId} ${FieldType.integerType},
+          ${CustomerAccountField.accgroupId} ${FieldType.integerType},
+          ${CustomerAccountField.totalCredit} ${FieldType.doubleType},
+          ${CustomerAccountField.totalDebit} ${FieldType.doubleType},
+          ${CustomerAccountField.createdAt} ${FieldType.timeType},
+          ${CustomerAccountField.operation} ${FieldType.integerType},
+          ${CustomerAccountField.status} ${FieldType.boolType}
+
+
+        );
+    ''');
+  }
 
   Future<CustomerAccount> create(CustomerAccount customerAccount) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     final id =
         await db.insert(TableName.customerAccountTbl, customerAccount.toMap());
 
@@ -15,7 +34,7 @@ class CustomerAccountData {
   }
 
   Future<CustomerAccount?> readCustomerAccount(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     final maps = await db.query(
       TableName.customerAccountTbl,
       columns: CustomerAccountField.values,
@@ -31,7 +50,7 @@ class CustomerAccountData {
   }
 
   Future<List<CustomerAccount>> readAllCustomerAccounts() async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     final result = await db.query(TableName.customerAccountTbl,
         orderBy:
@@ -40,13 +59,13 @@ class CustomerAccountData {
   }
 
   Future<int> updateCustomerAccount(CustomerAccount customerAccount) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     return db.update(TableName.customerAccountTbl, customerAccount.toMap(),
         where: '${CustomerField.id} = ?', whereArgs: [customerAccount.id]);
   }
 
   Future<int> delete(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     return await db.delete(TableName.customerAccountTbl,
         where: '${CustomerAccountField.id} = ?', whereArgs: [id]);
   }
@@ -55,7 +74,7 @@ class CustomerAccountData {
       {required int customerId,
       required int accGroupId,
       required int curencyId}) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     var maps = await db.query(TableName.customerAccountTbl,
         columns: CustomerAccountField.values,
         where:

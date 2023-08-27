@@ -15,7 +15,7 @@ class CustomDialog {
         textAlign: TextAlign.right,
         style: myTextStyles.subTitle.copyWith(
           color: Colors.white,
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.normal,
         ),
       ),
@@ -28,7 +28,7 @@ class CustomDialog {
         ),
       ),
       margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       borderRadius: 12,
     );
     // Get.snackbar("", "",
@@ -138,11 +138,12 @@ class CustomDialog {
 
   static void loadingProgress() {
     Get.defaultDialog(
-      title: "",
+      title: "...يرجي الإ نتضار",
       middleText: "",
+      titleStyle: myTextStyles.subTitle,
       barrierDismissible: false,
-      radius: 12,
-      titlePadding: const EdgeInsets.all(0),
+      radius: 15,
+      titlePadding: const EdgeInsets.all(10),
       // custom: Center(child: CircularProgressIndicator()),
       backgroundColor: MyColors.bg.withOpacity(0.7),
       content: Container(
@@ -152,8 +153,8 @@ class CustomDialog {
         ),
         child: const Center(
             child: CircularProgressIndicator(
-          backgroundColor: MyColors.lessBlackColor,
-          color: MyColors.bg,
+          backgroundColor: MyColors.bg,
+          color: MyColors.lessBlackColor,
         )),
       ),
     );

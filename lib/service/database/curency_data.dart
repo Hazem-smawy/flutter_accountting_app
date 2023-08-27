@@ -1,15 +1,30 @@
 import 'package:account_app/models/curency_model.dart';
+import 'package:account_app/service/database/helper/database_helper.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/database/helper/tables_helpers.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 
 class CurencyData {
-  final ins = DatabaseService.instance;
+  Future<void> createTable(Database db) async {
+    await db.execute('''
+        CREATE TABLE  IF NOT EXISTS ${TableName.curencyTbl} (
+          ${CurencyField.id} ${FieldType.idType},
+          ${CurencyField.name} ${FieldType.textType} UNIQUE,
+          ${CurencyField.symbol} ${FieldType.textType},
+          ${CurencyField.status} ${FieldType.boolType},
+          ${CurencyField.createdAt} ${FieldType.timeType},
+          ${CurencyField.modifiedAt} ${FieldType.timeType}
+
+
+        );
+    ''');
+  }
 
   Future<Curency?> create(Curency curency) async {
     try {
-      final db = await ins.database;
+      final db = await DatabaseService().database;
       final id = await db.insert(TableName.curencyTbl, curency.toMap());
       Get.back();
       return curency.copyWith(id: id);
@@ -19,7 +34,7 @@ class CurencyData {
   }
 
   Future<Curency?> readCurency(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     final maps = await db.query(
       TableName.curencyTbl,
       columns: CurencyField.values,
@@ -35,14 +50,14 @@ class CurencyData {
   }
 
   Future<List<Curency>> readAllCurencies() async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     final result = await db.query(TableName.curencyTbl);
     return result.map((e) => Curency.fromMap(e)).toList();
   }
 
   Future<int?> updateCurency(Curency curency) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
 
     try {
       final updatedObject = await db.update(
@@ -56,7 +71,7 @@ class CurencyData {
   }
 
   Future<int> delete(int id) async {
-    final db = await ins.database;
+    final db = await DatabaseService().database;
     return await db.delete(TableName.curencyTbl,
         where: '${CurencyField.id} = ?', whereArgs: [id]);
   }

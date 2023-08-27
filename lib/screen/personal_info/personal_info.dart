@@ -194,153 +194,160 @@ class EditPersonalInfoSheet extends StatelessWidget {
     return SafeArea(
       top: isFirstTime ? false : true,
       bottom: false,
-      child: Container(
-        // margin: EdgeInsets.only(top: Get.width / 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-          color: personalController.newPersonal['name'] == null
-              ? Colors.transparent
-              : MyColors.bg,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (personalController.newPersonal['name'] == null)
-                SafeArea(
-                  child: CustomBackBtnWidget(title: "الإعدادات الشخصية"),
-                ),
-              if (personalController.newPersonal['name'] != null)
-                const CustomSheetBackBtnWidget(),
-              const SizedBox(height: 30),
-              Stack(
-                alignment: AlignmentDirectional.bottomEnd,
-                children: const [
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundColor: MyColors.lessBlackColor,
-                    child: FaIcon(
-                      FontAwesomeIcons.house,
-                      color: Colors.white,
-                    ),
+      child: SingleChildScrollView(
+        child: Container(
+          // margin: EdgeInsets.only(top: Get.width / 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            color: personalController.newPersonal['name'] == null
+                ? Colors.transparent
+                : MyColors.bg,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (personalController.newPersonal['name'] == null)
+                  SafeArea(
+                    child: CustomBackBtnWidget(title: "الإعدادات الشخصية"),
                   ),
-                  Positioned(
-                      child: CircleAvatar(
-                    radius: 12,
-                    backgroundColor: MyColors.primaryColor,
-                    child: FaIcon(
-                      FontAwesomeIcons.plus,
-                      color: MyColors.bg,
-                      size: 15,
+                if (personalController.newPersonal['name'] != null)
+                  const CustomSheetBackBtnWidget(),
+                const SizedBox(height: 30),
+                Stack(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  children: const [
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundColor: MyColors.lessBlackColor,
+                      child: FaIcon(
+                        FontAwesomeIcons.house,
+                        color: Colors.white,
+                      ),
                     ),
-                  ))
-                ],
-              ),
-              const SizedBox(height: 30),
-              PersonalTextFieldWidget(
-                textHint: "الاسم",
-                icon: FontAwesomeIcons.user,
-                placeHolder: personalController.newPersonal['name'] ?? "",
-                action: (p0) {
-                  personalController.newPersonal.update(
-                    'newName',
-                    (value) => p0,
-                    ifAbsent: () => p0,
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              PersonalTextFieldWidget(
-                textHint: "البريد ألإلكتروني",
-                icon: FontAwesomeIcons.envelope,
-                placeHolder: personalController.newPersonal['email'] ?? "",
-                action: (p0) {
-                  personalController.newPersonal.update(
-                    'email',
-                    (value) => p0,
-                    ifAbsent: () => p0,
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              PersonalTextFieldWidget(
-                textHint: "الرقم",
-                icon: FontAwesomeIcons.phone,
-                placeHolder: personalController.newPersonal['phone'] ?? "",
-                action: (p0) {
-                  personalController.newPersonal.update(
-                    'phone',
-                    (value) => p0,
-                    ifAbsent: () => p0,
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              PersonalTextFieldWidget(
-                textHint: "العنوان",
-                icon: FontAwesomeIcons.locationPin,
-                placeHolder: personalController.newPersonal['address'] ?? "",
-                action: (p0) {
-                  personalController.newPersonal.update(
-                    'address',
-                    (value) => p0,
-                    ifAbsent: () => p0,
-                  );
-                },
-              ),
-              const SizedBox(height: 25),
-              Row(
-                children: [
-                  Flexible(
-                      child: CustomBtnWidget(
-                    color: MyColors.secondaryTextColor,
-                    label: "الغاء",
-                    action: () {
-                      personalController.newPersonal.clear();
-                      Get.back();
-                    },
-                  )),
-                  SizedBox(width: 10),
-                  Flexible(
-                      child: CustomBtnWidget(
-                    color: MyColors.primaryColor,
-                    label: 'إضافة',
-                    action: () {
-                      if (personalController.newPersonal['newName'] == null ||
-                          personalController.newPersonal['email'] == null) {
-                        CustomDialog.customSnackBar(
-                            "ادخل القيم بطريقة صحيحة", SnackPosition.TOP);
-                        return;
-                      }
-                      if (personalController.newPersonal['newName'].length <
-                              1 ||
-                          personalController.newPersonal['email'].length < 1) {
-                        CustomDialog.customSnackBar(
-                            "ادخل القيم بطريقة صحيحة", SnackPosition.TOP);
-                        return;
-                      }
-                      var newPersonalInfo = PersonalModel(
-                          id: 1,
-                          name: personalController.newPersonal['newName'] ?? "",
-                          email: personalController.newPersonal['email'] ?? "",
-                          address:
-                              personalController.newPersonal['address'] ?? "",
-                          phone: personalController.newPersonal['phone'] ?? "");
+                    Positioned(
+                        child: CircleAvatar(
+                      radius: 12,
+                      backgroundColor: MyColors.primaryColor,
+                      child: FaIcon(
+                        FontAwesomeIcons.plus,
+                        color: MyColors.bg,
+                        size: 15,
+                      ),
+                    ))
+                  ],
+                ),
+                const SizedBox(height: 30),
+                PersonalTextFieldWidget(
+                  textHint: "الاسم",
+                  icon: FontAwesomeIcons.user,
+                  placeHolder: personalController.newPersonal['name'] ?? "",
+                  action: (p0) {
+                    personalController.newPersonal.update(
+                      'newName',
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                ),
+                const SizedBox(height: 10),
+                PersonalTextFieldWidget(
+                  textHint: "البريد ألإلكتروني",
+                  icon: FontAwesomeIcons.envelope,
+                  placeHolder: personalController.newPersonal['email'] ?? "",
+                  action: (p0) {
+                    personalController.newPersonal.update(
+                      'email',
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                ),
+                const SizedBox(height: 10),
+                PersonalTextFieldWidget(
+                  textHint: "الرقم",
+                  icon: FontAwesomeIcons.phone,
+                  placeHolder: personalController.newPersonal['phone'] ?? "",
+                  action: (p0) {
+                    personalController.newPersonal.update(
+                      'phone',
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                PersonalTextFieldWidget(
+                  textHint: "العنوان",
+                  icon: FontAwesomeIcons.locationPin,
+                  placeHolder: personalController.newPersonal['address'] ?? "",
+                  action: (p0) {
+                    personalController.newPersonal.update(
+                      'address',
+                      (value) => p0,
+                      ifAbsent: () => p0,
+                    );
+                  },
+                ),
+                const SizedBox(height: 25),
+                Row(
+                  children: [
+                    Flexible(
+                        child: CustomBtnWidget(
+                      color: MyColors.secondaryTextColor,
+                      label: "الغاء",
+                      action: () {
+                        personalController.newPersonal.clear();
+                        Get.back();
+                      },
+                    )),
+                    SizedBox(width: 10),
+                    Flexible(
+                        child: CustomBtnWidget(
+                      color: MyColors.primaryColor,
+                      label: 'إضافة',
+                      action: () {
+                        if (personalController.newPersonal['newName'] == null ||
+                            personalController.newPersonal['email'] == null) {
+                          CustomDialog.customSnackBar(
+                              "ادخل القيم بطريقة صحيحة", SnackPosition.TOP);
+                          return;
+                        }
+                        if (personalController.newPersonal['newName'].length <
+                                1 ||
+                            personalController.newPersonal['email'].length <
+                                1) {
+                          CustomDialog.customSnackBar(
+                              "ادخل القيم بطريقة صحيحة", SnackPosition.TOP);
+                          return;
+                        }
+                        var newPersonalInfo = PersonalModel(
+                            id: 1,
+                            name:
+                                personalController.newPersonal['newName'] ?? "",
+                            email:
+                                personalController.newPersonal['email'] ?? "",
+                            address:
+                                personalController.newPersonal['address'] ?? "",
+                            phone:
+                                personalController.newPersonal['phone'] ?? "");
 
-                      isFirstTime
-                          ? personalController.createPersona(newPersonalInfo)
-                          : personalController.updatePersonal(newPersonalInfo);
-                      personalController.getPersonal();
-                    },
-                  ))
-                ],
-              ),
-              const SizedBox(height: 60),
-            ],
+                        isFirstTime
+                            ? personalController.createPersona(newPersonalInfo)
+                            : personalController
+                                .updatePersonal(newPersonalInfo);
+                        personalController.getPersonal();
+                      },
+                    ))
+                  ],
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

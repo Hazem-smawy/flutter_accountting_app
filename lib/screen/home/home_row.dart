@@ -39,10 +39,11 @@ class HomeRowView extends StatelessWidget {
               width: 20,
               height: 5,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: homeModel.totalCredit < homeModel.totalDebit
-                      ? Colors.red
-                      : Colors.green),
+                borderRadius: BorderRadius.circular(5),
+                color: homeModel.totalCredit < homeModel.totalDebit
+                    ? MyColors.creditColor
+                    : MyColors.debetColor,
+              ),
             ),
             const SizedBox(width: 10),
             SizedBox(
@@ -54,8 +55,8 @@ class HomeRowView extends StatelessWidget {
                 style: myTextStyles.title2.copyWith(
                   //   fontWeight: FontWeight.bold,
                   color: homeModel.totalCredit < homeModel.totalDebit
-                      ? Colors.red
-                      : Colors.green,
+                      ? MyColors.creditColor
+                      : MyColors.debetColor,
                 ),
               ),
             ),

@@ -26,6 +26,7 @@ dependencies:
   googleapis: 
   syncfusion_flutter_pdf: ^22.2.10
   open_file:
+  external_path: ^1.0.3
 
 dev_dependencies:
   flutter_test:

@@ -4,10 +4,8 @@ import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/database/helper/tables_helpers.dart';
 
 class HomeData {
-  final ins = DatabaseService.instance;
-
   Future<List<GroupCurency>> getCurencyInAccGroup(int accGroupId) async {
-    var db = await ins.database;
+    final db = await DatabaseService().database;
     var result = await db.rawQuery(
         'SELECT cac.curencyId AS crId ,cr.name AS name, cr.symbol AS symbol from customeraccount AS cac JOIN curency AS cr ON cac.curencyId = cr.id WHERE cac.accgroupId = $accGroupId  GROUP BY cac.curencyId');
 
@@ -15,7 +13,7 @@ class HomeData {
   }
 
   Future<List<HomeModel>> getCustomerAccountsForAccGroup() async {
-    var db = await ins.database;
+    final db = await DatabaseService().database;
     final result = await db.rawQuery(
         'SELECT cac.customerId AS caId, ca.name ,cac.id AS cacId,ca.status AS caStatus,cac.status AS cacStatus,totalDebit ,cac.totalCredit , cac.operation, cac.accgroupId AS accGId,cac.curencyId AS curId FROM customeraccount AS cac  JOIN  customer AS ca ON cac.customerId = ca.id ');
 
@@ -39,7 +37,7 @@ ORDER by acc.id , cac.curencyid
   }
 
   Future<List<AccCurencyModel>> getAccGroupsAndCurencies() async {
-    var db = await ins.database;
+    final db = await DatabaseService().database;
     final result = await db.rawQuery(
         'SELECT DISTINCT acc.id AS accGroupId,cac.curencyId AS curencyId from ${TableName.accGroupTbl} AS acc LEFT JOIN ${TableName.customerAccountTbl} AS cac ON acc.id = cac.accgroupId ORDER by acc.id , cac.curencyId');
 

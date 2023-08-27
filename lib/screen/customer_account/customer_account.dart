@@ -37,6 +37,7 @@ class CustomerAccountsView extends StatelessWidget {
                   children: [
                     Expanded(
                         child: Container(
+                      height: 35,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
@@ -284,7 +285,7 @@ class _CustomerAccountDetailsSheetState
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.red.withOpacity(0.09)),
+                      color: MyColors.creditColor.withOpacity(0.09)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -296,7 +297,7 @@ class _CustomerAccountDetailsSheetState
                       const FaIcon(
                         FontAwesomeIcons.arrowUp,
                         size: 10,
-                        color: Colors.red,
+                        color: MyColors.creditColor,
                       ),
                       const SizedBox(width: 5),
                       Text(
@@ -314,7 +315,7 @@ class _CustomerAccountDetailsSheetState
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.green.withOpacity(0.09)),
+                      color: MyColors.debetColor.withOpacity(0.09)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -324,9 +325,9 @@ class _CustomerAccountDetailsSheetState
                       ),
                       const SizedBox(width: 10),
                       const FaIcon(
-                        FontAwesomeIcons.arrowUp,
+                        FontAwesomeIcons.arrowDown,
                         size: 10,
-                        color: Colors.green,
+                        color: MyColors.debetColor,
                       ),
                       const SizedBox(width: 5),
                       Text(
