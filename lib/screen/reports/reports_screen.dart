@@ -223,19 +223,19 @@ class HomeReportsScreen extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: MyColors.bg,
+                    color: MyColors.containerColor,
                   ),
                   child: ListView.builder(
                     padding: EdgeInsets.only(top: 5),
                     itemCount: 1,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
-                        margin: EdgeInsets.only(left: 10, right: 10, top: 5),
+                        // margin: EdgeInsets.only(left: 10, right: 10, top: 5),
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
-                          color: MyColors.containerColor,
+                          color: MyColors.containerSecondColor,
                         ),
                         child: Row(
                           children: [

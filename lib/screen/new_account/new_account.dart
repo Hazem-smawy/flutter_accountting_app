@@ -14,12 +14,13 @@ import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/error_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 class NewAccountScreen extends StatefulWidget {
   const NewAccountScreen(
@@ -75,6 +76,43 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   CustomerAccountController customerAccountController = Get.find();
   CurencyController curencyController = Get.find();
   TextEditingController nameController = TextEditingController();
+  FullContact? _contact;
+
+  Future<void> _askContactPermissions() async {
+    PermissionStatus permissionStatus = await _getContactPermission();
+    if (permissionStatus == PermissionStatus.granted) {
+      final FullContact contact = await FlutterContactPicker.pickFullContact();
+      if (contact != null) {
+        setState(() {
+          _contact = contact;
+        });
+      }
+    } else {
+      _handleInvalidPermissions(permissionStatus);
+    }
+  }
+
+  Future<PermissionStatus> _getContactPermission() async {
+    PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.permanentlyDenied) {
+      PermissionStatus permissionStatus = await Permission.contacts.request();
+      return permissionStatus;
+    } else {
+      return permission;
+    }
+  }
+
+  void _handleInvalidPermissions(PermissionStatus permissionStatus) {
+    if (permissionStatus == PermissionStatus.denied) {
+      final snackBar = SnackBar(content: Text('Access to contact data denied'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else if (permissionStatus == PermissionStatus.permanentlyDenied) {
+      CustomDialog.customSnackBar(
+          'Contact data not available on device', SnackPosition.TOP);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
@@ -123,41 +161,60 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             borderRadius: BorderRadius.circular(12),
                             color: MyColors.containerSecondColor,
                           ),
-                          child: TextFormField(
-                            controller: nameController,
-                            textAlign: TextAlign.right,
-                            textDirection: TextDirection.rtl,
-                            style: myTextStyles.subTitle.copyWith(
-                                color: MyColors.blackColor,
-                                fontWeight: FontWeight.bold),
-                            onChanged: (p0) {
-                              selectionCustomer = null;
-                              CEC.errorMessage.value = "";
-                              newAccountController.newAccount.update(
-                                'name',
-                                (value) => p0,
-                                ifAbsent: () => p0,
-                              );
-                              if (p0.length > 0) {
-                                setState(() {
-                                  customers = customerController.allCustomers
-                                      .where((element) => element.name
-                                          .contains(p0.toString().trim()))
-                                      .toList();
-                                });
-                              } else {
-                                setState(() {
-                                  customers.clear();
-                                });
-                              }
-                            },
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "الاسم",
-                                hintStyle: myTextStyles.body
-                                    .copyWith(fontWeight: FontWeight.normal),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10)),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                onTap: _askContactPermissions,
+                                child: FaIcon(
+                                  FontAwesomeIcons.user,
+                                  size: 18,
+                                  color: MyColors.secondaryTextColor,
+                                ),
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: nameController,
+                                  textAlign: TextAlign.right,
+                                  textDirection: TextDirection.rtl,
+                                  style: myTextStyles.subTitle.copyWith(
+                                      color: MyColors.blackColor,
+                                      fontWeight: FontWeight.bold),
+                                  onChanged: (p0) {
+                                    selectionCustomer = null;
+                                    CEC.errorMessage.value = "";
+                                    newAccountController.newAccount.update(
+                                      'name',
+                                      (value) => p0,
+                                      ifAbsent: () => p0,
+                                    );
+                                    if (p0.length > 0) {
+                                      setState(() {
+                                        customers = customerController
+                                            .allCustomers
+                                            .where((element) => element.name
+                                                .contains(p0.toString().trim()))
+                                            .toList();
+                                      });
+                                    } else {
+                                      setState(() {
+                                        customers.clear();
+                                      });
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "الاسم",
+                                      hintStyle: myTextStyles.body.copyWith(
+                                          fontWeight: FontWeight.normal),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 10)),
+                                ),
+                              ),
+                            ],
                           ),
                         )),
                       ],

@@ -27,7 +27,8 @@ dependencies:
   syncfusion_flutter_pdf: ^22.2.10
   open_file:
   external_path: ^1.0.3
-
+  fluttercontactpicker: ^4.7.0
+  permission_handler: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
