@@ -40,8 +40,8 @@ class MyDrawerView extends StatelessWidget {
             Obx(
               () => personalController.newPersonal['name'] == null
                   ? Container(
-                      padding: EdgeInsets.only(top: 60, bottom: 20),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.only(top: 60, bottom: 20),
+                      decoration: const BoxDecoration(
                           color: MyColors.lessBlackColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
@@ -51,8 +51,8 @@ class MyDrawerView extends StatelessWidget {
                       ))
                   : Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(top: 60, bottom: 20),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.only(top: 60, bottom: 20),
+                      decoration: const BoxDecoration(
                           color: MyColors.lessBlackColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),

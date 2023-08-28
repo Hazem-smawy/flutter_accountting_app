@@ -116,200 +116,206 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   @override
   Widget build(BuildContext context) {
     CEC.errorMessage.value = "";
-    return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        color: MyColors.bg,
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Stack(
-            children: [
-              Obx(
-                () => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (CEC.errorMessage.isNotEmpty) const ErrorShowWidget(),
-                    if (isFindedIt) const CorrectShowWidget(),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        SizedBox(
-                            width: Get.width / 3,
-                            child: CustomNumberFieldWidget(
-                              textHint: "المبلغ",
-                              action: (p0) {
-                                setState(() {
-                                  customers.clear();
-                                });
-                                newAccountController.newAccount.update(
-                                  'money',
-                                  (value) => p0,
-                                  ifAbsent: () => p0,
-                                );
-                              },
-                            )),
-                        const SizedBox(width: 10),
-                        Expanded(
-                            child: Container(
-                          height: 55,
-                          alignment: Alignment.center,
-                          //padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: MyColors.containerSecondColor,
-                          ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              GestureDetector(
-                                onTap: _askContactPermissions,
-                                child: FaIcon(
-                                  FontAwesomeIcons.user,
-                                  size: 18,
-                                  color: MyColors.secondaryTextColor,
+    return SafeArea(
+      top: false,
+      child: Container(
+        margin: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          // borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          color: MyColors.bg,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Stack(
+              children: [
+                Obx(
+                  () => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (CEC.errorMessage.isNotEmpty) const ErrorShowWidget(),
+                      if (isFindedIt) const CorrectShowWidget(),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          SizedBox(
+                              width: Get.width / 3,
+                              child: CustomNumberFieldWidget(
+                                textHint: "المبلغ",
+                                action: (p0) {
+                                  setState(() {
+                                    customers.clear();
+                                  });
+                                  newAccountController.newAccount.update(
+                                    'money',
+                                    (value) => p0,
+                                    ifAbsent: () => p0,
+                                  );
+                                },
+                              )),
+                          const SizedBox(width: 10),
+                          Expanded(
+                              child: Container(
+                            height: 55,
+                            alignment: Alignment.center,
+                            //padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: MyColors.containerSecondColor,
+                            ),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
                                 ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: nameController,
-                                  textAlign: TextAlign.right,
-                                  textDirection: TextDirection.rtl,
-                                  style: myTextStyles.subTitle.copyWith(
-                                      color: MyColors.blackColor,
-                                      fontWeight: FontWeight.bold),
-                                  onChanged: (p0) {
-                                    selectionCustomer = null;
-                                    CEC.errorMessage.value = "";
-                                    newAccountController.newAccount.update(
-                                      'name',
-                                      (value) => p0,
-                                      ifAbsent: () => p0,
-                                    );
-                                    if (p0.length > 0) {
-                                      setState(() {
-                                        customers = customerController
-                                            .allCustomers
-                                            .where((element) => element.name
-                                                .contains(p0.toString().trim()))
-                                            .toList();
-                                      });
-                                    } else {
-                                      setState(() {
-                                        customers.clear();
-                                      });
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "الاسم",
-                                      hintStyle: myTextStyles.body.copyWith(
-                                          fontWeight: FontWeight.normal),
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => _selectDate(context),
-                          child: Container(
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: MyColors.containerSecondColor,
-                              ),
-                              child: const Center(
+                                GestureDetector(
+                                  onTap: _askContactPermissions,
                                   child: FaIcon(
-                                FontAwesomeIcons.calendarCheck,
-                                color: MyColors.secondaryTextColor,
-                                size: 22,
-                              ))),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                            child: CustomTextFieldWidget(
-                          textHint: "التفاصل",
-                          action: (p0) {
-                            newAccountController.newAccount.update(
-                              'desc',
-                              (value) => p0,
-                              ifAbsent: () => p0,
-                            );
-                          },
-                        )),
-                      ],
-                    ),
-                    CurencyShowWidget(),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: CustomBtnWidget(
-                            color: MyColors.debetColor,
-                            label: "له",
-                            action: () {
-                              createCustomerAccount(true);
-                            },
+                                    FontAwesomeIcons.user,
+                                    size: 18,
+                                    color: MyColors.secondaryTextColor,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: nameController,
+                                    textAlign: TextAlign.right,
+                                    textDirection: TextDirection.rtl,
+                                    style: myTextStyles.subTitle.copyWith(
+                                        color: MyColors.blackColor,
+                                        fontWeight: FontWeight.bold),
+                                    onChanged: (p0) {
+                                      selectionCustomer = null;
+                                      CEC.errorMessage.value = "";
+                                      newAccountController.newAccount.update(
+                                        'name',
+                                        (value) => p0,
+                                        ifAbsent: () => p0,
+                                      );
+                                      if (p0.length > 0) {
+                                        setState(() {
+                                          customers = customerController
+                                              .allCustomers
+                                              .where((element) => element.name
+                                                  .contains(
+                                                      p0.toString().trim()))
+                                              .toList();
+                                        });
+                                      } else {
+                                        setState(() {
+                                          customers.clear();
+                                        });
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "الاسم",
+                                        hintStyle: myTextStyles.body.copyWith(
+                                            fontWeight: FontWeight.normal),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 10)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => _selectDate(context),
+                            child: Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: MyColors.containerSecondColor,
+                                ),
+                                child: const Center(
+                                    child: FaIcon(
+                                  FontAwesomeIcons.calendarCheck,
+                                  color: MyColors.secondaryTextColor,
+                                  size: 22,
+                                ))),
                           ),
-                        ),
-                        SizedBox(width: 10),
-                        Flexible(
+                          SizedBox(width: 10),
+                          Expanded(
+                              child: CustomTextFieldWidget(
+                            textHint: "التفاصل",
+                            action: (p0) {
+                              newAccountController.newAccount.update(
+                                'desc',
+                                (value) => p0,
+                                ifAbsent: () => p0,
+                              );
+                            },
+                          )),
+                        ],
+                      ),
+                      CurencyShowWidget(),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Flexible(
                             child: CustomBtnWidget(
-                          color: MyColors.creditColor,
-                          label: "عليه",
-                          action: () {
-                            createCustomerAccount(false);
-                          },
-                        ))
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-              ),
-              if (customers.isNotEmpty)
-                Positioned(
-                  top: 80,
-                  right: 0,
-                  left: 0,
-                  child: Container(
-                    padding: EdgeInsets.only(top: 3),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: MyColors.secondaryTextColor.withOpacity(0.7),
-                    ),
-                    child: ListView.builder(
-                      itemCount: customers.length,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ExitCustomerItemWidget(
-                          customer: customers[index],
-                          action: () {
-                            setState(() {
-                              selectionCustomer = customers[index];
-                              nameController.text = customers[index].name;
-                              customers.clear();
-                            });
-                          },
-                        );
-                      },
-                    ),
+                              color: MyColors.debetColor,
+                              label: "له",
+                              action: () {
+                                createCustomerAccount(true);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Flexible(
+                              child: CustomBtnWidget(
+                            color: MyColors.creditColor,
+                            label: "عليه",
+                            action: () {
+                              createCustomerAccount(false);
+                            },
+                          ))
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                    ],
                   ),
                 ),
-            ],
+                if (customers.isNotEmpty)
+                  Positioned(
+                    top: 80,
+                    right: 0,
+                    left: 0,
+                    child: Container(
+                      padding: EdgeInsets.only(top: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: MyColors.secondaryTextColor.withOpacity(0.7),
+                      ),
+                      child: ListView.builder(
+                        itemCount: customers.length,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ExitCustomerItemWidget(
+                            customer: customers[index],
+                            action: () {
+                              setState(() {
+                                selectionCustomer = customers[index];
+                                nameController.text = customers[index].name;
+                                customers.clear();
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

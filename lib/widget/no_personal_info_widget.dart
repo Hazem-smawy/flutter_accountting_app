@@ -16,10 +16,19 @@ class NoPersonalInfoWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
-          FaIcon(
-            FontAwesomeIcons.userPlus,
-            color: isDrawer ? MyColors.containerColor : MyColors.lessBlackColor,
-            size: 30,
+          CircleAvatar(
+            radius: 25,
+            backgroundColor: isDrawer ? MyColors.bg : MyColors.lessBlackColor,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 2),
+              child: FaIcon(
+                FontAwesomeIcons.userPlus,
+                color: !isDrawer
+                    ? MyColors.containerColor
+                    : MyColors.lessBlackColor,
+                size: 15,
+              ),
+            ),
           ),
           SizedBox(
             height: 10,
@@ -27,10 +36,10 @@ class NoPersonalInfoWidget extends StatelessWidget {
           Text(
             " للحصول علي جميع خدماتنا \nقم بإدخال معلوماتك الشخصية من هنا ",
             textAlign: TextAlign.center,
-            style: myTextStyles.subTitle.copyWith(
-              color: isDrawer
-                  ? MyColors.secondaryTextColor
-                  : MyColors.lessBlackColor,
+            textDirection: TextDirection.rtl,
+            style: myTextStyles.body.copyWith(
+              color:
+                  isDrawer ? MyColors.containerColor : MyColors.lessBlackColor,
               fontWeight: FontWeight.normal,
             ),
           ),
@@ -45,10 +54,11 @@ class NoPersonalInfoWidget extends StatelessWidget {
               width: Get.width / 3,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: MyColors.secondaryTextColor),
+                border: Border.all(
+                    color: MyColors.secondaryTextColor.withOpacity(0.7)),
               ),
               child: Text(
-                "إضافة ",
+                "إضافة",
                 style: myTextStyles.title2.copyWith(
                   fontWeight: FontWeight.normal,
                   color: isDrawer
