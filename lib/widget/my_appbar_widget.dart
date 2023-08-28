@@ -83,7 +83,7 @@ class MyAppBarWidget extends StatelessWidget {
             const Spacer(),
             Text(
               accGroupCurencyController.homeReportShow.value
-                  ? "إضافي"
+                  ? "مساعدة سريعة"
                   : accGroupController.allAccGroups
                           .firstWhereOrNull((element) =>
                               element.id ==

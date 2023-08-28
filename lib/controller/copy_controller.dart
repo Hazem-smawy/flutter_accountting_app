@@ -51,8 +51,11 @@ class CopyController extends GetxController {
     }
   }
 
-  Future<File?> getTheLastFile() async {
-    await signIn();
+  Future<io.File?> getTheLastFile() async {
+    if (driveApi == null) {
+      await signIn();
+    }
+
     if (driveApi != null) {
       try {
         CustomDialog.loadingProgress();
@@ -60,51 +63,54 @@ class CopyController extends GetxController {
         List<File>? files =
             await googleDriveAppData.getAllDriveFiles(driveApi!);
         if (files != null) {
-          print(files);
           File file = files.reduce((currentLatest, element) =>
               element.modifiedTime!.isAfter(currentLatest.modifiedTime!)
                   ? element
                   : currentLatest);
 
-          print("last file: $file");
-
           String path = await databaseService.fullPath;
 
-          await googleDriveAppData.restoreDriveFile(
+          io.File? result = await googleDriveAppData.restoreDriveFile(
               driveApi: driveApi!, driveFile: file, targetLocalPath: path);
+
+          if (result != null) {
+            Get.back();
+            restoreSucess();
+            return result;
+          } else {
+            Get.back();
+            CustomDialog.customSnackBar(
+                "لاتوجد ملفات في جوجل درايف", SnackPosition.TOP);
+            return null;
+          }
         } else {
+          Get.back();
           CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP);
+          return null;
         }
       } catch (e) {
         Get.back();
         CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP);
         return null;
-      } finally {
-        restoreSucess();
       }
-    } else {
-      CustomDialog.customSnackBar(
-          "حدث خطأ أثناء إسترجاع النسخة", SnackPosition.TOP);
     }
   }
 
   Future<void> getSlelectedCopy(File file) async {
     CustomDialog.loadingProgress();
     try {
-      if (file != null) {
-        String path = await databaseService.fullPath;
+      String path = await databaseService.fullPath;
 
-        await googleDriveAppData.restoreDriveFile(
-            driveApi: driveApi!, driveFile: file, targetLocalPath: path);
-      } else {
-        Get.log("file is :$file");
-      }
+      await googleDriveAppData.restoreDriveFile(
+          driveApi: driveApi!, driveFile: file, targetLocalPath: path);
+
+      Get.back();
+      restoreSucess();
+      return;
     } catch (e) {
       Get.back();
       CustomDialog.customSnackBar("حدث خطأ ", SnackPosition.TOP);
       return;
-    } finally {
-      restoreSucess();
     }
   }
 
@@ -115,7 +121,6 @@ class CopyController extends GetxController {
     await accGroupCurencyController.getAllAccGroupAndCurency();
     await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
 
-    print("finish update new database ------------");
     Get.back();
     CustomDialog.customSnackBar(
         "تم إسترجاع النسخة بنجاح", SnackPosition.BOTTOM);
@@ -193,37 +198,51 @@ class CopyController extends GetxController {
       String targetPath = selectedFolderPath;
       io.File targetDatabase = io.File(targetPath);
 
-      try {
-        // await sourceDatabase.copy(targetPath);
-        targetDatabase.writeAsBytes(bytes);
-      } catch (e) {}
+      await targetDatabase.writeAsBytes(bytes);
     }
   }
 
-  Future<void> copyDatabaseFromFolder(String selectedFolderPath) async {
-    String path = await databaseService.fullPath;
+  Future<io.File?> copyDatabaseFromFolder(String selectedFolderPath) async {
+    final res = selectedFolderPath.split('.');
+    if (res.last == 'db') {
+      String path = await databaseService.fullPath;
 
-    await deleteDatabase(path);
-    io.File(path).openWrite();
-    io.File(selectedFolderPath).copy(path);
+      await deleteDatabase(path);
+      io.File(path).openWrite();
+      io.File file = await io.File(selectedFolderPath).copy(path);
 
-    restoreSucess();
+      return file;
+    } else {
+      return null;
+    }
   }
 
-  Future<void> openDatabaseFile() async {
+  Future<bool> openDatabaseFile() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
       if (result != null) {
+        CustomDialog.loadingProgress();
         PlatformFile file = result.files.first;
         if (file.path != null) {
-          copyDatabaseFromFolder(file.path!);
+          io.File? res = await copyDatabaseFromFolder(file.path!);
+
+          if (res != null) {
+            Get.back();
+            restoreSucess();
+            return true;
+          } else {
+            Get.back();
+            return false;
+          }
+        } else {
+          return false;
         }
       } else {
-        // User canceled the picker
+        return false;
       }
     } catch (e) {
-      Get.log("hello");
+      return false;
     }
   }
 
@@ -238,13 +257,7 @@ class CopyController extends GetxController {
           'account_app_copy_${DateTime.now().toIso8601String()}.db');
       io.File targetDatabase = io.File(targetPath);
 
-      try {
-        // await sourceDatabase.copy(targetPath);
-        targetDatabase.writeAsBytes(bytes);
-        print("Database copied to $selectedFolderPath");
-      } catch (e) {
-        print("Error copying database: $e");
-      }
+      await targetDatabase.writeAsBytes(bytes);
     }
   }
 
@@ -257,39 +270,6 @@ class CopyController extends GetxController {
         Get.back();
         CustomDialog.customSnackBar(
             "تم حفظ النسخة بنجاح", SnackPosition.BOTTOM);
-      }
-    } catch (e) {
-      print("error open filepicker : $e");
-    }
-  }
-
-  Future<void> copyDatabaseFromFolderIos(String selectedFolderPath) async {
-    String databasePath = await databaseService.fullPath;
-
-    print("delete database ------------");
-
-    await deleteDatabase(databasePath);
-    //await DatabaseService.instance.database.obs;
-    print("create new database ------------");
-    await io.File(databasePath).openWrite();
-    io.File(selectedFolderPath).copy(databasePath);
-
-    print("end new database ------------");
-  }
-
-  Future<void> openDatabaseFileIos() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
-      if (result != null) {
-        PlatformFile file = result.files.first;
-        if (file.path != null) {
-          CustomDialog.loadingProgress();
-          print(accGroupCurencyController.allAccgroupsAndCurency);
-          await copyDatabaseFromFolderIos(file.path!);
-          restoreSucess();
-        }
-      } else {
-        // User canceled the picker
       }
     } catch (e) {}
   }

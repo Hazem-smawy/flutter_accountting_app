@@ -177,11 +177,21 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                     return GestureDetector(
                                       onTap: () async {
                                         try {
-                                          controller.signIn;
+                                          final res =
+                                              await controller.getTheLastFile();
 
-                                          await controller.getTheLastFile();
-                                          // await introController.updateIntro();
-                                          // Get.to(() => ShowMyMainScreen());
+                                          if (res != null) {
+                                            await introController
+                                                .updateIntro()
+                                                .then((value) {
+                                              Get.offAll(
+                                                  () => ShowMyMainScreen());
+                                            });
+                                          } else {
+                                            CustomDialog.customSnackBar(
+                                                "حدث خطأ عند إستعادة النسخة",
+                                                SnackPosition.TOP);
+                                          }
                                         } catch (e) {
                                           CustomDialog.customSnackBar(
                                               "حدث خطأ عند إستعادة النسخة",
@@ -224,9 +234,20 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                                   GestureDetector(
                                     onTap: () async {
                                       try {
-                                        await copyController.openDatabaseFile();
-                                        // await introController.updateIntro();
-                                        //Get.to(() => ShowMyMainScreen());
+                                        final result = await copyController
+                                            .openDatabaseFile();
+                                        if (result == true) {
+                                          await introController
+                                              .updateIntro()
+                                              .then((value) {
+                                            Get.offAll(
+                                                () => ShowMyMainScreen());
+                                          });
+                                        } else {
+                                          CustomDialog.customSnackBar(
+                                              "حدث خطأ عند إستعادة النسخة",
+                                              SnackPosition.TOP);
+                                        }
                                       } catch (e) {
                                         CustomDialog.customSnackBar(
                                             "حدث خطأ عند إستعادة النسخة",
@@ -265,9 +286,10 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
                               ),
                             ],
                           ),
-                        const SizedBox(
-                          height: 40,
-                        ),
+                        if (i == pages.length - 1)
+                          const SizedBox(
+                            height: 100,
+                          ),
                       ],
                     );
                   }),

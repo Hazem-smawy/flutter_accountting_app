@@ -257,13 +257,14 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                     Row(
                       children: [
                         Flexible(
-                            child: CustomBtnWidget(
-                          color: MyColors.debetColor,
-                          label: "له",
-                          action: () {
-                            createCustomerAccount(true);
-                          },
-                        )),
+                          child: CustomBtnWidget(
+                            color: MyColors.debetColor,
+                            label: "له",
+                            action: () {
+                              createCustomerAccount(true);
+                            },
+                          ),
+                        ),
                         SizedBox(width: 10),
                         Flexible(
                             child: CustomBtnWidget(

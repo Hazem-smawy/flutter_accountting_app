@@ -1,7 +1,14 @@
-import 'package:account_app/constant/colors.dart';
-import 'package:account_app/constant/text_styles.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:account_app/screen/customer_account/customer_account.dart';
+import 'package:account_app/screen/reports/reports_screen_list.dart';
+import 'package:account_app/screen/settings/curency_setting.dart';
+import 'package:account_app/screen/settings/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+
+import 'package:account_app/constant/colors.dart';
+import 'package:account_app/constant/text_styles.dart';
 
 class HomeReportsScreen extends StatelessWidget {
   const HomeReportsScreen({super.key});
@@ -15,7 +22,7 @@ class HomeReportsScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(13),
@@ -31,15 +38,15 @@ class HomeReportsScreen extends StatelessWidget {
                         style: myTextStyles.title1,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: MyColors.bg,
@@ -50,10 +57,10 @@ class HomeReportsScreen extends StatelessWidget {
                                 "report of month",
                                 style: myTextStyles.subTitle,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              FaIcon(
+                              const FaIcon(
                                 FontAwesomeIcons.fileLines,
                                 color: MyColors.secondaryTextColor,
                                 size: 15,
@@ -62,12 +69,12 @@ class HomeReportsScreen extends StatelessWidget {
                           ),
                         ),
                         // item tow
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: MyColors.bg,
@@ -78,10 +85,10 @@ class HomeReportsScreen extends StatelessWidget {
                                 "report of month",
                                 style: myTextStyles.subTitle,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              FaIcon(
+                              const FaIcon(
                                 FontAwesomeIcons.fileLines,
                                 color: MyColors.secondaryTextColor,
                                 size: 15,
@@ -91,7 +98,7 @@ class HomeReportsScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
 
@@ -100,8 +107,8 @@ class HomeReportsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: MyColors.bg,
@@ -112,10 +119,10 @@ class HomeReportsScreen extends StatelessWidget {
                                 "report of month",
                                 style: myTextStyles.subTitle,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              FaIcon(
+                              const FaIcon(
                                 FontAwesomeIcons.fileLines,
                                 color: MyColors.secondaryTextColor,
                                 size: 15,
@@ -124,12 +131,12 @@ class HomeReportsScreen extends StatelessWidget {
                           ),
                         ),
                         // item tow
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: MyColors.bg,
@@ -140,10 +147,10 @@ class HomeReportsScreen extends StatelessWidget {
                                 "report of ",
                                 style: myTextStyles.subTitle,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              FaIcon(
+                              const FaIcon(
                                 FontAwesomeIcons.fileLines,
                                 color: MyColors.secondaryTextColor,
                                 size: 15,
@@ -156,8 +163,8 @@ class HomeReportsScreen extends StatelessWidget {
                         ),
 
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: MyColors.bg,
@@ -168,10 +175,10 @@ class HomeReportsScreen extends StatelessWidget {
                                 "report of ",
                                 style: myTextStyles.subTitle,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              FaIcon(
+                              const FaIcon(
                                 FontAwesomeIcons.fileLines,
                                 color: MyColors.secondaryTextColor,
                                 size: 15,
@@ -186,12 +193,13 @@ class HomeReportsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20,
+              const SizedBox(
+                height: 15,
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: MyColors.bg,
@@ -203,19 +211,16 @@ class HomeReportsScreen extends StatelessWidget {
                       "العمليات الحد يثة",
                       style: myTextStyles.subTitle,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    FaIcon(
+                    const FaIcon(
                       FontAwesomeIcons.clockRotateLeft,
                       color: MyColors.secondaryTextColor,
                       size: 17,
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 10,
               ),
               Expanded(
                 child: Container(
@@ -225,140 +230,105 @@ class HomeReportsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     color: MyColors.containerColor,
                   ),
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(top: 5),
-                    itemCount: 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        // margin: EdgeInsets.only(left: 10, right: 10, top: 5),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: MyColors.containerSecondColor,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 20,
-                              height: 5,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: MyColors.creditColor),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text("r.s"),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "1000",
-                              style: myTextStyles.title1,
-                            ),
-                            Spacer(),
-                            Row(
-                              children: [
-                                Text(
-                                  "local",
-                                  style: myTextStyles.subTitle,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.solidFolderClosed,
-                                  size: 12,
-                                  color: MyColors.secondaryTextColor,
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            Text(
-                              "hazem smawy",
-                              style: myTextStyles.title2,
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                  child: JournalListWidget(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: MyColors.bg,
+                  //  color: MyColors.bg,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: MyColors.lessBlackColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            "جميع الحسابات",
-                            style: myTextStyles.subTitle.copyWith(
-                              color: MyColors.containerColor,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          FaIcon(
-                            FontAwesomeIcons.fileCircleCheck,
-                            color: MyColors.containerColor,
-                            size: 15,
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => SettingScreen());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: MyColors.lessBlackColor),
+                        child: const FaIcon(
+                          FontAwesomeIcons.gear,
+                          size: 13,
+                          color: MyColors.bg,
+                        ),
                       ),
                     ),
-                    SizedBox(
+                    const Spacer(),
+                    HomeReportFooterWidget(
+                      title: "جميع الحسابات",
+                      icon: FontAwesomeIcons.fileCircleCheck,
+                      action: () {
+                        Get.to(() => CustomerAccountsView());
+                      },
+                    ),
+                    const SizedBox(
                       width: 10,
                     ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: MyColors.lessBlackColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            "العملات",
-                            style: myTextStyles.subTitle.copyWith(
-                              color: MyColors.containerColor,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          FaIcon(
-                            FontAwesomeIcons.dollarSign,
-                            color: MyColors.containerColor,
-                            size: 15,
-                          ),
-                        ],
-                      ),
-                    )
+                    HomeReportFooterWidget(
+                      title: "العملات",
+                      icon: FontAwesomeIcons.dollarSign,
+                      action: () {
+                        Get.to(() => CurencySettingScreen());
+                      },
+                    ),
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeReportFooterWidget extends StatelessWidget {
+  String title;
+  IconData icon;
+  VoidCallback action;
+  HomeReportFooterWidget({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.action,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => action(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: MyColors.lessBlackColor,
+        ),
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: myTextStyles.subTitle.copyWith(
+                color: MyColors.containerColor,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            FaIcon(
+              icon,
+              color: MyColors.containerColor,
+              size: 15,
+            ),
+          ],
         ),
       ),
     );

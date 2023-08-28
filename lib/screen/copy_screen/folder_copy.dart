@@ -61,9 +61,8 @@ class _FolderCopyWidgetState extends State<FolderCopyWidget> {
               icon: FontAwesomeIcons.upload,
               label: "فتح نسخة سابقة",
               //  action: () {},
-              action: () => Platform.isAndroid
-                  ? copyController.openDatabaseFile()
-                  : copyController.openDatabaseFileIos(),
+              action: () => copyController.openDatabaseFile(),
+
               description:
                   "إذا احتجت في أي وقت إلى نسخة احتياطية بديلة، فيمكنك نسخ بيانات جهازك احتياطيًا باستخدام",
             ),

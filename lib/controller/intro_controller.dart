@@ -23,5 +23,6 @@ class IntroController extends GetxController {
 
   Future<void> updateIntro() async {
     await introData.update();
+    update();
   }
 }

@@ -54,7 +54,7 @@ class ShowMyMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => accGroupController.allAccGroups.isEmpty
-          ? const Scaffold(
+          ? Scaffold(
               backgroundColor: MyColors.bg,
               body: EmptyAccGroupsWidget(),
             )
