@@ -61,7 +61,6 @@ class HomeController extends GetxController {
   }
 
   Future<void> addDefaultAccGroupsAndCurency() async {
-    CustomDialog.loadingProgress();
     var curencies = [
       Curency(
           name: "ريال يمني",
@@ -109,6 +108,5 @@ class HomeController extends GetxController {
     });
 
     await Future.delayed(const Duration(milliseconds: 200));
-    Get.back();
   }
 }

@@ -4,6 +4,7 @@ import 'package:account_app/controller/home_controller.dart';
 import 'package:account_app/main.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,10 +41,12 @@ class EmptyAccGroupsWidget extends StatelessWidget {
               Container(
                   // padding: const EdgeInsets.symmetric(horizontal: 80),
                   child: GestureDetector(
-                onTap: () {
-                  homeController.addDefaultAccGroupsAndCurency().then((value) {
-                    Get.offAll(() => ShowMyMainScreen());
-                  });
+                onTap: () async {
+                  CustomDialog.loadingProgress();
+                  await homeController.addDefaultAccGroupsAndCurency();
+                  await Future.delayed(Duration(milliseconds: 200));
+                  Get.back();
+                  Get.offAll(() => ShowMyMainScreen());
                 },
                 child: Container(
                   width: Get.width / 2,
@@ -56,10 +59,9 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                   child: Text(
                     "إضافة التصنيفات الإ فتراضية",
                     textAlign: TextAlign.center,
-                    style: myTextStyles.subTitle.copyWith(
+                    style: myTextStyles.body.copyWith(
                       color: MyColors.containerSecondColor,
                       fontWeight: FontWeight.normal,
-                      fontSize: 12,
                     ),
                   ),
                 ),

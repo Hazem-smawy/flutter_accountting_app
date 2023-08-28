@@ -117,7 +117,7 @@ class HomeReportsScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "report of month",
-                                style: myTextStyles.subTitle,
+                                style: myTextStyles.body,
                               ),
                               const SizedBox(
                                 width: 10,
@@ -161,31 +161,6 @@ class HomeReportsScreen extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: MyColors.bg,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "report of ",
-                                style: myTextStyles.subTitle,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const FaIcon(
-                                FontAwesomeIcons.fileLines,
-                                color: MyColors.secondaryTextColor,
-                                size: 15,
-                              ),
-                            ],
-                          ),
-                        )
                       ],
                     )
 
