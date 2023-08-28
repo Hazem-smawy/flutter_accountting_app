@@ -40,9 +40,9 @@ class HomeRowView extends StatelessWidget {
               height: 5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: homeModel.totalCredit < homeModel.totalDebit
-                    ? MyColors.creditColor
-                    : MyColors.debetColor,
+                color: homeModel.totalCredit > homeModel.totalDebit
+                    ? MyColors.debetColor
+                    : MyColors.creditColor,
               ),
             ),
             const SizedBox(width: 10),
@@ -54,9 +54,9 @@ class HomeRowView extends StatelessWidget {
                 textAlign: TextAlign.left,
                 style: myTextStyles.title2.copyWith(
                   //   fontWeight: FontWeight.bold,
-                  color: homeModel.totalCredit < homeModel.totalDebit
-                      ? MyColors.creditColor
-                      : MyColors.debetColor,
+                  color: homeModel.totalCredit > homeModel.totalDebit
+                      ? MyColors.debetColor
+                      : MyColors.creditColor,
                 ),
               ),
             ),

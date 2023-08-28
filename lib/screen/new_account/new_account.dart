@@ -20,7 +20,7 @@ import 'package:account_app/constant/colors.dart';
 import 'package:account_app/widget/custom_textfiled_widget.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:fluttercontactpicker/fluttercontactpicker.dart';
+// import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 class NewAccountScreen extends StatefulWidget {
   const NewAccountScreen(
@@ -76,21 +76,21 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   CustomerAccountController customerAccountController = Get.find();
   CurencyController curencyController = Get.find();
   TextEditingController nameController = TextEditingController();
-  FullContact? _contact;
+  // FullContact? _contact;
 
-  Future<void> _askContactPermissions() async {
-    PermissionStatus permissionStatus = await _getContactPermission();
-    if (permissionStatus == PermissionStatus.granted) {
-      final FullContact contact = await FlutterContactPicker.pickFullContact();
-      if (contact != null) {
-        setState(() {
-          _contact = contact;
-        });
-      }
-    } else {
-      _handleInvalidPermissions(permissionStatus);
-    }
-  }
+  // Future<void> _askContactPermissions() async {
+  //   PermissionStatus permissionStatus = await _getContactPermission();
+  //   if (permissionStatus == PermissionStatus.granted) {
+  //     final FullContact contact = await FlutterContactPicker.pickFullContact();
+  //     if (contact != null) {
+  //       setState(() {
+  //         _contact = contact;
+  //       });
+  //     }
+  //   } else {
+  //     _handleInvalidPermissions(permissionStatus);
+  //   }
+  // }
 
   Future<PermissionStatus> _getContactPermission() async {
     PermissionStatus permission = await Permission.contacts.status;
@@ -171,7 +171,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   width: 10,
                                 ),
                                 GestureDetector(
-                                  onTap: _askContactPermissions,
+                                  // onTap: _askContactPermissions,
                                   child: FaIcon(
                                     FontAwesomeIcons.user,
                                     size: 18,

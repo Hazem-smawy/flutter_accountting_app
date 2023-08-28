@@ -2,6 +2,7 @@ import 'dart:io' as io;
 
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/main_controller.dart';
+import 'package:account_app/main.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/http_service/google_drive_service.dart';
 import 'package:account_app/widget/custom_dialog.dart';
@@ -115,13 +116,14 @@ class CopyController extends GetxController {
   }
 
   void restoreSucess() async {
+    await accGroupController.readAllAccGroup();
     await customerController.readAllCustomer();
     await curencyController.readAllCurency();
-    await accGroupController.readAllAccGroup();
+
     await accGroupCurencyController.getAllAccGroupAndCurency();
     await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
-
-    Get.back();
+    await Future.delayed(Duration(milliseconds: 500));
+    Get.offAll(() => ShowMyMainScreen());
     CustomDialog.customSnackBar(
         "تم إسترجاع النسخة بنجاح", SnackPosition.BOTTOM);
   }
