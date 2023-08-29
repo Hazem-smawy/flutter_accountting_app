@@ -17,7 +17,7 @@ class SittingController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     readSitting();
-    setCopyToGoogleDriveEvery();
+    //setCopyToGoogleDriveEvery();
   }
 
   Future<void> createSitting() async {
@@ -65,15 +65,15 @@ class SittingController extends GetxController {
     }
   }
 
-  void setCopyToGoogleDriveEvery() {
-    Duration copyEveryDuration = Duration(hours: 24 * everyArray[every.value]);
-    // Duration copyEveryDuration = Duration(minutes: 5);
+  // void setCopyToGoogleDriveEvery() {
+  //   Duration copyEveryDuration = Duration(hours: 24 * everyArray[every.value]);
+  //   // Duration copyEveryDuration = Duration(minutes: 5);
 
-    Timer.periodic(copyEveryDuration, (timer) async {
-      if (toggleAsyncGoogleDrive.value) {
-        await copyController.uploadCopy();
-        print("hello copy");
-      }
-    });
-  }
+  //   Timer.periodic(copyEveryDuration, (timer) async {
+  //     if (toggleAsyncGoogleDrive.value) {
+  //       await copyController.uploadCopy();
+  //       print("hello copy");
+  //     }
+  //   });
+  // }
 }
