@@ -1,26 +1,25 @@
 import 'dart:io' as io;
 
 import 'package:account_app/controller/acc_curency_controller.dart';
-import 'package:account_app/controller/main_controller.dart';
 import 'package:account_app/main.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/http_service/google_drive_service.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:external_path/external_path.dart' as ex;
+import 'package:permission_handler/permission_handler.dart' as per;
 
 import 'accgroup_controller.dart';
 import 'curency_controller.dart';
 import 'customers_controller.dart';
 import 'home_controller.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class CopyController extends GetxController {
   AccGroupCurencyController accGroupCurencyController = Get.find();
@@ -172,8 +171,30 @@ class CopyController extends GetxController {
   }
 
   // folders
+  Future<bool> requestPermission() async {
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var release = int.parse(androidInfo.version.release);
+    per.Permission permission;
+    if (release < 11) {
+      permission = per.Permission.storage;
+    } else {
+      permission = per.Permission.manageExternalStorage;
+    }
+    if (await permission.isGranted) {
+      return true;
+    } else {
+      var result = await permission.request();
+      if (result == per.PermissionStatus.granted) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   Future<void> selectFolder() async {
     CustomDialog.loadingProgress();
+    requestPermission();
     try {
       String path = await ex.ExternalPath.getExternalStoragePublicDirectory(
           ex.ExternalPath.DIRECTORY_DOWNLOADS);

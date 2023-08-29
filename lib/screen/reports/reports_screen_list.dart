@@ -28,7 +28,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
     return Obx(
       () => homeController.todaysJournals.isEmpty
           ? Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -46,7 +46,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                     height: 20,
                   ),
                   Text(
-                    "لاتوجد أي عمليات اليوم",
+                    "لا توجد أي عمليات اليوم",
                     style: myTextStyles.subTitle,
                   )
                 ],
@@ -78,7 +78,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                                 : MyColors.debetColor),
                       ),
                       const SizedBox(
-                        width: 30,
+                        width: 15,
                       ),
                       Text(
                         homeController.todaysJournals[index]['symbol'],
@@ -88,41 +88,68 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                         width: 5,
                       ),
                       SizedBox(
-                        width: Get.width / 5,
-                        child: Text(
-                          (homeController.todaysJournals[index]['debit'] -
-                                  homeController.todaysJournals[index]
-                                      ['credit'])
-                              .toString(),
-                          style: myTextStyles.title2,
+                        width: Get.width / 8,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            (homeController.todaysJournals[index]['debit'] -
+                                    homeController.todaysJournals[index]
+                                        ['credit'])
+                                .toString(),
+                            style: myTextStyles.title2,
+                          ),
                         ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            homeController.todaysJournals[index]['accName'],
-                            style: myTextStyles.subTitle,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const FaIcon(
-                            FontAwesomeIcons.folder,
-                            size: 12,
-                            color: MyColors.secondaryTextColor,
-                          ),
-                        ],
+                      SizedBox(
+                        width: Get.width / 6,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FittedBox(
+                              child: Text(
+                                homeController.todaysJournals[index]['accName'],
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                                style: myTextStyles.subTitle
+                                    .copyWith(fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const FaIcon(
+                              FontAwesomeIcons.folder,
+                              size: 12,
+                              color: MyColors.secondaryTextColor,
+                            ),
+                          ],
+                        ),
                       ),
-                      const Spacer(),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        width: Get.width / 5,
-                        child: Text(
-                          homeController.todaysJournals[index]['name'],
-                          style: myTextStyles.title2,
+                      // const Spacer(),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerRight,
+                              // width: Get.width / 2.7,
+                              child: FittedBox(
+                                child: Text(
+                                  homeController.todaysJournals[index]['name'],
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.right,
+                                  style: myTextStyles.subTitle,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     ],

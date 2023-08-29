@@ -37,14 +37,14 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
     },
     {
       "id": 1,
-      "image": "assets/images/customerAccount1.png",
+      "image": "assets/images/customerAccount.png",
       "title": "العنوان",
       "desc":
           "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
     },
     {
       "id": 0,
-      "image": "assets/images/customerAccount.png",
+      "image": "assets/images/curency.png",
       "title": "العنوان",
       "desc": ". أكثر من أن تعد إغلاق التطبيق"
     },

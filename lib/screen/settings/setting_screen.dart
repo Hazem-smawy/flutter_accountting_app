@@ -198,6 +198,95 @@ class SettingScreen extends StatelessWidget {
                         ),
 
                         //theme
+                        Container(
+                          margin: const EdgeInsets.only(top: 5.0),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: MyColors.containerColor.withOpacity(0.3),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Switch.adaptive(
+                                      value: true, onChanged: (value) {}),
+                                  Spacer(),
+                                  Text(
+                                    "المزامنة مع جوجل درايف",
+                                    style: myTextStyles.subTitle,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    width: 35,
+                                    height: 35,
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      //borderRadius: BorderRadius.circular(10),
+                                      color: MyColors.lessBlackColor
+                                          .withOpacity(0.8),
+                                    ),
+                                    child: Center(
+                                      child: FaIcon(
+                                        FontAwesomeIcons.googleDrive,
+                                        size: 15,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Row(
+                                  children: [
+                                    FaIcon(
+                                      FontAwesomeIcons.plus,
+                                      size: 15,
+                                      color: MyColors.secondaryTextColor,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      child: Text(
+                                        " يوم ١",
+                                        style: myTextStyles.title2.copyWith(
+                                          color: MyColors.lessBlackColor,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    FaIcon(
+                                      FontAwesomeIcons.minus,
+                                      size: 15,
+                                      color: MyColors.secondaryTextColor,
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      "عمل نسخة كل",
+                                      style: myTextStyles.title2.copyWith(
+                                        //fontSize: 13,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: 30),
                         const Spacer(),
                         Container(
@@ -213,7 +302,7 @@ class SettingScreen extends StatelessWidget {
                             style: myTextStyles.subTitle,
                           ),
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 15),
                       ],
                     ),
                   ),
@@ -268,7 +357,7 @@ class SettingItemWidget extends StatelessWidget {
               title,
               textAlign: TextAlign.right,
               style: myTextStyles.title2.copyWith(
-                fontSize: 14,
+                //fontSize: 13,
                 fontWeight: FontWeight.normal,
               ),
             ),

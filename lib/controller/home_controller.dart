@@ -1,3 +1,4 @@
+import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
 import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
@@ -13,6 +14,7 @@ class HomeController extends GetxController {
   HomeData homeData = HomeData();
   CurencyController curencyController = Get.find();
   AccGroupController accGroupController = Get.find();
+  AccGroupCurencyController accGroupCurencyController = Get.find();
 
   var openDrawer = false.obs;
   var curencyId = "".obs;
@@ -106,6 +108,7 @@ class HomeController extends GetxController {
       accGroupController.createAccGroup(element);
       Future.delayed(const Duration(milliseconds: 50));
     });
+    await accGroupCurencyController.getAllAccGroupAndCurency();
 
     await Future.delayed(const Duration(milliseconds: 200));
   }

@@ -23,105 +23,243 @@ class MyDrawerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: Container(
-        height: Get.height,
-        // margin:
-        //     const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: MyColors.bg,
-        ),
-        child: Column(
-          children: [
-            // const SizedBox(height: 60),
-            Obx(
-              () => personalController.newPersonal['name'] == null
-                  ? Container(
-                      padding: const EdgeInsets.only(top: 60, bottom: 20),
-                      decoration: const BoxDecoration(
-                          color: MyColors.lessBlackColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
-                      child: const NoPersonalInfoWidget(
-                        isDrawer: true,
-                      ))
-                  : Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(top: 60, bottom: 20),
-                      decoration: const BoxDecoration(
-                          color: MyColors.lessBlackColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20))),
+    return SafeArea(
+      bottom: false,
+      top: Platform.isAndroid ? true : false,
+      child: Drawer(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: Get.height,
+          // margin:
+          //     const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: MyColors.bg,
+          ),
+          child: Column(
+            children: [
+              // const SizedBox(height: 60),
+              Obx(
+                () => personalController.newPersonal['name'] == null
+                    ? Container(
+                        padding: EdgeInsets.only(
+                            top: Platform.isAndroid ? 10 : 60, bottom: 20),
+                        decoration: const BoxDecoration(
+                            color: MyColors.lessBlackColor,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20))),
+                        child: const NoPersonalInfoWidget(
+                          isDrawer: true,
+                        ))
+                    : Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.only(
+                            top: Platform.isAndroid ? 10 : 60, bottom: 20),
+                        decoration: const BoxDecoration(
+                            color: MyColors.lessBlackColor,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              radius: 30,
+                              backgroundColor: MyColors.containerColor,
+                              child: FaIcon(
+                                FontAwesomeIcons.user,
+                                size: 20,
+                                color: MyColors.lessBlackColor,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              personalController.newPersonal['name'],
+                              style: myTextStyles.title2.copyWith(
+                                color: MyColors.bg,
+                              ),
+                            ),
+                            Text(
+                              personalController.newPersonal['email'],
+                              style: myTextStyles.subTitle.copyWith(
+                                color: MyColors.secondaryTextColor,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+              ),
+              // Divider(
+              //   color: MyColors.lessBlackColor.withOpacity(0.5),
+              // ),
+              const SizedBox(height: 30),
+              //drawer items
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Column(
+                  children: [
+                    DrawerItemWidget(
+                      onPress: () => Get.to(() => CustomerAccountsView()),
+                      icon: FontAwesomeIcons.users,
+                      title: "حسابات العملاء",
+                    ),
+                    DrawerItemWidget(
+                      onPress: () => Get.to(() => SettingScreen()),
+                      icon: FontAwesomeIcons.gear,
+                      title: "الاعدادات",
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 15, right: 5),
+                      //  padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: MyColors.lessBlackColor.withOpacity(0.1)),
                       child: Column(
                         children: [
-                          const CircleAvatar(
-                            radius: 30,
-                            backgroundColor: MyColors.containerColor,
-                            child: FaIcon(
-                              FontAwesomeIcons.user,
-                              size: 20,
-                              color: MyColors.lessBlackColor,
-                            ),
+                          DrawerItemWidget(
+                            onPress: () => Get.to(() => LocalCopyScreen()),
+                            icon: FontAwesomeIcons.download,
+                            title: " النسخ الإ حتياطي",
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            personalController.newPersonal['name'],
-                            style: myTextStyles.title2.copyWith(
-                              color: MyColors.bg,
-                            ),
+                          const SizedBox(
+                            height: 21,
                           ),
-                          Text(
-                            personalController.newPersonal['email'],
-                            style: myTextStyles.subTitle.copyWith(
-                              color: MyColors.secondaryTextColor,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              ShortCutCopyWidget(
+                                icon: FontAwesomeIcons.download,
+                                actoin: () {
+                                  CustomDialog.showDialog(
+                                      action: () {
+                                        copyController.openDatabaseFile();
+
+                                        Get.back();
+                                      },
+                                      title: "إستعادة",
+                                      icon: FontAwesomeIcons.download,
+                                      color: Colors.red,
+                                      description:
+                                          "هل أنت متأكد من إستعادة نسخة ");
+                                },
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              ShortCutCopyWidget(
+                                icon: FontAwesomeIcons.upload,
+                                actoin: () {
+                                  CustomDialog.showDialog(
+                                      action: () {
+                                        Platform.isAndroid
+                                            ? copyController.selectFolder()
+                                            : copyController.selectFolderIos();
+
+                                        Get.back();
+                                      },
+                                      title: "نسخة",
+                                      icon: FontAwesomeIcons.upload,
+                                      color: Colors.green,
+                                      description:
+                                          "هل أنت متأكد من عمل نسخة جد يدة");
+                                },
+                              ),
+                              const Spacer(),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 7),
+                                child: FaIcon(
+                                  FontAwesomeIcons.solidFolderClosed,
+                                  size: 17,
+                                  color: MyColors.lessBlackColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 10),
+                          // Divider(),
+                          // //google drive copy
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     const SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //     ShortCutCopyWidget(
+                          //       icon: FontAwesomeIcons.upload,
+                          //       actoin: () {
+                          //         CustomDialog.showDialog(
+                          //             action: () {
+                          //               Platform.isAndroid
+                          //                   ? copyController.openDatabaseFile()
+                          //                   : copyController
+                          //                       .openDatabaseFileIos();
+
+                          //               Get.back();
+                          //             },
+                          //             title: "إستعادة",
+                          //             icon: FontAwesomeIcons.download,
+                          //             color: Colors.red,
+                          //             description:
+                          //                 "هل أنت متأكد من إستعادة نسخة ");
+                          //       },
+                          //     ),
+                          //     const SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //     ShortCutCopyWidget(
+                          //       icon: FontAwesomeIcons.download,
+                          //       actoin: () {
+                          //         CustomDialog.showDialog(
+                          //             action: () {
+                          //               Platform.isAndroid
+                          //                   ? copyController.selectFolder()
+                          //                   : copyController.selectFolderIos();
+
+                          //               Get.back();
+                          //             },
+                          //             title: "نسخة",
+                          //             icon: FontAwesomeIcons.download,
+                          //             color: Colors.green,
+                          //             description:
+                          //                 "هل أنت متأكد من عمل نسخة جد يدة");
+                          //       },
+                          //     ),
+                          //     const Spacer(),
+                          //     const FaIcon(
+                          //       FontAwesomeIcons.googleDrive,
+                          //       size: 17,
+                          //       color: MyColors.bg,
+                          //     ),
+                          //     const SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //   ],
+                          // ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
                     ),
-            ),
-            // Divider(
-            //   color: MyColors.lessBlackColor.withOpacity(0.5),
-            // ),
-            const SizedBox(height: 30),
-            //drawer items
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Column(
-                children: [
-                  DrawerItemWidget(
-                    onPress: () => Get.to(() => CustomerAccountsView()),
-                    icon: FontAwesomeIcons.users,
-                    title: "حسابات العملاء",
-                  ),
-                  DrawerItemWidget(
-                    onPress: () => Get.to(() => SettingScreen()),
-                    icon: FontAwesomeIcons.gear,
-                    title: "الاعدادات",
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 15, right: 5),
-                    //  padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: MyColors.lessBlackColor.withOpacity(0.1)),
-                    child: Column(
-                      children: [
-                        DrawerItemWidget(
-                          onPress: () => Get.to(() => LocalCopyScreen()),
-                          icon: FontAwesomeIcons.download,
-                          title: " النسخ الإ حتياطي",
-                        ),
-                        const SizedBox(
-                          height: 21,
-                        ),
-                        Row(
+                    SizedBox(
+                      height: 3,
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.to(() => LocalCopyScreen()),
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 15, right: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: MyColors.lessBlackColor.withOpacity(0.1)),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             const SizedBox(
@@ -131,10 +269,9 @@ class MyDrawerView extends StatelessWidget {
                               icon: FontAwesomeIcons.download,
                               actoin: () {
                                 CustomDialog.showDialog(
-                                    action: () {
-                                      copyController.openDatabaseFile();
-
+                                    action: () async {
                                       Get.back();
+                                      await copyController.getTheLastFile();
                                     },
                                     title: "إستعادة",
                                     icon: FontAwesomeIcons.download,
@@ -150,12 +287,9 @@ class MyDrawerView extends StatelessWidget {
                               icon: FontAwesomeIcons.upload,
                               actoin: () {
                                 CustomDialog.showDialog(
-                                    action: () {
-                                      Platform.isAndroid
-                                          ? copyController.selectFolder()
-                                          : copyController.selectFolderIos();
-
+                                    action: () async {
                                       Get.back();
+                                      await copyController.uploadCopy();
                                     },
                                     title: "نسخة",
                                     icon: FontAwesomeIcons.upload,
@@ -166,9 +300,9 @@ class MyDrawerView extends StatelessWidget {
                             ),
                             const Spacer(),
                             const Padding(
-                              padding: EdgeInsets.only(right: 7),
+                              padding: EdgeInsets.only(right: 7, left: 5),
                               child: FaIcon(
-                                FontAwesomeIcons.solidFolderClosed,
+                                FontAwesomeIcons.googleDrive,
                                 size: 17,
                                 color: MyColors.lessBlackColor,
                               ),
@@ -178,175 +312,48 @@ class MyDrawerView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // Divider(),
-                        // //google drive copy
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   children: [
-                        //     const SizedBox(
-                        //       width: 10,
-                        //     ),
-                        //     ShortCutCopyWidget(
-                        //       icon: FontAwesomeIcons.upload,
-                        //       actoin: () {
-                        //         CustomDialog.showDialog(
-                        //             action: () {
-                        //               Platform.isAndroid
-                        //                   ? copyController.openDatabaseFile()
-                        //                   : copyController
-                        //                       .openDatabaseFileIos();
-
-                        //               Get.back();
-                        //             },
-                        //             title: "إستعادة",
-                        //             icon: FontAwesomeIcons.download,
-                        //             color: Colors.red,
-                        //             description:
-                        //                 "هل أنت متأكد من إستعادة نسخة ");
-                        //       },
-                        //     ),
-                        //     const SizedBox(
-                        //       width: 10,
-                        //     ),
-                        //     ShortCutCopyWidget(
-                        //       icon: FontAwesomeIcons.download,
-                        //       actoin: () {
-                        //         CustomDialog.showDialog(
-                        //             action: () {
-                        //               Platform.isAndroid
-                        //                   ? copyController.selectFolder()
-                        //                   : copyController.selectFolderIos();
-
-                        //               Get.back();
-                        //             },
-                        //             title: "نسخة",
-                        //             icon: FontAwesomeIcons.download,
-                        //             color: Colors.green,
-                        //             description:
-                        //                 "هل أنت متأكد من عمل نسخة جد يدة");
-                        //       },
-                        //     ),
-                        //     const Spacer(),
-                        //     const FaIcon(
-                        //       FontAwesomeIcons.googleDrive,
-                        //       size: 17,
-                        //       color: MyColors.bg,
-                        //     ),
-                        //     const SizedBox(
-                        //       width: 10,
-                        //     ),
-                        //   ],
-                        // ),
-                        const SizedBox(
-                          height: 10,
+                      ),
+                    ),
+                    DrawerItemWidget(
+                      onPress: () => Get.to(() => SettingScreen()),
+                      icon: FontAwesomeIcons.circleExclamation,
+                      title: " عنا",
+                    ),
+                    const DrawerItemWidget(
+                      icon: FontAwesomeIcons.phone,
+                      title: "الاتصال والدعم",
+                    ),
+                    const DrawerItemWidget(
+                      icon: FontAwesomeIcons.question,
+                      title: " الاسئله الشائعه",
+                    ),
+                    ListTile(
+                      contentPadding: const EdgeInsets.only(right: 20),
+                      onTap: () {
+                        SystemNavigator.pop();
+                        // closeApp();
+                        // print("h");
+                      },
+                      title: Text(
+                        "خروج",
+                        textAlign: TextAlign.right,
+                        style: myTextStyles.title2.copyWith(
+                          color: MyColors.secondaryTextColor,
+                          fontWeight: FontWeight.normal,
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.to(() => LocalCopyScreen()),
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 15, right: 5),
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: MyColors.lessBlackColor.withOpacity(0.1)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ShortCutCopyWidget(
-                            icon: FontAwesomeIcons.download,
-                            actoin: () {
-                              CustomDialog.showDialog(
-                                  action: () async {
-                                    Get.back();
-                                    await copyController.getTheLastFile();
-                                  },
-                                  title: "إستعادة",
-                                  icon: FontAwesomeIcons.download,
-                                  color: Colors.red,
-                                  description: "هل أنت متأكد من إستعادة نسخة ");
-                            },
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ShortCutCopyWidget(
-                            icon: FontAwesomeIcons.upload,
-                            actoin: () {
-                              CustomDialog.showDialog(
-                                  action: () async {
-                                    Get.back();
-                                    await copyController.uploadCopy();
-                                  },
-                                  title: "نسخة",
-                                  icon: FontAwesomeIcons.upload,
-                                  color: Colors.green,
-                                  description:
-                                      "هل أنت متأكد من عمل نسخة جد يدة");
-                            },
-                          ),
-                          const Spacer(),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 7, left: 5),
-                            child: FaIcon(
-                              FontAwesomeIcons.googleDrive,
-                              size: 17,
-                              color: MyColors.lessBlackColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                  DrawerItemWidget(
-                    onPress: () => Get.to(() => SettingScreen()),
-                    icon: FontAwesomeIcons.circleExclamation,
-                    title: " عنا",
-                  ),
-                  const DrawerItemWidget(
-                    icon: FontAwesomeIcons.phone,
-                    title: "الاتصال والدعم",
-                  ),
-                  const DrawerItemWidget(
-                    icon: FontAwesomeIcons.question,
-                    title: " الاسئله الشائعه",
-                  ),
-                  ListTile(
-                    contentPadding: const EdgeInsets.only(right: 20),
-                    onTap: () {
-                      SystemNavigator.pop();
-                      // closeApp();
-                      // print("h");
-                    },
-                    title: Text(
-                      "خروج",
-                      textAlign: TextAlign.right,
-                      style: myTextStyles.title2.copyWith(
+                      trailing: const FaIcon(
+                        FontAwesomeIcons.arrowRightToBracket,
+                        size: 20,
                         color: MyColors.secondaryTextColor,
-                        fontWeight: FontWeight.normal,
                       ),
                     ),
-                    trailing: const FaIcon(
-                      FontAwesomeIcons.arrowRightToBracket,
-                      size: 20,
-                      color: MyColors.secondaryTextColor,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

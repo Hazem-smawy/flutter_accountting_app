@@ -116,7 +116,7 @@ class HomeReportsScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                "report of month",
+                                "report-month",
                                 style: myTextStyles.body,
                               ),
                               const SizedBox(
@@ -144,7 +144,7 @@ class HomeReportsScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                "report of ",
+                                "report",
                                 style: myTextStyles.subTitle,
                               ),
                               const SizedBox(
@@ -160,6 +160,30 @@ class HomeReportsScreen extends StatelessWidget {
                         ),
                         const SizedBox(
                           width: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: MyColors.bg,
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "report",
+                                style: myTextStyles.subTitle,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const FaIcon(
+                                FontAwesomeIcons.fileLines,
+                                color: MyColors.secondaryTextColor,
+                                size: 15,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     )
@@ -226,7 +250,7 @@ class HomeReportsScreen extends StatelessWidget {
                         Get.to(() => SettingScreen());
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: MyColors.lessBlackColor),
