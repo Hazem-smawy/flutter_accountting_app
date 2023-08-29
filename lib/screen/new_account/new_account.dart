@@ -167,17 +167,17 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             ),
                             child: Row(
                               children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  // onTap: _askContactPermissions,
-                                  child: FaIcon(
-                                    FontAwesomeIcons.user,
-                                    size: 18,
-                                    color: MyColors.secondaryTextColor,
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   width: 10,
+                                // ),
+                                // GestureDetector(
+                                //   // onTap: _askContactPermissions,
+                                //   child: FaIcon(
+                                //     FontAwesomeIcons.user,
+                                //     size: 18,
+                                //     color: MyColors.secondaryTextColor,
+                                //   ),
+                                // ),
                                 Expanded(
                                   child: TextFormField(
                                     controller: nameController,

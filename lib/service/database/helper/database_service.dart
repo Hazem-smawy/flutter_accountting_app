@@ -6,6 +6,7 @@ import 'package:account_app/service/database/customer_data.dart';
 import 'package:account_app/service/database/intro_data.dart';
 import 'package:account_app/service/database/journal_data.dart';
 import 'package:account_app/service/database/personal_data.dart';
+import 'package:account_app/service/database/sitting_data.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
@@ -22,7 +23,7 @@ class DatabaseService {
 
   Future<String> get fullPath async {
     String path = await getDatabasesPath();
-    String databasePath = p.join(path, "accoutting.db");
+    String databasePath = p.join(path, "accountting_app2.db");
 
     return databasePath;
   }
@@ -43,6 +44,7 @@ class DatabaseService {
       await CustomerAccountData().createTable(txn.database);
       await JournalData().createTable(txn.database);
       await PersonalData().createTable(txn.database);
+      await SittingData().createTable(database);
     });
   }
 }

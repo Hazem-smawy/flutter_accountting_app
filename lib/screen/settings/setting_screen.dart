@@ -1,20 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/personal_controller.dart';
+import 'package:account_app/controller/sitting_controller.dart';
+import 'package:account_app/screen/copy_screen/local_copy.dart';
+import 'package:account_app/screen/intro_screen/intro_screen.dart';
 import 'package:account_app/screen/personal_info/personal_info.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
 import 'package:account_app/screen/settings/curency_setting.dart';
 import 'package:account_app/constant/text_styles.dart';
+import 'package:account_app/service/database/helper/database_service.dart';
+import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/no_personal_info_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/screen/settings/customer_setting.dart';
+import 'package:sqflite/sqflite.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
   PersonalController personalController = Get.find();
+  CopyController copyController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -196,112 +205,61 @@ class SettingScreen extends StatelessWidget {
                           icon: FontAwesomeIcons.fileCirclePlus,
                           title: " التصنيفات",
                         ),
-
-                        //theme
-                        Container(
-                          margin: const EdgeInsets.only(top: 5.0),
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: MyColors.containerColor.withOpacity(0.3),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Switch.adaptive(
-                                      value: true, onChanged: (value) {}),
-                                  Spacer(),
-                                  Text(
-                                    "المزامنة مع جوجل درايف",
-                                    style: myTextStyles.subTitle,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    width: 35,
-                                    height: 35,
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      //borderRadius: BorderRadius.circular(10),
-                                      color: MyColors.lessBlackColor
-                                          .withOpacity(0.8),
-                                    ),
-                                    child: Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.googleDrive,
-                                        size: 15,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.plus,
-                                      size: 15,
-                                      color: MyColors.secondaryTextColor,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
-                                      child: Text(
-                                        " يوم ١",
-                                        style: myTextStyles.title2.copyWith(
-                                          color: MyColors.lessBlackColor,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    FaIcon(
-                                      FontAwesomeIcons.minus,
-                                      size: 15,
-                                      color: MyColors.secondaryTextColor,
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                      "عمل نسخة كل",
-                                      style: myTextStyles.title2.copyWith(
-                                        //fontSize: 13,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                        SettingItemWidget(
+                          onPress: () => Get.to(() => LocalCopyScreen()),
+                          icon: FontAwesomeIcons.solidFolderClosed,
+                          title: "النسخ الإحتياطي",
                         ),
+                        GoogleDriveSyncWidget(),
                         const SizedBox(height: 30),
                         const Spacer(),
-                        Container(
-                          width: Get.width - 100,
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: MyColors.containerColor,
-                          ),
-                          child: Text(
-                            "خروج ",
-                            style: myTextStyles.subTitle,
+                        GestureDetector(
+                          onTap: () {
+                            SystemNavigator.pop();
+                          },
+                          child: Container(
+                            width: Get.width - 100,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18),
+                              color: MyColors.containerColor,
+                            ),
+                            child: Text(
+                              "خروج ",
+                              style: myTextStyles.subTitle,
+                            ),
                           ),
                         ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     CustomDialog.loadingProgress();
+                        //     await deleteDatabase(
+                        //         await DatabaseService().fullPath);
+                        //     await copyController.restoreSucess();
+                        //     Get.back();
+
+                        //     Get.offAll(() => MyEntroScreen());
+                        //   },
+                        //   child: Container(
+                        //     width: Get.width - 100,
+                        //     alignment: Alignment.center,
+                        //     padding: const EdgeInsets.all(10),
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(18),
+                        //       color: Color.fromARGB(255, 252, 203, 203),
+                        //     ),
+                        //     child: Text(
+                        //       "خروج ومسح كل البيانات ",
+                        //       style: myTextStyles.subTitle.copyWith(
+                        //         color: Color.fromARGB(255, 146, 44, 36),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         const SizedBox(height: 15),
                       ],
                     ),
@@ -310,6 +268,184 @@ class SettingScreen extends StatelessWidget {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class GoogleDriveSyncWidget extends StatelessWidget {
+  GoogleDriveSyncWidget({
+    super.key,
+  });
+  SittingController sittingController = Get.find();
+  CopyController copyController = Get.find();
+
+  String getCopyEveryString(int i) {
+    switch (i) {
+      case 0:
+        return "يوم";
+      case 1:
+        return "يومين";
+      case 7:
+        return "أسبوع";
+
+      default:
+        return "شهر";
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: const EdgeInsets.only(top: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: MyColors.containerColor.withOpacity(0.3),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Switch.adaptive(
+                    value: sittingController.toggleAsyncGoogleDrive.value,
+                    onChanged: (value) async {
+                      if (value) {
+                        await copyController.signIn();
+                        CustomDialog.customSnackBar(
+                            "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
+                            SnackPosition.BOTTOM);
+                      }
+
+                      await sittingController.toogleIsCopyOn(value);
+                    }),
+                const Spacer(),
+                Text(
+                  "المزامنة مع جوجل درايف",
+                  style: myTextStyles.subTitle,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  width: 35,
+                  height: 35,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    //borderRadius: BorderRadius.circular(10),
+                    color: MyColors.lessBlackColor.withOpacity(0.8),
+                  ),
+                  child: const Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.googleDrive,
+                      size: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (sittingController.toggleAsyncGoogleDrive.value)
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: MyColors.containerSecondColor,
+                          ),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  await sittingController.increemint();
+                                  CustomDialog.customSnackBar(
+                                      "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
+                                      SnackPosition.BOTTOM);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: MyColors.lessBlackColor,
+                                  ),
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.plus,
+                                    size: 15,
+                                    color: MyColors.containerColor,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                child: FittedBox(
+                                  child: Text(
+                                    getCopyEveryString(
+                                        sittingController.every.value),
+                                    style: myTextStyles.title2.copyWith(
+                                      color: MyColors.lessBlackColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  // decreming
+                                  await sittingController.decreemint();
+                                  CustomDialog.customSnackBar(
+                                      "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
+                                      SnackPosition.BOTTOM);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: MyColors.lessBlackColor,
+                                  ),
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.minus,
+                                    size: 15,
+                                    color: MyColors.containerColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "عمل نسخة كل",
+                          style: myTextStyles.title2.copyWith(
+                            //fontSize: 13,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              )
+          ],
         ),
       ),
     );

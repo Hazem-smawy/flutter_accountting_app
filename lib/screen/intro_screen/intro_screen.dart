@@ -4,20 +4,9 @@ import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/main.dart';
 import 'package:account_app/widget/custom_dialog.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
-
-import 'package:account_app/service/http_service/google_drive_service.dart';
-
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/drive/v3.dart';
-import 'dart:io' as io;
-import 'package:path/path.dart' as p;
 
 class MyEntroScreen extends StatefulWidget {
   const MyEntroScreen({super.key});
@@ -30,21 +19,21 @@ class _MyEntroScreenState extends State<MyEntroScreen> {
   List pages = [
     {
       "id": 2,
-      "image": "assets/images/curency1.png",
+      "image": "assets/images/intro2.png",
       "title": "العنوان",
       "desc":
           "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
     },
     {
       "id": 1,
-      "image": "assets/images/customerAccount.png",
+      "image": "assets/images/intro3.png",
       "title": "العنوان",
       "desc":
           "الله في الإسلام هو الإله الواحد الأحد وهو وصف لغوي للذات الإلهية. وله أسماء تسمى أسماء الله الحسنى وهي أكثر من أن تعد"
     },
     {
       "id": 0,
-      "image": "assets/images/curency.png",
+      "image": "assets/images/intro4.png",
       "title": "العنوان",
       "desc": ". أكثر من أن تعد إغلاق التطبيق"
     },
@@ -391,12 +380,13 @@ class FirstPage extends StatelessWidget {
           //if (lastPage)
           Image.asset(
             page['image'],
-            width: lastPage ? Get.width / 2 - 50 : Get.width - 150,
+            width: lastPage ? Get.width : Get.width - 100,
             //  height: lastPage ? Get.width / 5 : null,
             fit: BoxFit.cover,
           ),
+
           SizedBox(
-            height: Get.height / 9,
+            height: lastPage ? 30 : Get.height / 9,
           ),
           // if (!lastPage)
           Text(
@@ -410,18 +400,18 @@ class FirstPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          //  if (!lastPage)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Text(
-              page['desc'],
-              textAlign: TextAlign.center,
-              style: myTextStyles.body.copyWith(
-                color: MyColors.containerSecondColor,
-                fontWeight: FontWeight.normal,
+          if (!lastPage)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                page['desc'],
+                textAlign: TextAlign.center,
+                style: myTextStyles.body.copyWith(
+                  color: MyColors.containerSecondColor,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

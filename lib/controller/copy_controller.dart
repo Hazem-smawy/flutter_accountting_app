@@ -114,7 +114,7 @@ class CopyController extends GetxController {
     }
   }
 
-  void restoreSucess() async {
+  Future<void> restoreSucess() async {
     await accGroupController.readAllAccGroup();
     await customerController.readAllCustomer();
     await curencyController.readAllCurency();

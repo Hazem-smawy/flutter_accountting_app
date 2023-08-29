@@ -44,7 +44,7 @@ class MyDrawerView extends StatelessWidget {
                 () => personalController.newPersonal['name'] == null
                     ? Container(
                         padding: EdgeInsets.only(
-                            top: Platform.isAndroid ? 10 : 60, bottom: 20),
+                            top: Platform.isAndroid ? 20 : 60, bottom: 20),
                         decoration: const BoxDecoration(
                             color: MyColors.lessBlackColor,
                             borderRadius: BorderRadius.only(
@@ -56,7 +56,7 @@ class MyDrawerView extends StatelessWidget {
                     : Container(
                         width: double.infinity,
                         padding: EdgeInsets.only(
-                            top: Platform.isAndroid ? 10 : 60, bottom: 20),
+                            top: Platform.isAndroid ? 20 : 60, bottom: 20),
                         decoration: const BoxDecoration(
                             color: MyColors.lessBlackColor,
                             borderRadius: BorderRadius.only(

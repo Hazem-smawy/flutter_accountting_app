@@ -193,7 +193,7 @@ class CustomCopyBtnWidget extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: myTextStyles.subTitle,
+              style: myTextStyles.body,
             ),
           ),
           const SizedBox(

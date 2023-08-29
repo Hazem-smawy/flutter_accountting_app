@@ -38,13 +38,11 @@ class EmptyAccGroupsWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                  // padding: const EdgeInsets.symmetric(horizontal: 80),
-                  child: GestureDetector(
+              GestureDetector(
                 onTap: () async {
                   CustomDialog.loadingProgress();
                   await homeController.addDefaultAccGroupsAndCurency();
-                  await Future.delayed(Duration(milliseconds: 200));
+
                   Get.back();
                   Get.offAll(() => ShowMyMainScreen());
                 },
@@ -60,18 +58,16 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                     "إضافة التصنيفات الإ فتراضية",
                     textAlign: TextAlign.center,
                     style: myTextStyles.body.copyWith(
-                      color: MyColors.containerSecondColor,
+                      color: MyColors.bg,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
                 ),
-              )),
-              SizedBox(
+              ),
+              const SizedBox(
                 height: 10,
               ),
-              Container(
-                  // padding: const EdgeInsets.symmetric(horizontal: 80),
-                  child: GestureDetector(
+              GestureDetector(
                 onTap: () {
                   Get.to(() => AccGroupSettingScreen());
                 },
@@ -88,10 +84,13 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                   child: Text(
                     "إضافة",
                     textAlign: TextAlign.center,
-                    style: myTextStyles.title2,
+                    style: myTextStyles.body.copyWith(
+                      color: MyColors.lessBlackColor,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                 ),
-              )),
+              ),
             ],
           ),
         ));

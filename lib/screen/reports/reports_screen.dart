@@ -17,10 +17,25 @@ class HomeReportsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
             children: [
+              // Container(
+              //   alignment: Alignment.center,
+              //   width: double.infinity,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5),
+              //     color: MyColors.bg,
+              //   ),
+              //   child: Text(
+              //     "تنبة",
+              //     style: myTextStyles.body,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
               Container(
                 padding: const EdgeInsets.all(10),
                 width: double.infinity,
@@ -216,7 +231,7 @@ class HomeReportsScreen extends StatelessWidget {
                     const FaIcon(
                       FontAwesomeIcons.clockRotateLeft,
                       color: MyColors.secondaryTextColor,
-                      size: 17,
+                      size: 15,
                     ),
                   ],
                 ),

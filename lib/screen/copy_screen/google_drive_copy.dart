@@ -1,21 +1,15 @@
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/constant/text_styles.dart';
 import 'package:account_app/controller/copy_controller.dart';
-import 'package:account_app/service/http_service/google_drive_service.dart';
 import 'package:account_app/widget/custom_btns_widges.dart';
 import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart';
-import 'package:googleapis/forms/v1.dart';
-import 'package:intl/intl.dart';
-import 'dart:io' as io;
-import 'package:path/path.dart' as p;
 
-import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
 
 class GoogleDriveCopyWidget extends StatefulWidget {
   GoogleDriveCopyWidget({super.key});
@@ -54,7 +48,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                       height: 10,
                     ),
                     Text(
-                      "النسخ الإحتياطي الي جوجل درايف",
+                      "النسخ الإ حتياطي الى جوجل درايف",
                       style: myTextStyles.title2,
                     )
                   ],
@@ -82,7 +76,7 @@ class _GoogleDriveCopyWidgetState extends State<GoogleDriveCopyWidget> {
                           value ? contorller.signIn() : contorller.signOut();
                         }),
                     Text(
-                      "تفعيل النسخ الي جوجل درايف",
+                      "تفعيل النسخ الى جوجل درايف",
                       style: myTextStyles.subTitle.copyWith(
                           color: contorller.googleUser == null
                               ? Colors.red
@@ -256,7 +250,7 @@ class _ShowAllFilesState extends State<ShowAllFiles> {
                                 },
                               )
                             : EmptyWidget(
-                                imageName: 'assets/images/accGroup.png',
+                                imageName: 'assets/images/notfound1.png',
                                 label: "لاتوجد أي نسخة ",
                               ),
                       )
@@ -377,23 +371,24 @@ class ShowFileItemWidget extends StatelessWidget {
             bottom: 5,
             child: GestureDetector(
               onTap: () {
-                CustomDialog.showDialog(
-                  title: "حذف",
-                  description: "هل انت متأكد من حذف هذه النسخة",
-                  icon: FontAwesomeIcons.circleInfo,
-                  color: Colors.red,
-                  action: () async {
-                    Get.back();
-                    CustomDialog.loadingProgress();
+                if (Get.isSnackbarOpen != true) {
+                  CustomDialog.showDialog(
+                    title: "حذف",
+                    description: "هل انت متأكد من حذف هذه النسخة",
+                    icon: FontAwesomeIcons.circleInfo,
+                    color: Colors.red,
+                    action: () async {
+                      Get.back();
+                      CustomDialog.loadingProgress();
 
-                    await copyController.deleteDriveFile(file);
-                    action();
-                    Get.back();
-
-                    CustomDialog.customSnackBar(
-                        "تم الحذف بنجاح", SnackPosition.TOP);
-                  },
-                );
+                      await copyController.deleteDriveFile(file);
+                      action();
+                      Get.back();
+                      CustomDialog.customSnackBar(
+                          "تم الحذف بنجاح", SnackPosition.TOP);
+                    },
+                  );
+                }
               },
               child: Container(
                 alignment: Alignment.center,
@@ -450,7 +445,7 @@ class CustomDriveCopyBtnWidget extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: myTextStyles.subTitle,
+              style: myTextStyles.body,
             ),
           ),
           const SizedBox(

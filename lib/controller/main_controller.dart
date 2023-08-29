@@ -1,3 +1,4 @@
+import 'package:account_app/controller/sitting_controller.dart';
 import 'package:get/get.dart';
 import 'package:account_app/controller/acc_curency_controller.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
@@ -32,6 +33,7 @@ class MainController extends GetxController {
     Get.put(PersonalController());
     Get.put(PdfApi());
     Get.put(CopyController());
+    Get.put(SittingController());
   }
 
   Future<void> updateAll() async {

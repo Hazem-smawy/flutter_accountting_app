@@ -103,7 +103,7 @@ class CustomerAccountsView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              "assets/images/customerAccount1.png",
+                              "assets/images/notfound1.png",
                               fit: BoxFit.cover,
                               height: Get.height / 3,
                             ),

@@ -32,7 +32,7 @@ class CurencySettingScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 if (curencyController.allCurency.isEmpty)
                   EmptyWidget(
-                    imageName: 'assets/images/curency1.png',
+                    imageName: 'assets/images/curency2.png',
                     label: "لاتوجد اي عملات , قم بإضافة بعض العملات",
                   ),
                 if (curencyController.allCurency.isNotEmpty)
