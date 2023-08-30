@@ -8,9 +8,11 @@ import 'package:account_app/controller/copy_controller.dart';
 
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/controller/main_controller.dart';
+import 'package:account_app/controller/sitting_controller.dart';
+import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/screen/intro_screen/intro_screen.dart';
 import 'package:account_app/screen/main_screen/main_screen.dart';
-import 'package:account_app/widget/custom_dialog.dart';
+import 'package:account_app/service/database/sitting_data.dart';
 
 import 'package:account_app/widget/empty_accGroup_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,35 +20,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:workmanager/workmanager.dart';
 
 import 'firebase_options.dart';
-
-@pragma('vm:entry-point')
-void callbackDispatcher() {
-  Workmanager().executeTask((taskName, inputData) async {
-    CopyController copyController = Get.find();
-    await copyController.uploadCopy();
-
-    return Future.value(true);
-  });
-}
 
 final FlutterLocalNotificationsPlugin flutterLocalPlugin =
     FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel notificationChannel =
-    AndroidNotificationChannel("coding is life", "android channal service",
+    AndroidNotificationChannel("coding is the life", "android channal service",
         description: "this is channel des..", importance: Importance.high);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initService();
-  Get.put(MainController());
 
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Get.put(MainController());
+  await initService();
 
   runApp(MyApp());
 }
@@ -93,7 +84,7 @@ Future<void> initService() async {
           onStart: onStart,
           autoStart: true,
           isForegroundMode: true,
-          notificationChannelId: "coding is life",
+          notificationChannelId: "coding is the life",
           initialNotificationTitle: "coding is life servic",
           initialNotificationContent: "coding is life content",
           foregroundServiceNotificationId: 90));
@@ -103,7 +94,7 @@ Future<void> initService() async {
 
 // onstart
 @pragma('vm:entry-point')
-void onStart(ServiceInstance service) {
+void onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
 
   service.on("setAsForeground").listen((event) {
@@ -118,20 +109,27 @@ void onStart(ServiceInstance service) {
     service.stopSelf();
   });
 
-  //display notification
+  SittingData sittingData = SittingData();
+  SittingModel? sittingModel = await sittingData.read(1);
+  final settingArray = [1, 2, 7, 30];
 
-  // Timer.periodic(Duration(seconds: 2), (timer) {
-  //   flutterLocalPlugin.show(
-  //     90,
-  //     "cool service",
-  //     'this is the body',
-  //     const NotificationDetails(
-  //       android: AndroidNotificationDetails(
-  //           "coding is the life", "coding is life servic",
-  //           ongoing: true, icon: "app_icon"),
-  //     ),
-  //   );
-  // });
+  print("$sittingModel");
+
+  if (sittingModel?.isCopyOn ?? false) {
+    Timer.periodic(Duration(hours: 24 * settingArray[sittingModel?.every ?? 0]),
+        (timer) {
+      flutterLocalPlugin.show(
+        90,
+        " عمل نسخة ",
+        '"تم عمل نسخة إحتياطية"',
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              "coding is the life", "android channal service",
+              ongoing: true, icon: "@mipmap/ic_launcher"),
+        ),
+      );
+    });
+  }
 }
 
 //ios

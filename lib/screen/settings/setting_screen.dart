@@ -287,7 +287,7 @@ class GoogleDriveSyncWidget extends StatelessWidget {
         return "يوم";
       case 1:
         return "يومين";
-      case 7:
+      case 2:
         return "أسبوع";
 
       default:
@@ -318,9 +318,11 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                           await copyController.signIn();
                         }
                         if (copyController.driveApi != null) {
-                          CustomDialog.customSnackBar(
-                              "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
-                              SnackPosition.BOTTOM);
+                          if (Get.isSnackbarOpen == false) {
+                            CustomDialog.customSnackBar(
+                                "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
+                                SnackPosition.BOTTOM);
+                          }
                         }
                       }
 

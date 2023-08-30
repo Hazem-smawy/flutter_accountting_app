@@ -27,6 +27,7 @@ class MainController extends GetxController {
     Get.put(CurencyController());
     Get.put(JournalController());
     Get.put(CustomerAccountController());
+
     Get.put(HomeController());
     Get.put(NewAccountController());
     Get.put(IntroController());
@@ -34,19 +35,5 @@ class MainController extends GetxController {
     Get.put(PdfApi());
     Get.put(CopyController());
     Get.put(SittingController());
-  }
-
-  Future<void> updateAll() async {
-    AccGroupCurencyController accGroupCurencyController = Get.find();
-    AccGroupController accGroupController = Get.find();
-    CurencyController curencyController = Get.find();
-    CustomerController customerController = Get.find();
-    HomeController homeController = Get.find();
-
-    await customerController.readAllCustomer();
-    await curencyController.readAllCurency();
-    await accGroupController.readAllAccGroup();
-    await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
-    await accGroupCurencyController.getAllAccGroupAndCurency();
   }
 }

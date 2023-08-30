@@ -31,7 +31,6 @@ dependencies:
   permission_handler: any
   path: ^1.8.2
   device_info_plus: ^9.0.3
-  workmanager: ^0.5.1
   flutter_background_service: any
   flutter_local_notifications: any
 

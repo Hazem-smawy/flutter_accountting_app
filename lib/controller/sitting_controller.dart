@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/service/database/sitting_data.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
-import 'package:workmanager/workmanager.dart';
 
 class SittingController extends GetxController {
   final every = 0.obs;
@@ -18,6 +18,7 @@ class SittingController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     readSitting();
+    toogleIsCopyOn(toggleAsyncGoogleDrive.value);
   }
 
   Future<void> createSitting() async {
@@ -52,31 +53,40 @@ class SittingController extends GetxController {
     if (isOn) {
       setCopyToGoogleDriveEvery();
     } else {
-      Workmanager().cancelAll();
+      FlutterBackgroundService().invoke("stopService");
     }
   }
 
   Future<void> increemint() async {
-    if (every < everyArray.length) {
+    if (every < everyArray.length - 1) {
       every.value++;
+
       await updateSitting(toggleAsyncGoogleDrive.value, every.value);
-      Workmanager().cancelAll();
-      setCopyToGoogleDriveEvery();
+      FlutterBackgroundService().invoke("stopService");
+      Future.delayed(Duration(seconds: 3)).then(
+        (value) {
+          toogleIsCopyOn(toggleAsyncGoogleDrive.value);
+        },
+      );
     }
   }
 
   Future<void> decreemint() async {
-    if (every > -1) {
+    if (every > 0) {
       every.value--;
+
       await updateSitting(toggleAsyncGoogleDrive.value, every.value);
-      Workmanager().cancelAll();
-      setCopyToGoogleDriveEvery();
+      FlutterBackgroundService().invoke("stopService");
+      Future.delayed(Duration(seconds: 3)).then(
+        (value) {
+          toogleIsCopyOn(toggleAsyncGoogleDrive.value);
+        },
+      );
     }
   }
 
   void setCopyToGoogleDriveEvery() {
-    Workmanager().registerPeriodicTask("threeTask", 'backUp',
-        frequency: Duration(hours: 24 * every.value),
-        constraints: Constraints(networkType: NetworkType.connected));
+    FlutterBackgroundService().startService();
+    print("hello world");
   }
 }

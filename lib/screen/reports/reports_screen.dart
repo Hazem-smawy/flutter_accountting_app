@@ -208,7 +208,7 @@ class HomeReportsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               Container(
                 width: double.infinity,
@@ -248,7 +248,7 @@ class HomeReportsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               Container(
                 width: double.infinity,
@@ -298,7 +298,7 @@ class HomeReportsScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 15,
               )
             ],
           ),
