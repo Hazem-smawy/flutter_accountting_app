@@ -314,10 +314,14 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                     value: sittingController.toggleAsyncGoogleDrive.value,
                     onChanged: (value) async {
                       if (value) {
-                        await copyController.signIn();
-                        CustomDialog.customSnackBar(
-                            "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
-                            SnackPosition.BOTTOM);
+                        if (copyController.driveApi == null) {
+                          await copyController.signIn();
+                        }
+                        if (copyController.driveApi != null) {
+                          CustomDialog.customSnackBar(
+                              "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
+                              SnackPosition.BOTTOM);
+                        }
                       }
 
                       await sittingController.toogleIsCopyOn(value);

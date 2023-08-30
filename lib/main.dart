@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:account_app/constant/colors.dart';
 import 'package:account_app/controller/accgroup_controller.dart';
+import 'package:account_app/controller/copy_controller.dart';
 
 import 'package:account_app/controller/intro_controller.dart';
 import 'package:account_app/controller/main_controller.dart';
@@ -10,16 +15,38 @@ import 'package:account_app/widget/custom_dialog.dart';
 import 'package:account_app/widget/empty_accGroup_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'firebase_options.dart';
+
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  Workmanager().executeTask((taskName, inputData) async {
+    CopyController copyController = Get.find();
+    await copyController.uploadCopy();
+
+    return Future.value(true);
+  });
+}
+
+final FlutterLocalNotificationsPlugin flutterLocalPlugin =
+    FlutterLocalNotificationsPlugin();
+const AndroidNotificationChannel notificationChannel =
+    AndroidNotificationChannel("coding is life", "android channal service",
+        description: "this is channel des..", importance: Importance.high);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await initService();
   Get.put(MainController());
+
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
 
   runApp(MyApp());
 }
@@ -37,7 +64,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: MyColors.containerColor,
       ),
       // theme: AppThemes.darkTheme,
-
+      //  home: ShowProgress(),
       home: Obx(
         () => introController.introShow.value
             ? ShowMyMainScreen()
@@ -45,6 +72,76 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> initService() async {
+  var service = FlutterBackgroundService();
+  if (Platform.isIOS) {
+    await flutterLocalPlugin.initialize(
+        const InitializationSettings(iOS: DarwinInitializationSettings()));
+  }
+
+  await flutterLocalPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(notificationChannel);
+
+  await service.configure(
+      iosConfiguration:
+          IosConfiguration(onBackground: iosBackground, onForeground: onStart),
+      androidConfiguration: AndroidConfiguration(
+          onStart: onStart,
+          autoStart: true,
+          isForegroundMode: true,
+          notificationChannelId: "coding is life",
+          initialNotificationTitle: "coding is life servic",
+          initialNotificationContent: "coding is life content",
+          foregroundServiceNotificationId: 90));
+
+  service.startService();
+}
+
+// onstart
+@pragma('vm:entry-point')
+void onStart(ServiceInstance service) {
+  DartPluginRegistrant.ensureInitialized();
+
+  service.on("setAsForeground").listen((event) {
+    print("forground =====");
+  });
+
+  service.on("setAsBackground").listen((event) {
+    print("bacground =====");
+  });
+
+  service.on("stopService").listen((event) {
+    service.stopSelf();
+  });
+
+  //display notification
+
+  // Timer.periodic(Duration(seconds: 2), (timer) {
+  //   flutterLocalPlugin.show(
+  //     90,
+  //     "cool service",
+  //     'this is the body',
+  //     const NotificationDetails(
+  //       android: AndroidNotificationDetails(
+  //           "coding is the life", "coding is life servic",
+  //           ongoing: true, icon: "app_icon"),
+  //     ),
+  //   );
+  // });
+}
+
+//ios
+// onstart
+@pragma('vm:entry-point')
+Future<bool> iosBackground(ServiceInstance service) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
+
+  return true;
 }
 
 class ShowMyMainScreen extends StatelessWidget {
@@ -62,128 +159,3 @@ class ShowMyMainScreen extends StatelessWidget {
     );
   }
 }
-
-class ShowProgress extends StatelessWidget {
-  const ShowProgress({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            CustomDialog.loadingProgress();
-          },
-          child: Text("data"),
-        ),
-      ),
-    );
-  }
-}
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   final GoogleDriveAppData _googleDriveAppData = GoogleDriveAppData();
-//   GoogleSignInAccount? _googleUser;
-//   DriveApi? _driveApi;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             ElevatedButton(
-//               child: Text("sign in"),
-//               onPressed: () async {
-//                 if (_googleUser == null) {
-//                   _googleUser = await _googleDriveAppData.signInGoogle();
-//                   if (_googleUser != null) {
-//                     _driveApi =
-//                         await _googleDriveAppData.getDriveApi(_googleUser!);
-//                   }
-//                 } else {
-//                   await _googleDriveAppData.signOut();
-//                   _googleUser = null;
-//                   _driveApi = null;
-//                 }
-//                 setState(() {});
-//               },
-//             ),
-//             ElevatedButton(
-//               onPressed: _driveApi != null
-//                   ? () {
-//                       FilePicker.platform.pickFiles().then((value) {
-//                         if (value != null && value.files[0] != null) {
-//                           io.File selectedFile = io.File(value.files[0].path!);
-//                           _googleDriveAppData.uploadDriveFile(
-//                             driveApi: _driveApi!,
-//                             file: selectedFile,
-//                           );
-//                         }
-//                       });
-//                     }
-//                   : null,
-//               child: Text('Save sth to drive'),
-//             ),
-//             ElevatedButton(
-//                 onPressed: () async {
-//                   try {
-//                     File? file = await _googleDriveAppData.getDriveFile(
-//                         _driveApi!, "account_app_copy.db");
-
-//                     if (file != null) {
-//                       Get.log("file is :$file");
-//                       io.Directory path =
-//                           await getApplicationDocumentsDirectory();
-//                       String databasePath =
-//                           p.join(path.path, "account_app_database.db");
-
-//                       await _googleDriveAppData
-//                           .restoreDriveFile(
-//                               driveApi: _driveApi!,
-//                               driveFile: file,
-//                               targetLocalPath: databasePath)
-//                           .then((value) {
-//                         print("it is complete");
-//                       });
-//                     } else {
-//                       Get.log("file is :$file");
-//                     }
-//                   } catch (e) {
-//                     print(e);
-//                   }
-//                 },
-//                 child: Text("get file"))
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Future<void> copyDatabaseFromFolder(io.File selectedFolderPath) async {
-//     io.Directory path = await getApplicationDocumentsDirectory();
-//     String databasePath = p.join(path.path, "account_database1.db");
-
-//     // await File(databasePath).delete();
-
-//     await deleteDatabase(databasePath);
-//     //await DatabaseService.instance.database.obs;
-
-//     await io.File(databasePath).openWrite();
-//     selectedFolderPath.copy(databasePath);
-
-//     CustomDialog.showDialog(
-//         title: "تنبة",
-//         description: "سيتم إغلاق التطبيق قم بإعادة فتحة",
-//         icon: FontAwesomeIcons.circleInfo,
-//         color: Colors.red,
-//         action: () {});
-//     await Future.delayed(const Duration(seconds: 2));
-//   }
-// }

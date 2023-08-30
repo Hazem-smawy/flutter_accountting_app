@@ -4,6 +4,7 @@ import 'package:account_app/controller/copy_controller.dart';
 import 'package:account_app/models/sitting_model.dart';
 import 'package:account_app/service/database/sitting_data.dart';
 import 'package:get/get.dart';
+import 'package:workmanager/workmanager.dart';
 
 class SittingController extends GetxController {
   final every = 0.obs;
@@ -17,7 +18,6 @@ class SittingController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     readSitting();
-    //setCopyToGoogleDriveEvery();
   }
 
   Future<void> createSitting() async {
@@ -49,12 +49,19 @@ class SittingController extends GetxController {
   Future<void> toogleIsCopyOn(bool isOn) async {
     toggleAsyncGoogleDrive.value = isOn;
     await updateSitting(toggleAsyncGoogleDrive.value, every.value);
+    if (isOn) {
+      setCopyToGoogleDriveEvery();
+    } else {
+      Workmanager().cancelAll();
+    }
   }
 
   Future<void> increemint() async {
     if (every < everyArray.length) {
       every.value++;
       await updateSitting(toggleAsyncGoogleDrive.value, every.value);
+      Workmanager().cancelAll();
+      setCopyToGoogleDriveEvery();
     }
   }
 
@@ -62,18 +69,14 @@ class SittingController extends GetxController {
     if (every > -1) {
       every.value--;
       await updateSitting(toggleAsyncGoogleDrive.value, every.value);
+      Workmanager().cancelAll();
+      setCopyToGoogleDriveEvery();
     }
   }
 
-  // void setCopyToGoogleDriveEvery() {
-  //   Duration copyEveryDuration = Duration(hours: 24 * everyArray[every.value]);
-  //   // Duration copyEveryDuration = Duration(minutes: 5);
-
-  //   Timer.periodic(copyEveryDuration, (timer) async {
-  //     if (toggleAsyncGoogleDrive.value) {
-  //       await copyController.uploadCopy();
-  //       print("hello copy");
-  //     }
-  //   });
-  // }
+  void setCopyToGoogleDriveEvery() {
+    Workmanager().registerPeriodicTask("threeTask", 'backUp',
+        frequency: Duration(hours: 24 * every.value),
+        constraints: Constraints(networkType: NetworkType.connected));
+  }
 }

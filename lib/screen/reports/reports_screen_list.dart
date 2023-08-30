@@ -137,15 +137,20 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              alignment: Alignment.centerRight,
-                              // width: Get.width / 2.7,
-                              child: FittedBox(
-                                child: Text(
-                                  homeController.todaysJournals[index]['name'],
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.right,
-                                  style: myTextStyles.subTitle,
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerRight,
+                                // width: Get.width / 2.7,
+                                child: FittedBox(
+                                  child: Text(
+                                    homeController.todaysJournals[index]
+                                        ['name'],
+                                    textDirection: TextDirection.rtl,
+                                    textAlign: TextAlign.right,
+                                    style: myTextStyles.subTitle.copyWith(
+                                        overflow: TextOverflow.ellipsis),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                             ),

@@ -93,9 +93,13 @@ class CustomerSettingItemWidget extends StatelessWidget {
                 backgroundColor: customer.status ? Colors.green : Colors.red,
               ),
               const Spacer(),
-              Text(
-                customer.name,
-                style: myTextStyles.title2,
+              Expanded(
+                child: Text(
+                  customer.name,
+                  textAlign: TextAlign.right,
+                  textDirection: TextDirection.rtl,
+                  style: myTextStyles.title2,
+                ),
               ),
               const SizedBox(width: 10),
               const FaIcon(
