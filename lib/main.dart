@@ -32,7 +32,7 @@ final FlutterLocalNotificationsPlugin flutterLocalPlugin =
     FlutterLocalNotificationsPlugin();
 const AndroidNotificationChannel notificationChannel =
     AndroidNotificationChannel("coding is the life", "android channal service",
-        description: "this is channel des..", importance: Importance.high);
+        description: "this is channel des..", importance: Importance.low);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -136,6 +136,16 @@ void onStart(ServiceInstance service) async {
   if (sittingModel?.isCopyOn ?? false) {
     Timer.periodic(Duration(hours: 24 * settingArray[sittingModel?.every ?? 0]),
         (timer) async {
+      flutterLocalPlugin.show(
+        90,
+        title,
+        "تم عمل نسخة إحتياطية",
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              "coding is the life", "android channal service",
+              ongoing: true, icon: "@mipmap/ic_launcher"),
+        ),
+      );
       GoogleDriveAppData googleDriveAppData = GoogleDriveAppData();
       GoogleSignInAccount? googleUser;
       DriveApi? driveApi;
@@ -167,17 +177,6 @@ void onStart(ServiceInstance service) async {
       }
 
 //notification
-
-      flutterLocalPlugin.show(
-        90,
-        title,
-        "تم عمل نسخة إحتياطية",
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-              "coding is the life", "android channal service",
-              ongoing: true, icon: "@mipmap/ic_launcher"),
-        ),
-      );
     });
   }
 }

@@ -23,7 +23,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: 50,
       alignment: Alignment.center,
       //padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -76,7 +76,7 @@ class _CustomNumberFieldWidgetState extends State<CustomNumberFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: 50,
       alignment: Alignment.center,
       //padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(

@@ -47,143 +47,141 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
   Widget build(BuildContext context) {
     newAccountController.newAccount.clear();
     CEC.errorMessage.value = "";
-    return Container(
-      constraints: const BoxConstraints(
-        minHeight: 300,
-      ),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        color: MyColors.bg,
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Obx(
-            () => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (CEC.errorMessage.isNotEmpty) const ErrorShowWidget(),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    SizedBox(
-                        width: Get.width / 3,
-                        child: CustomNumberFieldWidget(
-                          textHint: "المبلغ",
-                          action: (p0) {
-                            newAccountController.newAccount.update(
-                              'money',
-                              (value) => p0,
-                              ifAbsent: () => p0,
-                            );
-                          },
-                        )),
-                    const SizedBox(width: 10),
-                    Expanded(
-                        child: Container(
-                      height: 56,
-                      padding: const EdgeInsets.only(right: 10),
-                      alignment: Alignment.centerRight,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: MyColors.lessBlackColor,
-                      ),
-                      child: Container(
-                        child: Text(
-                          widget.homeModel.name,
-                          textAlign: TextAlign.right,
-                          style: myTextStyles.subTitle
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    )),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => _selectDate(context),
-                      child: Container(
-                          height: 56,
-                          width: 56,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: MyColors.containerSecondColor,
-                          ),
-                          child: const Center(
-                              child: FaIcon(
-                            FontAwesomeIcons.calendarCheck,
-                            color: MyColors.secondaryTextColor,
-                            size: 22,
-                          ))),
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.all(10),
+        constraints: const BoxConstraints(
+          minHeight: 300,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: MyColors.bg,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Obx(
+              () => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (CEC.errorMessage.isNotEmpty) const ErrorShowWidget(),
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 50,
+                    padding: const EdgeInsets.only(right: 10),
+                    alignment: Alignment.centerRight,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: MyColors.lessBlackColor,
                     ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                        child: CustomTextFieldWidget(
-                      textHint: "التفاصل",
-                      action: (p0) {
-                        newAccountController.newAccount.update(
-                          'desc',
-                          (value) => p0,
-                          ifAbsent: () => p0,
-                        );
-                      },
-                    )),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.only(top: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: MyColors.containerColor.withOpacity(0.5),
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        curencyController.allCurency
-                            .firstWhere((element) =>
-                                element.id == widget.homeModel.curId)
-                            .symbol,
-                        style: myTextStyles.body,
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              // color: MyColors.containerColor.withOpacity(0.5),
+                            ),
+                            child: Text(
+                              curencyController.allCurency
+                                  .firstWhere((element) =>
+                                      element.id == widget.homeModel.curId)
+                                  .name,
+                              style: myTextStyles.body
+                                  .copyWith(color: MyColors.bg),
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            widget.homeModel.name,
+                            textAlign: TextAlign.right,
+                            style: myTextStyles.subTitle
+                                .copyWith(color: Colors.white),
+                          ),
+                        ],
                       ),
-                      Spacer(),
-                      Text(
-                        curencyController.allCurency
-                            .firstWhere((element) =>
-                                element.id == widget.homeModel.curId)
-                            .name,
-                        style: myTextStyles.subTitle,
-                      )
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => _selectDate(context),
+                        child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: MyColors.containerSecondColor,
+                            ),
+                            child: const Center(
+                                child: FaIcon(
+                              FontAwesomeIcons.calendarCheck,
+                              color: MyColors.secondaryTextColor,
+                              size: 22,
+                            ))),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: CustomNumberFieldWidget(
+                        textHint: "المبلغ",
+                        action: (p0) {
+                          newAccountController.newAccount.update(
+                            'money',
+                            (value) => p0,
+                            ifAbsent: () => p0,
+                          );
+                        },
+                      )),
                     ],
                   ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Flexible(
-                        child: CustomBtnWidget(
-                      color: MyColors.debetColor,
-                      label: "له",
-                      action: () {
-                        addNewRecordFunction(true);
-                      },
-                    )),
-                    SizedBox(width: 10),
-                    Flexible(
-                        child: CustomBtnWidget(
-                      color: MyColors.creditColor,
-                      label: "عليه",
-                      action: () {
-                        addNewRecordFunction(false);
-                      },
-                    ))
-                  ],
-                ),
-                const SizedBox(height: 30),
-              ],
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: CustomTextFieldWidget(
+                        textHint: "التفاصل",
+                        action: (p0) {
+                          newAccountController.newAccount.update(
+                            'desc',
+                            (value) => p0,
+                            ifAbsent: () => p0,
+                          );
+                        },
+                      )),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Flexible(
+                          child: CustomBtnWidget(
+                        color: MyColors.debetColor,
+                        label: "له",
+                        action: () {
+                          addNewRecordFunction(true);
+                        },
+                      )),
+                      SizedBox(width: 10),
+                      Flexible(
+                          child: CustomBtnWidget(
+                        color: MyColors.creditColor,
+                        label: "عليه",
+                        action: () {
+                          addNewRecordFunction(false);
+                        },
+                      ))
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),

@@ -326,7 +326,9 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                           }
                         }
                       }
-                      if (copyController.driveApi != null) {
+                      if (copyController.driveApi != null && value == true) {
+                        await sittingController.toogleIsCopyOn(value);
+                      } else {
                         await sittingController.toogleIsCopyOn(value);
                       }
                     }),

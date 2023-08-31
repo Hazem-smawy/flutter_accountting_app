@@ -230,8 +230,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                           GestureDetector(
                             onTap: () => _selectDate(context),
                             child: Container(
-                                height: 56,
-                                width: 56,
+                                height: 50,
+                                width: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: MyColors.containerSecondColor,
