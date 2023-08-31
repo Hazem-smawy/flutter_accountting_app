@@ -8,22 +8,20 @@ import 'package:path/path.dart' as path;
 
 class GoogleDriveAppData {
   /// sign in with google
+  GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      drive.DriveApi.driveAppdataScope,
+    ],
+  );
 
   Future<GoogleSignInAccount?> getCurentUser() async {
-    final googleUser = GoogleSignIn();
-    final user = googleUser.currentUser;
+    final user = googleSignIn.currentUser;
     return user;
   }
 
   Future<GoogleSignInAccount?> signInGoogle() async {
     GoogleSignInAccount? googleUser;
     try {
-      GoogleSignIn googleSignIn = GoogleSignIn(
-        scopes: [
-          drive.DriveApi.driveAppdataScope,
-        ],
-      );
-
       googleUser =
           await googleSignIn.signInSilently() ?? await googleSignIn.signIn();
     } catch (e) {
@@ -34,7 +32,6 @@ class GoogleDriveAppData {
 
   ///sign out from google
   Future<void> signOut() async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
     await googleSignIn.signOut();
   }
 

@@ -17,8 +17,10 @@ class IntroController extends GetxController {
     await introData.create();
   }
 
-  Future<void> readIntro() async {
+  Future<bool> readIntro() async {
     introShow.value = await introData.read();
+
+    return introShow.value;
   }
 
   Future<void> updateIntro() async {

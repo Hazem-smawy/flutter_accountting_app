@@ -44,7 +44,7 @@ class EmptyAccGroupsWidget extends StatelessWidget {
                   await homeController.addDefaultAccGroupsAndCurency();
 
                   Get.back();
-                  Get.offAll(() => ShowMyMainScreen());
+                  Get.offAll(() => MyMainScreen());
                 },
                 child: Container(
                   width: Get.width / 2,

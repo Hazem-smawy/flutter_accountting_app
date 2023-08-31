@@ -6,13 +6,11 @@ import 'package:account_app/controller/curency_controller.dart';
 import 'package:account_app/controller/pdf_controller.dart';
 import 'package:account_app/models/accgroup_model.dart';
 import 'package:account_app/models/curency_model.dart';
-import 'package:account_app/models/home_model.dart';
 import 'package:account_app/screen/settings/acc_group_setting.dart';
-import 'package:account_app/widget/custom_dialog.dart';
+import 'package:account_app/text_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
 
 class MyAppBarWidget extends StatelessWidget {
   final AccGroup accGroup;
@@ -62,17 +60,18 @@ class MyAppBarWidget extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                CustomDialog.loadingProgress();
-                final file = await PdfApi.generatePdf(
-                    homeModel: HomeModel(
-                        operation: 20,
-                        name: "hazem",
-                        caStatus: false,
-                        cacStatus: true,
-                        totalDebit: 200,
-                        totalCredit: 200));
-                Get.back();
-                await OpenFile.open(file.path);
+                // CustomDialog.loadingProgress();
+                // final file = await PdfApi.generatePdf(
+                //     homeModel: HomeModel(
+                //         operation: 20,
+                //         name: "hazem",
+                //         caStatus: false,
+                //         cacStatus: true,
+                //         totalDebit: 200,
+                //         totalCredit: 200));
+                // Get.back();
+                // await OpenFile.open(file.path);
+                // Get.to(() => MyTestScreen());
               },
               child: const FaIcon(
                 FontAwesomeIcons.solidFilePdf,
@@ -127,7 +126,7 @@ class AccGroupCurencyListWidget extends StatelessWidget {
       margin: EdgeInsets.only(
         left: 15,
         top: 55,
-        right: Get.width / 2.3,
+        // right: Get.width / 2.3,
       ),
       width: Get.width / 2,
       //height: 300,
@@ -241,15 +240,17 @@ class AccGroupCurencyListItemWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         textDirection: TextDirection.rtl,
         children: [
-          Text(
-            accGroup.name,
-            textAlign: TextAlign.right,
-            style: myTextStyles.title2,
+          Expanded(
+            child: Text(
+              accGroup.name,
+              textAlign: TextAlign.right,
+              style: myTextStyles.title2,
+            ),
           ),
           const Spacer(),
           if (curency != null)
             Text(
-              curency?.name ?? "",
+              curency?.symbol ?? "",
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
               style: myTextStyles.subTitle.copyWith(

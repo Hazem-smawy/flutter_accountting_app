@@ -21,6 +21,7 @@ class MainController extends GetxController {
   }
 
   Future<void> intializedApp() async {
+    Get.put(IntroController());
     Get.put(AccGroupCurencyController());
     Get.put(CustomerController());
     Get.put(AccGroupController());
@@ -30,7 +31,7 @@ class MainController extends GetxController {
 
     Get.put(HomeController());
     Get.put(NewAccountController());
-    Get.put(IntroController());
+
     Get.put(PersonalController());
     Get.put(PdfApi());
     Get.put(CopyController());

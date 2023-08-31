@@ -61,7 +61,7 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: MyColors.containerSecondColor,
+                    color: MyColors.bg.withOpacity(0.5),
                   ),
                   child: Row(
                     children: [
@@ -103,37 +103,47 @@ class _JournalListWidgetState extends State<JournalListWidget> {
                       const SizedBox(
                         width: 5,
                       ),
-                      SizedBox(
-                        width: Get.width / 6,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            FittedBox(
-                              child: Text(
-                                homeController.todaysJournals[index]['accName'],
-                                textDirection: TextDirection.rtl,
-                                textAlign: TextAlign.right,
-                                style: myTextStyles.subTitle
-                                    .copyWith(fontWeight: FontWeight.normal),
+                      Flexible(
+                        flex: 1,
+                        child: SizedBox(
+                          width: Get.width / 6,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  clipBehavior: Clip.hardEdge,
+                                  child: Text(
+                                    homeController.todaysJournals[index]
+                                        ['accName'],
+                                    textDirection: TextDirection.rtl,
+                                    textAlign: TextAlign.right,
+                                    style: myTextStyles.subTitle.copyWith(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            const FaIcon(
-                              FontAwesomeIcons.folder,
-                              size: 12,
-                              color: MyColors.secondaryTextColor,
-                            ),
-                          ],
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              const FaIcon(
+                                FontAwesomeIcons.folder,
+                                size: 12,
+                                color: MyColors.secondaryTextColor,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       // const Spacer(),
                       const SizedBox(
                         width: 5,
                       ),
-                      Expanded(
+                      Flexible(
+                        flex: 2,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

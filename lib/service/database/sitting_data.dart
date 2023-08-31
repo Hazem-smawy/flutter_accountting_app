@@ -40,6 +40,7 @@ class SittingData {
 
   Future<int?> update(SittingModel sittingModel) async {
     final db = await DatabaseService().database;
+    print(sittingModel);
     try {
       final upOb = await db.update('sitting', sittingModel.toMap(),
           where: 'id= ?', whereArgs: [sittingModel.id]);

@@ -18,7 +18,7 @@ class SittingController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     readSitting();
-    toogleIsCopyOn(toggleAsyncGoogleDrive.value);
+    // toogleIsCopyOn(toggleAsyncGoogleDrive.value);
   }
 
   Future<void> createSitting() async {

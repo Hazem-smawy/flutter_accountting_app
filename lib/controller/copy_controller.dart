@@ -1,6 +1,8 @@
 import 'dart:io' as io;
 
 import 'package:account_app/controller/acc_curency_controller.dart';
+import 'package:account_app/controller/customer_account_controller.dart';
+import 'package:account_app/controller/sitting_controller.dart';
 import 'package:account_app/main.dart';
 import 'package:account_app/service/database/helper/database_service.dart';
 import 'package:account_app/service/http_service/google_drive_service.dart';
@@ -22,12 +24,6 @@ import 'home_controller.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class CopyController extends GetxController {
-  AccGroupCurencyController accGroupCurencyController = Get.find();
-  AccGroupController accGroupController = Get.find();
-  CurencyController curencyController = Get.find();
-  CustomerController customerController = Get.find();
-  HomeController homeController = Get.find();
-
   // google drive
   final GoogleDriveAppData googleDriveAppData = GoogleDriveAppData();
   GoogleSignInAccount? googleUser;
@@ -115,12 +111,22 @@ class CopyController extends GetxController {
   }
 
   Future<void> restoreSucess() async {
+    AccGroupCurencyController accGroupCurencyController = Get.find();
+    AccGroupController accGroupController = Get.find();
+    CurencyController curencyController = Get.find();
+    CustomerController customerController = Get.find();
+    CustomerAccountController customerAccountController = Get.find();
+
+    HomeController homeController = Get.find();
     await accGroupController.readAllAccGroup();
     await customerController.readAllCustomer();
     await curencyController.readAllCurency();
+    await customerAccountController.readAllCustomerAccounts();
 
     await accGroupCurencyController.getAllAccGroupAndCurency();
     await homeController.getCustomerAccountsFromCurencyAndAccGroupIds();
+
+    await homeController.getTheTodaysJournals();
     await Future.delayed(Duration(milliseconds: 500));
     Get.offAll(() => ShowMyMainScreen());
     CustomDialog.customSnackBar(
@@ -167,6 +173,8 @@ class CopyController extends GetxController {
     await googleDriveAppData.signOut();
     googleUser = null;
     driveApi = null;
+    SittingController sittingController = Get.find();
+    sittingController.toogleIsCopyOn(false);
     update();
   }
 

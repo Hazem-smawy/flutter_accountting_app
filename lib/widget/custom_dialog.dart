@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 class CustomDialog {
   static void customSnackBar(description, SnackPosition? snackPosition) {
+    Get.closeAllSnackbars();
     Get.rawSnackbar(
       backgroundColor: MyColors.lessBlackColor.withOpacity(0.9),
       //duration: const Duration(seconds: 10),

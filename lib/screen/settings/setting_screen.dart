@@ -80,10 +80,10 @@ class SettingScreen extends StatelessWidget {
                       onTap: () => Get.to(() => PersonalInfoScreen()),
                       child: Container(
                         padding: const EdgeInsets.only(
-                          left: 8.0,
-                          right: 8,
+                          left: 15,
+                          right: 15,
                           bottom: 12,
-                          top: 8,
+                          top: 10,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -138,14 +138,15 @@ class SettingScreen extends StatelessWidget {
                                         const CircleAvatar(
                                           radius: 20,
                                           backgroundColor:
-                                              MyColors.secondaryTextColor,
+                                              MyColors.lessBlackColor,
                                           child: FaIcon(
                                             FontAwesomeIcons.user,
                                             color: MyColors.containerColor,
                                           ),
                                         ),
                                         Positioned(
-                                          bottom: -10,
+                                          bottom: -2.5,
+                                          right: -2.5,
                                           child: Container(
                                             padding: const EdgeInsets.all(5),
                                             decoration: const BoxDecoration(
@@ -157,7 +158,7 @@ class SettingScreen extends StatelessWidget {
                                             child: const Center(
                                               child: FaIcon(
                                                 FontAwesomeIcons.plus,
-                                                size: 13,
+                                                size: 10,
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -325,8 +326,9 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                           }
                         }
                       }
-
-                      await sittingController.toogleIsCopyOn(value);
+                      if (copyController.driveApi != null) {
+                        await sittingController.toogleIsCopyOn(value);
+                      }
                     }),
                 const Spacer(),
                 Text(
@@ -368,13 +370,14 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: MyColors.containerSecondColor,
+                            color: MyColors.bg,
                           ),
                           child: Row(
                             children: [
                               GestureDetector(
                                 onTap: () async {
                                   await sittingController.increemint();
+
                                   CustomDialog.customSnackBar(
                                       "سيتم رفع نسخة الي جوجل درايف كل ${getCopyEveryString(sittingController.every.value)}",
                                       SnackPosition.BOTTOM);
@@ -383,7 +386,8 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: MyColors.lessBlackColor,
+                                    color: MyColors.lessBlackColor
+                                        .withOpacity(0.8),
                                   ),
                                   child: const FaIcon(
                                     FontAwesomeIcons.plus,
@@ -423,7 +427,8 @@ class GoogleDriveSyncWidget extends StatelessWidget {
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: MyColors.lessBlackColor,
+                                    color: MyColors.lessBlackColor
+                                        .withOpacity(0.8),
                                   ),
                                   child: const FaIcon(
                                     FontAwesomeIcons.minus,
