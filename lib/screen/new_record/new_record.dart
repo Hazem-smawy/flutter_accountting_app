@@ -48,7 +48,8 @@ class _NewRecordScreenState extends State<NewRecordScreen> {
     newAccountController.newAccount.clear();
     CEC.errorMessage.value = "";
     return SafeArea(
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         margin: EdgeInsets.all(10),
         constraints: const BoxConstraints(
           minHeight: 300,

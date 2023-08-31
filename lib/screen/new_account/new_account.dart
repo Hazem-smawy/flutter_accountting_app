@@ -118,7 +118,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
     CEC.errorMessage.value = "";
     return SafeArea(
       top: false,
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         margin: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
